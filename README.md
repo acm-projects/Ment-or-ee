@@ -16,8 +16,43 @@ One of the significant challenges facing college students aspiring to break into
   * Connect to each other’s own zoom account
   * If preferred or possible, embed the zoom meeting into the client itself
 
-## Tech Stack
+## Tech Stack & Resources
 #### MERN Stack (MongoDB, Express.js, React, Node.js)
+<details>
+  
+**<summary>Comprehensive Full-Stack Tutorials</summary>**
+
+<br>
+</details>
+
+<details>
+  
+**<summary>Front-end</summary>**
+
+<br>
+</details>
+
+<details>
+  
+**<summary>Back-end</summary>**
+
+<br>
+</details>
+
+<details>
+  
+**<summary>Third-party Integrations / APIs</summary>**
+
+<br>
+</details>
+
+<details>
+  
+**<summary>Dev Environment</summary>**
+
+<br>
+</details>
+
 
 ## Milestones
 
@@ -46,15 +81,12 @@ One of the significant challenges facing college students aspiring to break into
        <ul>
         <li>Get familiar with tech stack</li>
         <li>Begin starting with basic deliverables</li>
+       <li>Brainstorm schemas for the database (Both front-end and back-end should be in agreement before creating states/models)</li>
+        <ul>
       </ul>
     </td>
     <td>
       <ul>
-        <li>Brainstorm schemas for the database (Both front-end and back-end should be in agreement before creating states/models)</li>
-        <ul>
-         <li>How should a user document look like? How will this translate to information on a page?</li>
-         <li>How many/which collections should we have?</li>
-        </ul>
         <li>Finalize UI/UX design concepts (Finish by end of Week 2)</li>
         <li>Implement designs for Profile page, Login/Register page and set-up homepage (will be finished in a later week).</li>
         <li>Implement the review/recommendation submission component for the profile page</li>
@@ -62,11 +94,6 @@ One of the significant challenges facing college students aspiring to break into
     </td>
     <td>
       <ul>
-        <li>Brainstorm schemas for the database (Both front-end and back-end should be in agreement before creating states/models)</li>
-        <ul>
-         <li>How should a user document look like? How will this translate to information on a page?</li>
-         <li>How many/which collections should we have?</li>
-        </ul>
         <li>Spin up MongoDB Atlas cluster, give everyone access to the database and download Compass for database administration</li>
         <li>Organize Node.js server and set up auth routes with Express.js, implement JWT strategy (optional: protect routes with authorization)</li>
         <li>Implement routes and middleware for other user CRUD</li>
