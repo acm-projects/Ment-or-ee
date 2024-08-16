@@ -22,35 +22,56 @@ One of the significant challenges facing college students aspiring to break into
   
 **<summary>Comprehensive Full-Stack Tutorials</summary>**
 
-<br>
+* [Dave Gray: MERN Stack Tutorial Playlist](https://www.youtube.com/playlist?list=PL0Zuz27SZ-6P4dQUsoDatjEGpmBpcOW8V)
+* [NetNinja: MERN Stack Crash Course Tutorial Playlist](https://www.youtube.com/playlist?list=PL4cUxeGkcC9iJ_KkrkBZWZRHVwnzLIoUE)
+* [Auth implementation w/ MERN](https://www.youtube.com/watch?v=b5LDOW8WJ9A&list=PL4cUxeGkcC9g8OhpOZxNdhXggFz2lOuCT&index=2)
+  
 </details>
 
 <details>
   
 **<summary>Front-end</summary>**
 
-<br>
+* [Official React Documentation / Setup](https://react.dev/learn/start-a-new-react-project)
+* [React Tutorial for Beginners](https://youtu.be/SqcY0GlETPk?si=7m4sb_bs-ksPQLkv)
+* [JS Mastery React JS Full Course 2023, 1 hour](https://www.youtube.com/watch?v=b9eMGE7QtTk&ab_channel=JavaScriptMastery)
+* [Official TailwindCSS Documentation / Setup](https://tailwindcss.com/docs/installation)
+* [Official Bootstrap Documentation / Setup for JavaScript](https://getbootstrap.com/docs/5.3/getting-started/javascript/)
+
 </details>
 
 <details>
   
 **<summary>Back-end</summary>**
 
-<br>
+* [Official Express.js Documentation / Setup](https://expressjs.com/en/starter/installing.html)
+* [Dave Gray Intro to Express.js](https://www.youtube.com/watch?v=jivyItmsu18&ab_channel=DaveGray)
+* [Learn Express.js in 35 Minutes](https://www.youtube.com/watch?v=SccSCuHhOw0&ab_channel=WebDevSimplified)
+* [Official Mongoose Documentation (Express.js library for connecting to MongoDB database)](https://mongoosejs.com/docs/)
+
 </details>
 
 <details>
   
 **<summary>Third-party Integrations / APIs</summary>**
 
-<br>
+* [Zoom Integration Into Nodejs App | Medium](https://medium.com/@merlovelace/zoom-integration-into-nodejs-app-2c72b731f5d6)
+* [Build and Connect: Mastering Zoom API with Node.js](https://www.youtube.com/watch?v=0lhgP6Qe6zg&ab_channel=CodingwithAdo)
+* [Official Twilio Documentation for Node.js](https://www.twilio.com/docs/messaging/quickstart/node)
+* [Add Google Maps and Places with React - Official YouTube Playlist](https://www.youtube.com/playlist?list=PL2rFahu9sLJ2QuJaKKYDaJp0YqjFCDCtN)
+
 </details>
 
 <details>
   
-**<summary>Dev Environment</summary>**
+**<summary>Dev Tools/Software</summary>**
 
-<br>
+* [Git](https://git-scm.com/downloads)
+* [VS Code](https://code.visualstudio.com/download)
+* [Node.js](https://nodejs.org/en/download/package-manager)
+* [MongoDB Compass](https://www.mongodb.com/docs/compass/current/install/)
+* [Postman](https://www.postman.com/downloads/)
+
 </details>
 
 
@@ -184,3 +205,22 @@ One of the significant challenges facing college students aspiring to break into
   * Little map included on profile to mark which city a user is based out of
   * Fun little thing :)
 
+## GitHub Cheat Sheet
+
+
+| Command | Description |
+| ------ | ------ |
+| **cd <director>** | Change directories over to our repository |
+| **git branch** | Lists branches for you |
+| **git branch "branch name"** | Makes new branch |
+| **git checkout "branch name"** | Switch to branch |
+| **git checkout -b "branch name"** | Same as 2 previous commands together |
+| **git add .**| Finds all changed files |
+| **git commit -m "Testing123"** | Commit with message |
+| **git push origin "branch"** | Push to branch |
+| **git pull origin "branch"** | Pull updates from a specific branch |
+| get commit hash (find on github or in terminal run **git log --oneline** ) then **git revert 2f5451f --no-edit**| Undo a commit that has been pushed |
+| **git reset --soft HEAD~** | Undo commit (not pushed) but *keep* the changes |
+| get commit hash then **git reset --hard 2f5451f** | Undo commit (not pushed) and *remove*  changes |
+
+## Developers 
