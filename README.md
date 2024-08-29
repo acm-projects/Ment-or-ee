@@ -204,6 +204,7 @@ One of the significant challenges facing college students aspiring to break into
 * Google Maps Integration
   * Little map included on profile to mark which city a user is based out of
   * Fun little thing :)
+* Real Users :0
 
 ## GitHub Cheat Sheet
 
@@ -223,4 +224,10 @@ One of the significant challenges facing college students aspiring to break into
 | **git reset --soft HEAD~** | Undo commit (not pushed) but *keep* the changes |
 | get commit hash then **git reset --hard 2f5451f** | Undo commit (not pushed) and *remove*  changes |
 
-## Developers 
+## The Team 
+
+### Developers
+
+### Project Manager
+
+### Industry Mentor
