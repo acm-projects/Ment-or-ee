@@ -1,7 +1,14 @@
-# Ment(or/ee)
-One of the significant challenges facing college students aspiring to break into their respective industry today is the necessity to meaningfully network with industry professionals. Ment(or/ee) aims to assist students in overcoming this challenge by sophisticatedly matching them with professionals willing to mentor students on their journey. Simply create a profile stating your goals—whether for long-term guidance, resume reviews, mock interviews, or just a simple coffee chat—and you can establish a meaningful professional connection with Ment(or/ee).
+<p align="center">
+<img src='https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNW53dmpqamgyaXNwem90aWMxMjBsNHUydm4wNjc4dTk0a3FsNXc5aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKJNFVZ4xCMriFy/giphy.webp' width='700'>
+</p>
 
-## MVP
+<h1 align="center">Ment(or/ee)</h1>
+
+<p align="center">
+One of the significant challenges facing college students aspiring to break into their respective industry today is the necessity to meaningfully network with industry professionals. Ment(or/ee) aims to assist students in overcoming this challenge by sophisticatedly matching them with professionals willing to mentor students on their journey. Simply create a profile stating your goals—whether for long-term guidance, resume reviews, mock interviews, or just a simple coffee chat—and you can establish a meaningful professional connection with Ment(or/ee).
+</p>
+
+## MVP ✅
 * User auth → account / profile
   * Select account to be either a mentor or mentee
   * Basic professional profile info: name, picture, education/company, industry, etc.
@@ -16,7 +23,7 @@ One of the significant challenges facing college students aspiring to break into
   * Connect to each other’s own zoom account
   * If preferred or possible, embed the zoom meeting into the client itself
 
-## Tech Stack & Resources
+## Tech Stack & Resources ⚙️
 #### MERN Stack (MongoDB, Express.js, React, Node.js)
 <details>
   
@@ -75,7 +82,7 @@ One of the significant challenges facing college students aspiring to break into
 </details>
 
 
-## Milestones
+## Milestones 📅
 
 <table>
   <tr>
@@ -192,7 +199,7 @@ One of the significant challenges facing college students aspiring to break into
   </tr>
 </table>
 
-## Stretch Goals
+## Stretch Goals 💪
 
 * Technical Resume builder augmented by generative AI (likely RAG with GPT)
   * Generate suggestions to the document with grammar/diction
@@ -206,7 +213,7 @@ One of the significant challenges facing college students aspiring to break into
   * Fun little thing :)
 * Real Users :0
 
-## GitHub Cheat Sheet
+## GitHub Cheat Sheet 💬
 
 
 | Command | Description |
@@ -224,10 +231,17 @@ One of the significant challenges facing college students aspiring to break into
 | **git reset --soft HEAD~** | Undo commit (not pushed) but *keep* the changes |
 | get commit hash then **git reset --hard 2f5451f** | Undo commit (not pushed) and *remove*  changes |
 
-## The Team 
+## The Team 🎉
 
-### Developers
+<div align="center">
+<h2>🎊Developers🎊</h2>
+<h3>Neeti Ingle</h3><br/>
+<h3>Ali Arkate</h3><br/>
+<h3>Mia Sorola Yoshida</h3><br/>
+<h3>Chris Abraham</h3><br/>
 
-### Project Manager
+<h2>🎊Project Manager🎊</h2>
+<h3>Lerich Osay</h3><br/>
 
-### Industry Mentor
+<h2>🎊Industry Mentor🎊</h2>
+<h3>Jeshna Gupta</h3><br/><br/>
