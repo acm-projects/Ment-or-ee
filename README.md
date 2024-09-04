@@ -2,7 +2,7 @@
 <img src='https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNW53dmpqamgyaXNwem90aWMxMjBsNHUydm4wNjc4dTk0a3FsNXc5aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKJNFVZ4xCMriFy/giphy.webp' width='700'>
 </p>
 
-<h1 align="center">Ment(or/ee)</h1>
+<h1 align="center">🤝Ment(or/ee)🤝</h1>
 
 <p align="center">
 One of the significant challenges facing college students aspiring to break into their respective industry today is the necessity to meaningfully network with industry professionals. Ment(or/ee) aims to assist students in overcoming this challenge by sophisticatedly matching them with professionals willing to mentor students on their journey. Simply create a profile stating your goals—whether for long-term guidance, resume reviews, mock interviews, or just a simple coffee chat—and you can establish a meaningful professional connection with Ment(or/ee).
@@ -23,7 +23,7 @@ One of the significant challenges facing college students aspiring to break into
   * Connect to each other’s own zoom account
   * If preferred or possible, embed the zoom meeting into the client itself
 
-## Tech Stack & Resources ⚙️
+## Tech Stack & Resources 💻
 #### MERN Stack (MongoDB, Express.js, React, Node.js)
 <details>
   
@@ -96,7 +96,7 @@ One of the significant challenges facing college students aspiring to break into
     <td>
        <ul>
         <li>Get to know everyone :)</li>
-        <li>Begin UI/UX design. (Utilize Moqups or Figma)</li>
+        <li>Begin <a href="https://www.figma.com/design/N0o0SMVnJWN2LuDU000nu7/Ment(or%2Fee)?node-id=0-1&node-type=CANVAS&t=84ZLJyDpUXA0KVX2-0">UI/UX design.</a> (Utilize Moqups or Figma)</li>
         <li>Invite everyone to github repo, clone repo onto everyone’s machines</li>
       </ul>
     </td>
