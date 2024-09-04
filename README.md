@@ -96,7 +96,7 @@ One of the significant challenges facing college students aspiring to break into
     <td>
        <ul>
         <li>Get to know everyone :)</li>
-        <li>Begin UI/UX design. (Utilize <a href="https://moqups.com/templates/wireframes-mockups/websites/"></a> or <a href="https://www.figma.com/design/N0o0SMVnJWN2LuDU000nu7/Ment(or%2Fee)?node-id=0-1&node-type=CANVAS&t=84ZLJyDpUXA0KVX2-0">Figma</a>)</li>
+        <li>Begin UI/UX design. (Utilize <a href="https://moqups.com/templates/wireframes-mockups/websites/">Moqups</a> or <a href="https://www.figma.com/design/N0o0SMVnJWN2LuDU000nu7/Ment(or%2Fee)?node-id=0-1&node-type=CANVAS&t=84ZLJyDpUXA0KVX2-0">Figma</a>)</li>
         <li>Invite everyone to github repo, clone repo onto everyone’s machines</li>
       </ul>
     </td>
