@@ -13,12 +13,15 @@ One of the significant challenges facing college students aspiring to break into
   * Select account to be either a mentor or mentee
   * Basic professional profile info: name, picture, education/company, industry, etc.
   * View/edit your own profile
-* Matching algorithm that takes user preferences
+* Matching algorithm that makes matches based on user preferences
   * Define preferences in the type of mentorship, career, field, location, and education that the user is looking for in a mentor or mentee
   * Algorithm considers attributes, each with different weight, in the matching process before returning a percentage match
+* Task list for mentorship
+  * Due dates, meeting links, resources, timeline, and other task details in a kanban board style
 * Search and view other user’s profiles, leave reviews/recommendations
   * Reviews and recommendations can be public or anonymous
-* Start a chat with other users 
+* Start a chat with other users
+  * Include suggested messages to reply with 
 * Connect to zoom to easily schedule virtual chats impromptu or as recurring meetings
   * Connect to each other’s own zoom account
   * If preferred or possible, embed the zoom meeting into the client itself
