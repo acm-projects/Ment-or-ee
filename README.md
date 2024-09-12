@@ -214,6 +214,7 @@ One of the significant challenges facing college students aspiring to break into
 * Google Maps Integration
   * Little map included on profile to mark which city a user is based out of
   * Fun little thing :)
+* Group mentorship
 * Real Users :0
 
 ## GitHub Cheat Sheet 💬
