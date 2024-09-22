@@ -39,6 +39,11 @@ const userSchema = new mongoose.Schema({
     required: true, 
     trim: true 
   },
+  skills: { 
+    type: String, 
+    required: true, 
+    trim: true 
+  },
   availability: { 
     type: Boolean, 
     default: true 
@@ -48,10 +53,19 @@ const userSchema = new mongoose.Schema({
     enum: ['mentor', 'mentee'],
     required: true
   },
+  /* location: { 
+    type: no idea, 
+    required: true, 
+    trim: true 
+  }, */
   // Array of review IDs where this user is being reviewed
   reviews: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'ReviewModel'
+  }],
+  meetings: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'MeetingModel' // Reference to the Meeting model
   }]
 }, {
   timestamps: true
@@ -61,3 +75,5 @@ const userSchema = new mongoose.Schema({
 const UserModel = mongoose.model('User', userSchema);
 
 module.exports = UserModel;
+
+
