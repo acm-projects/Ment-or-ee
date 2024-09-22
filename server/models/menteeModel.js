@@ -9,9 +9,6 @@ const menteeSchema = new mongoose.Schema({
   fieldOfInterest: { 
     type: String 
   },
-  calendar: { 
-    type: Object // Define the structure of your calendar as needed
-  }
 });
 
 // Create Mentee model, inheriting from the User model

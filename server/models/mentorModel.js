@@ -23,3 +23,5 @@ const mentorSchema = new mongoose.Schema({
 const MentorModel = UserModel.discriminator('Mentor', mentorSchema);
 
 module.exports = MentorModel;
+
+
