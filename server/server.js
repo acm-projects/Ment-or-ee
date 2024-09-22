@@ -40,7 +40,9 @@ io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
 
   // Handle joining a room
-  socket.on('joinRoom', (roomId) => {
+  socket.on('joinRoom', ({ mentorId, menteeId }) => {
+    const roomId = `${mentorId}_${menteeId}`; // Unique room ID for each mentor-mentee pair
+
     if (!rooms[roomId]) {
       rooms[roomId] = [];
     }
@@ -78,6 +80,9 @@ io.on('connection', (socket) => {
         console.log(`${socket.id} left room: ${roomId}`);
         if (rooms[roomId].length === 0) {
           delete rooms[roomId]; // Remove the room if empty
+        } else {
+          // Notify remaining users in the room that someone has left
+          io.to(roomId).emit('userLeft', `${socket.id} has left the room.`);
         }
       }
     }
