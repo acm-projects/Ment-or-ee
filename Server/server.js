@@ -29,18 +29,3 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// POST route to create a task
-app.post('/tasks', (req, res) => {
-  console.log(req.body); // Log the request body
-  const newTask = new TaskModel(req.body);
-  newTask.save()
-    .then(() => res.status(201).send('Task created successfully'))
-    .catch(err => res.status(400).send('Error creating task: ' + err));
-});
-
-// GET route to fetch tasks
-app.get('/tasks', (req, res) => {
-  TaskModel.find()
-    .then(tasks => res.json(tasks)) // Send tasks as JSON
-    .catch(err => res.status(500).send('Error retrieving tasks: ' + err));
-});
