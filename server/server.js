@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser'); // Add body-parser to handle POST requests
-const TaskModel = require('./models/taskModel'); // Import your task model
 const app = express();
 
 // Middleware to parse JSON
