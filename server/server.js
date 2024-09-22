@@ -1,8 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const http = require('http'); // Import http
-const { Server } = require('socket.io'); // Import Socket.IO
+const http = require('http'); 
+const { Server } = require('socket.io'); 
 
 const app = express();
 
@@ -22,29 +22,65 @@ mongoose.connect('mongodb+srv://drive2winjoy:Akhrub123!@mentoree.c516s.mongodb.n
     console.error('MongoDB connection error:', err);
   });
 
-// Create an HTTP server and pass the Express app to it
+// Create an HTTP server and attach the Express app
 const server = http.createServer(app);
 
-// Initialize Socket.IO and attach it to the HTTP server
+// Initialize Socket.IO and set up CORS
 const io = new Server(server, {
   cors: {
-    origin: "*", // Allow connections from any origin (adjust as needed)
+    origin: "*", 
   }
 });
+
+// Store rooms and track user connections
+const rooms = {};
 
 // Handle WebSocket connections
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
 
+  // Handle joining a room
+  socket.on('joinRoom', (roomId) => {
+    if (!rooms[roomId]) {
+      rooms[roomId] = [];
+    }
+    
+    if (rooms[roomId].length < 2) {
+      rooms[roomId].push(socket.id);
+      socket.join(roomId);
+      console.log(`${socket.id} joined room: ${roomId}`);
+      socket.emit('roomJoined', `You have joined room ${roomId}`);
+      
+      // Notify the other user in the room if it's now full
+      if (rooms[roomId].length === 2) {
+        io.to(roomId).emit('roomFull', `Room ${roomId} is now full.`);
+      }
+    } else {
+      socket.emit('roomFull', `Room ${roomId} is full.`);
+    }
+  });
+
   // Handle messages from the client
-  socket.on('message', (data) => {
-    console.log('Message received:', data);
-    io.emit('message', data); // Broadcast the message to all clients
+  socket.on('message', ({ roomId, message }) => {
+    console.log(`Message from ${socket.id} in room ${roomId}: ${message}`);
+    io.to(roomId).emit('message', { sender: socket.id, message });
   });
 
   // Handle disconnection
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
+    
+    // Remove user from rooms they were in
+    for (const roomId in rooms) {
+      const index = rooms[roomId].indexOf(socket.id);
+      if (index !== -1) {
+        rooms[roomId].splice(index, 1);
+        console.log(`${socket.id} left room: ${roomId}`);
+        if (rooms[roomId].length === 0) {
+          delete rooms[roomId]; // Remove the room if empty
+        }
+      }
+    }
   });
 });
 
