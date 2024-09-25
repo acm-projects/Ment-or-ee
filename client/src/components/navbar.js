@@ -1,5 +1,6 @@
 import React from 'react';
 //import logo from '../assets/logo.png'  
+import {AiOutlineSearch} from 'react-icons/ai'
 
 const Navbar = () => {
   return (
@@ -13,6 +14,11 @@ const Navbar = () => {
             <li>Tasks</li>
             <li>Chat</li>
             <li>Profile</li>
+            <AiOutlineSearch 
+                size={20}
+                className="icon"
+                style={{color:'#000'}}
+            />
           </ul>
         </div>
       </div>
