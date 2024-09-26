@@ -1,83 +1,106 @@
-const User = required ('../models/user.model');
+const User = require('../models/user.model'); // Adjust the path as needed
 const mongoose = require('mongoose');
 
 // Get all users
-const getUsers = async (rep,res) => {
-    const users = await User.find({}).sort({createdAt: -1})
+const getUsers = async (req, res) => {
+    try {
+        const users = await User.find({}).sort({ createdAt: -1 }).populate('reviews');
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
-    res.status(200).json(users)
-}
+// Get a single user
+const getUser = async (req, res) => {
+    const { id } = req.params;
 
-//Get a single user
-const  getUser = async (req, res) => {
-    const{id} = req.params   //grap id
-    console.log(id)
-
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        console.log("404")
-        return res.status(404).json({error: `No user with id: ${id}`})
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: `No user with id: ${id}` });
     }
 
-    //const user = await User.findById(id)
-    const user = await User.findById(id).select("-password -orderHistory")
+    try {
+        const user = await User.findById(id).select("-password -orderHistory").populate('reviews');
+        if (!user) {
+            return res.status(404).json({ error: 'No such User' });
+        }
 
-    if(!user){
-        return res.status(404).json({error: 'no  such User'})
-    }
-    
-    res.status(200).json(user)
-
-}
-
-//post a new user
-
-const creatUser = async( req, res)=>{
-    const {username, email, password} = req.body
-
-    try { // add doc to db
-        const user = await User.create({username, email, password});
         res.status(200).json(user);
-    } catch (error){
-        res.status(400).json({error: error.message})
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-}
+};
 
+// Create a new user
+const createUser = async (req, res) => {
+    const { name, email, username, dateOfBirth, language, personalityType, educationLevel, role } = req.body;
 
-// DELETE a user
+    // Validate required fields
+    if (!name || !email || !username || !dateOfBirth || !language || !personalityType || !educationLevel || !role) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    try {
+        const user = await User.create({
+            name,
+            email,
+            username,
+            dateOfBirth,
+            language,
+            personalityType,
+            educationLevel,
+            role,
+            reviews: []
+        });
+
+        res.status(201).json(user);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+// Delete a user
 const deleteUser = async (req, res) => {
-    const {id} = req.params // grabs id
+    const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) { // check for valid id
-        return res.status(404).json({error: 'No such User'})
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such User' });
     }
 
-    const user = await User.findOneAndDelete({_id: id})
+    try {
+        const user = await User.findOneAndDelete({ _id: id });
+        if (!user) {
+            return res.status(404).json({ error: 'No such User' });
+        }
 
-    if(!user) {
-        return res.status(404).json({error: 'no such User'})
-    } 
+        res.status(200).json({ message: 'User deleted successfully', user });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
-    res.status(200).json(user)
-}
-
-// UPDATE a user
+// Update a user
 const updateUser = async (req, res) => {
-    const {id} = req.params // grabs id
+    const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) { // check for valid id
-        return res.status(404).json({error: 'No such User'})
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such User' });
     }
 
-    const user = await User.findOneAndUpdate({_id: id}, {
-        ...req.body
-    })
+    try {
+        const user = await User.findOneAndUpdate({ _id: id }, {
+            ...req.body
+        }, { new: true }); // new: true returns the updated document
 
-    if(!user) {
-        return res.status(404).json({error: 'no such User'})
-    } 
+        if (!user) {
+            return res.status(404).json({ error: 'No such User' });
+        }
 
-    res.status(200).json(user)
-}
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
 
 module.exports = {
     getUsers,
@@ -85,4 +108,4 @@ module.exports = {
     createUser,
     deleteUser,
     updateUser
-}
+};
