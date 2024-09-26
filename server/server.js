@@ -102,11 +102,11 @@ server.listen(port, () => {
 });
 
 
-const userRoutes = require('./routes/user.routes'); // Adjust the path as needed
+const userRoutes = require('./routes/users.routes'); // Adjust the path as needed
 app.use('/api/users', userRoutes);
 
 
-const reviewRoutes = require('./routes/review.route'); // Adjust the path as needed
+const reviewRoutes = require('./routes/review.routes'); // Adjust the path as needed
 app.use('/api/reviews', reviewRoutes);
 
 const taskRoutes = require('./routes/task.routes'); // Ensure this matches your folder name casing

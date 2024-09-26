@@ -53,6 +53,10 @@
   <script>
     const socket = io('http://localhost:3000'); // Ensure this matches your server address
 
+    socket.on('connect', () => {
+    console.log('Connected to Socket.IO server');
+});
+
     const menteeId = 'mentee123'; // Assume the mentee has this ID
     const buttons = document.querySelectorAll('button[data-mentorid]');
     

@@ -1,4 +1,4 @@
-const User = require('../models/user.model'); // Adjust the path as needed
+const User = require('../models/userModel'); // Adjust the path as needed
 const mongoose = require('mongoose');
 
 // Get all users

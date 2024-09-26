@@ -1,4 +1,4 @@
-const Mentee = require('../models/mentee.model'); // Adjust the path as needed
+const Mentee = require('../models/menteeModel'); // Adjust the path as needed
 const mongoose = require('mongoose');
 
 // Get all mentees

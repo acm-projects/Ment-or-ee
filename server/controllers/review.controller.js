@@ -1,4 +1,4 @@
-const ReviewModel = require('../models/review.model'); // Adjust the path as needed
+const ReviewModel = require('../models/reviewModel'); // Adjust the path as needed
 const mongoose = require('mongoose');
 
 // Create a new review

@@ -1,4 +1,4 @@
-const Task = require('../models/task.model'); // Adjust the path as needed
+const Task = require('../models/taskModel'); // Adjust the path as needed
 const mongoose = require('mongoose');
 
 // Get all tasks
