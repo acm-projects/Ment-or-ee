@@ -21,8 +21,10 @@ const userSchema = new mongoose.Schema({
     trim: true 
   },
   dateOfBirth: { 
-    type: Date, 
-    required: true 
+    type: String, 
+    required: true, 
+    unique: true, 
+    trim: true 
   },
   language: { 
     type: String, 

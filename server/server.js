@@ -1,8 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const http = require('http'); 
-const { Server } = require('socket.io'); 
+const http = require('http');
+const { Server } = require('socket.io');
 
 const app = express();
 
@@ -14,13 +14,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://drive2winjoy:Akhrub123!@mentoree.c516s.mongodb.net/mentoree?retryWrites=true&w=majority')
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((err) => {
-    console.error('MongoDB connection error:', err);
-  });
+mongoose.connect('mongodb+srv://drive2winjoy:Akhrub123!@mentoree.c516s.mongodb.net/mentoree?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
 // Create an HTTP server and attach the Express app
 const server = http.createServer(app);
@@ -28,7 +24,7 @@ const server = http.createServer(app);
 // Initialize Socket.IO and set up CORS
 const io = new Server(server, {
   cors: {
-    origin: "*", 
+    origin: "*",
   }
 });
 
@@ -46,7 +42,7 @@ io.on('connection', (socket) => {
     if (!rooms[roomId]) {
       rooms[roomId] = [];
     }
-    
+
     if (rooms[roomId].length < 2) {
       rooms[roomId].push(socket.id);
       socket.join(roomId);
@@ -65,9 +61,7 @@ io.on('connection', (socket) => {
   // Handle messages from the client
   socket.on('message', ({ roomId, message }) => {
     console.log(`Message from ${socket.id} in room ${roomId}: ${message}`);
-    // Include mentorId in the message data
-    const mentorId = roomId.split('_')[0]; // Extract mentorId from roomId
-    io.to(roomId).emit('message', { sender: socket.id, message, mentorId });
+    io.to(roomId).emit('message', { sender: socket.id, message });
   });
 
   // Handle disconnection
@@ -83,7 +77,6 @@ io.on('connection', (socket) => {
         if (rooms[roomId].length === 0) {
           delete rooms[roomId]; // Remove the room if empty
         } else {
-          // Notify remaining users in the room that someone has left
           io.to(roomId).emit('userLeft', `${socket.id} has left the room.`);
         }
       }
@@ -91,27 +84,28 @@ io.on('connection', (socket) => {
   });
 });
 
-// Define a basic route
+// Define basic routes
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+// User routes
+const userRoutes = require('./routes/users.routes'); 
+app.use('/api/users', userRoutes);
+
+// Review routes
+const reviewRoutes = require('./routes/review.routes'); 
+app.use('/api/reviews', reviewRoutes);
+
+// Task routes
+const taskRoutes = require('./routes/task.routes'); 
+app.use('/api/tasks', taskRoutes);
+
+// Mentee routes
+const menteeRoutes = require('./routes/mentee.routes'); 
+app.use('/api/mentees', menteeRoutes);
 
 // Start the HTTP server
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
-
-const userRoutes = require('./routes/users.routes'); // Adjust the path as needed
-app.use('/api/users', userRoutes);
-
-
-const reviewRoutes = require('./routes/review.routes'); // Adjust the path as needed
-app.use('/api/reviews', reviewRoutes);
-
-const taskRoutes = require('./routes/task.routes'); // Ensure this matches your folder name casing
-app.use('/api/tasks', taskRoutes);
-
-
-const menteeRoutes = require('./routes/mentee.routes'); // Adjust the path as needed
-app.use('/api/mentees', menteeRoutes);
