@@ -98,3 +98,18 @@ app.get('/', (req, res) => {
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+
+const userRoutes = require('./routes/user.routes'); // Adjust the path as needed
+app.use('/api/users', userRoutes);
+
+
+const reviewRoutes = require('./routes/review.route'); // Adjust the path as needed
+app.use('/api/reviews', reviewRoutes);
+
+const taskRoutes = require('./routes/task.routes'); // Ensure this matches your folder name casing
+app.use('/api/tasks', taskRoutes);
+
+
+const menteeRoutes = require('./routes/mentee.routes'); // Adjust the path as needed
+app.use('/api/mentees', menteeRoutes);
