@@ -65,7 +65,9 @@ io.on('connection', (socket) => {
   // Handle messages from the client
   socket.on('message', ({ roomId, message }) => {
     console.log(`Message from ${socket.id} in room ${roomId}: ${message}`);
-    io.to(roomId).emit('message', { sender: socket.id, message });
+    // Include mentorId in the message data
+    const mentorId = roomId.split('_')[0]; // Extract mentorId from roomId
+    io.to(roomId).emit('message', { sender: socket.id, message, mentorId });
   });
 
   // Handle disconnection
