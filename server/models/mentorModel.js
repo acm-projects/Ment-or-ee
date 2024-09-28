@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const UserModel = require('./userModel'); // Import User model
 
+
 // Create Mentor schema extending the base user schema
 const mentorSchema = new mongoose.Schema({
   mentorshipExperience: { 
@@ -16,9 +17,12 @@ const mentorSchema = new mongoose.Schema({
   }]
 });
 
+
 // Create Mentor model, inheriting from the User model
 const MentorModel = UserModel.discriminator('Mentor', mentorSchema);
 
+
 module.exports = MentorModel;
+
 
 
