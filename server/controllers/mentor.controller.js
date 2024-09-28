@@ -13,7 +13,7 @@ const createMentor = async (req, res) => {
 };
 
 // Get all mentors
-const getAllMentors = async (req, res) => {
+const getMentors = async (req, res) => {
     try {
         const mentors = await MentorModel.find().populate('tasks');
         res.status(200).json(mentors);
@@ -23,7 +23,7 @@ const getAllMentors = async (req, res) => {
 };
 
 // Get mentor by ID
-const getMentorById = async (req, res) => {
+const getMentor = async (req, res) => {
     const { id } = req.params;
     try {
         const mentor = await MentorModel.findById(id).populate('tasks');
@@ -66,8 +66,8 @@ const deleteMentor = async (req, res) => {
 
 module.exports = {
     createMentor,
-    getAllMentors,
-    getMentorById,
+    getMentors,
+    getMentor,
     updateMentor,
     deleteMentor
 };

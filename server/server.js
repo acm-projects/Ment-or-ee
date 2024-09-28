@@ -105,29 +105,13 @@ app.use('/api/tasks', taskRoutes);
 const menteeRoutes = require('./routes/mentee.routes'); 
 app.use('/api/mentees', menteeRoutes);
 
+// Mentor routes
+const mentorRoutes = require('./routes/mentor.routes'); 
+app.use('/api/mentors', mentorRoutes);
+
 // Start the HTTP server
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
 
-const userRoutes = require('./routes/users.routes'); // Adjust the path as needed
-app.use('/api/users', userRoutes);
-
-
-const reviewRoutes = require('./routes/review.routes'); // Adjust the path as needed
-app.use('/api/reviews', reviewRoutes);
-
-const taskRoutes = require('./routes/task.routes'); // Ensure this matches your folder name casing
-app.use('/api/tasks', taskRoutes);
-
-
-const menteeRoutes = require('./routes/mentee.routes'); // Adjust the path as needed
-app.use('/api/mentees', menteeRoutes);
-
-
-const mentorRoutes = require('./routes/mentor.routes'); // Import the mentor routes
-app.use('/mentors', mentorRoutes); // Use the mentor routes for /mentors path
-
-const authRoutes = require('./routes/store-auth.routes');
-app.use('/api/auth', authRoutes);
