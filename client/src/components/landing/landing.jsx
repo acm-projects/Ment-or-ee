@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
       };
     
     return (
-      <header className="fixed inset-0 relative w-full h-screen bg-fixed bg-cover bg-center z-negative h-[1000px]" style={{ backgroundImage: `url(${bgimage})`, backgroundPosition: 'center 0px', }}>
+      <header className="fixed inset-0 relative w-full h-screen bg-fixed bg-cover bg-center z-negative h-[1100px]" style={{ backgroundImage: `url(${bgimage})`, backgroundPosition: 'center 0px', }}>
       <nav className="flex items-center justify-between px-6 py-4">
       <div className="flex items-center">
         <img
