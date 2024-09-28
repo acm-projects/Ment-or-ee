@@ -2,7 +2,7 @@ import React from 'react'
 import logo from '../../assets/logo.svg'
 import { useNavigate } from 'react-router-dom';
 
-const login = () => {
+const Login = () => {
   
   const navigate = useNavigate();
     
@@ -52,4 +52,4 @@ const login = () => {
   )
 }
 
-export default login;
+export default Login;
