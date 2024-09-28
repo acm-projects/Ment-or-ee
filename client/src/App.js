@@ -1,15 +1,29 @@
 import React from 'react'
-//import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Navbar from "./components/navbar";
 import {Landnavbar, About, Testimonials, Contact} from "./components/landing/landing";
+import Login from "./components/login/login";
+
 const App = () => {
   return (
-    <div>
+    <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+    </Router>
+  )
+}
+export default App
+
+
+const LandingPage = () => {
+  return (
+    <>
       <Landnavbar />
       <About />
       <Testimonials />
       <Contact />
-    </div>
-  )
+    </>
+  );
 }
-export default App

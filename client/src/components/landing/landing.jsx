@@ -6,7 +6,16 @@ import neeti_pfp from '../../assets/neeti_pfp.svg'
 import lerich_pfp from '../../assets/lerich_pfp.svg'
 import { IoCallOutline } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
+  
+
   export const Landnavbar = () => {
+      const navigate = useNavigate();
+    
+      const handleLoginClick = () => {
+        navigate('/login');
+      };
+    
     return (
       <header className="fixed inset-0 relative w-full h-screen bg-cover bg-center z-negative h-[1000px]" style={{ backgroundImage: `url(${bgimage})`, backgroundPosition: 'center 0px', }}>
       <nav className="flex items-center justify-between px-6 py-4">
@@ -19,7 +28,7 @@ import { MdOutlineEmail } from "react-icons/md";
         <span className="text-4xl font-bold text-gray-800">mentor/ee</span>
       </div>
       <div className="flex space-x-4">
-        <button className="px-6 py-3 text-lg font-semibold text-white bg-[#1F2839] rounded-full hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
+        <button onClick={handleLoginClick} className="px-6 py-3 text-lg font-semibold text-white bg-[#1F2839] rounded-full hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
             Login
         </button>
         <button className="px-6 py-3 text-lg font-semibold text-gray-900 bg-white border border-gray-900 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300">
