@@ -20,7 +20,7 @@ const login = () => {
             alt="mentor/ee logo"
             className="h-16 w-auto mr-2"
           />
-          <span className="text-4xl font-semibold text-gray-800">mentor/ee</span>
+          <span className="text-4xl font-bold text-gray-800">mentor/ee</span>
         </button>
 
         <div className='flex flex-col items-center justify-center'>
