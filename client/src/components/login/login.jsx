@@ -13,7 +13,7 @@ const Login = () => {
   return (
     <div className='w-screen h-screen flex'>
       <div className='w-1/2 bg-[#F5F5EF]'>
-        <button onClick={handleHomeClick} className="flex items-center">
+        <button onClick={handleHomeClick} className="flex items-center px-6 py-4">
           
           <img
             src = {logo}
