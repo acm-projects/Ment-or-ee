@@ -18,6 +18,13 @@
             padding: 5px;
             margin-bottom: 10px;
         }
+        #log {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 5px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -26,6 +33,9 @@
     <button id="mentor2" data-mentor-id="mentor456">Chat with Mentor 2</button>
 
     <div id="chat-rooms"></div>
+
+    <h2>Logs</h2>
+    <div id="log"></div> <!-- Log area to display messages -->
 
     <script src="https://cdn.socket.io/4.4.0/socket.io.min.js"></script>
     <script>
@@ -71,6 +81,13 @@
                     });
                 }
             });
+        });
+
+        // Listen for log messages from the server
+        socket.on('log', (msg) => {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += `<p>${msg}</p>`; // Display log message
+            logDiv.scrollTop = logDiv.scrollHeight; // Auto-scroll
         });
 
         socket.on('roomFull', (msg) => {

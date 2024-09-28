@@ -2,6 +2,16 @@ const mongoose = require('mongoose');
 
 // Define the user schema
 const userSchema = new mongoose.Schema({
+  role: { // To differentiate between mentor and mentee
+    type: String,
+    enum: ['mentor', 'mentee'],
+    required: true
+  },
+  profilePic: {
+    type: String,
+    required: true, // You can set this to false if the profile pic is optional
+    trim: true
+  },
   name: { 
     type: String, 
     required: true, 
@@ -14,32 +24,61 @@ const userSchema = new mongoose.Schema({
     lowercase: true, 
     trim: true 
   },
-  username: { 
-    type: String, 
-    required: true, 
-    unique: true, 
-    trim: true 
+  location: {
+    city: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    state: {
+      type: String,
+      required: true,
+      trim: true,
+      enum: [
+        'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
+        'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho',
+        'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+        'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
+        'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+        'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma',
+        'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota',
+        'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia',
+        'Wisconsin', 'Wyoming'
+      ]
+    }
   },
-  dateOfBirth: { 
-    type: String, 
-    required: true, 
-    unique: true, 
-    trim: true 
+  languages: {
+    type: [String], // Store languages as an array of strings
+    required: true,
+    trim: true,
+    enum: [
+      'English',
+      'Spanish',
+      'Chinese',
+      'Tagalog',
+      'Vietnamese',
+      'Arabic',
+      'French',
+      'German',
+      'Russian',
+      'Italian',
+      'Portuguese',
+      'Japanese',
+      'Korean',
+      'Hindi',
+      'Persian'
+    ]
   },
-  language: { 
-    type: String, 
-    required: true, 
-    trim: true 
+  university: {
+    type: String, // String for the university name
+    required: true,
+    trim: true
   },
-  personalityType: { 
-    type: String, 
-    required: true, 
-    trim: true 
-  },
-  educationLevel: { 
-    type: String, 
-    required: true, 
-    trim: true 
+  personalityType: {
+    type: String,
+    required: true,
+    trim: true,
+    enum: ['introvert', 'extrovert'] // Only these values are allowed
   },
   skills: { 
     type: String, 
@@ -50,16 +89,6 @@ const userSchema = new mongoose.Schema({
     type: Boolean, 
     default: true 
   },
-  role: { // To differentiate between mentor and mentee
-    type: String,
-    enum: ['mentor', 'mentee'],
-    required: true
-  },
-  /* location: { 
-    type: no idea, 
-    required: true, 
-    trim: true 
-  }, */
   // Array of review IDs where this user is being reviewed
   reviews: [{
     type: mongoose.Schema.Types.ObjectId,

@@ -7,9 +7,6 @@ const mentorSchema = new mongoose.Schema({
     type: String, 
     required: true 
   },
-  pdfResume: { 
-    type: String // URL or path to the PDF resume
-  },
   teachingStyle: { 
     type: String 
   },

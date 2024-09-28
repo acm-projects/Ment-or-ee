@@ -9,6 +9,19 @@ const menteeSchema = new mongoose.Schema({
   fieldOfInterest: { 
     type: String 
   },
+  educationLevel: {
+    type: String,
+    required: true,
+    trim: true,
+    enum: [
+      'freshman',
+      'sophomore',
+      'junior',
+      'senior',
+      'masters',
+      'PhD'
+    ]
+  }
 });
 
 // Create Mentee model, inheriting from the User model
