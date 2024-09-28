@@ -15,6 +15,10 @@ import { useNavigate } from 'react-router-dom';
       const handleLoginClick = () => {
         navigate('/login');
       };
+
+      const handleSignupClick = () => {
+        navigate('/signup');
+      };
     
     return (
       <header className="fixed inset-0 relative w-full h-screen bg-fixed bg-cover bg-center z-negative h-[1000px]" style={{ backgroundImage: `url(${bgimage})`, backgroundPosition: 'center 0px', }}>
@@ -31,7 +35,7 @@ import { useNavigate } from 'react-router-dom';
         <button onClick={handleLoginClick} className="px-6 py-3 text-lg font-semibold text-white bg-[#1F2839] rounded-full hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
             Login
         </button>
-        <button className="px-6 py-3 text-lg font-semibold text-gray-900 bg-white border border-gray-900 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300">
+        <button onClick={handleSignupClick} className="px-6 py-3 text-lg font-semibold text-gray-900 bg-white border border-gray-900 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300">
             Signup
         </button>
         </div>
@@ -52,7 +56,7 @@ import { useNavigate } from 'react-router-dom';
         <div>
             <div className='w-full bg-[#D6C7B1] py-24'>
                 <div className='max-w-[1000px] m-auto grid grid-cols-2'>
-                <img src={image1} className='w-full h-auto object-cover' />
+                <img src={image1} alt="about page pic" className='w-full h-auto object-cover' />
                 <div className='flex flex-col justify-start gap-4 items-end'>
                     <h1 className='py-4 md:text-5xl text-5xl font-semibold p-4 text-white bg-[#1F2839] rounded-3xl text-center w-max'>
                     About Us
@@ -75,11 +79,11 @@ import { useNavigate } from 'react-router-dom';
              <h1 className='py-4 md:text-5xl text-5xl font-semibold p-4 text-white bg-[#1F2839] rounded-3xl text center mx-auto w-max'>Testimonials</h1>
            </div>
           <div className="flex flex-col items-center">
-            <img src={neeti_pfp } className="mb-4"/>
+            <img src={neeti_pfp } alt="neeti pfp" className="mb-4"/>
             <p className='p-4 text-2xl text-[#1F2839] text-balance'>I learned so much from my mentor! - Mentee 2024</p>
           </div>
           <div className="flex flex-col items-center">
-            <img src={lerich_pfp} className="mb-4"/>
+            <img src={lerich_pfp} alt="lerich pfp" className="mb-4"/>
             <p className='p-4 text-2xl text-[#1F2839] text-balance'>I feel so fulfilled giving advice to my mentee! - Mentor 2023</p>
           </div>
         </div>

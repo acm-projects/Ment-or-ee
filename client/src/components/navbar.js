@@ -1,30 +1,72 @@
-import React from 'react';
-//import logo from '../assets/logo.png'  
-import {AiOutlineSearch} from 'react-icons/ai'
+import React from 'react'
+import { FaCheck } from "react-icons/fa";
+import { CiChat1 } from "react-icons/ci";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { IoPeople } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+
+const navbar = () => {
+  const navigate = useNavigate();
+    
+      const handleMatchClick = () => {
+        navigate('/matches');
+      };
+
+      const handleTaskClick = () => {
+        navigate('/tasks');
+      };
+
+      const handleChatClick = () => {
+        navigate('/chat');
+      };
+
+      const handleProfileClick = () => {
+        navigate('/profile');
+      };
+  
   return (
-    <nav className="w-full h-[80px] bg-white border-b border-gray-300 shadow-sm">
-      <div className="max-w-[1480px] mx-auto w-full h-full flex justify-between items-center px-4">
-        {/* <img src={logo} className="h-[25px]" /> */}
-        <div className='flex items-center'>
-          <ul className="flex space-x-4">
-            <li>Home</li>
-            <li>Matches</li>
-            <li>Tasks</li>
-            <li>Chat</li>
-            <li>Profile</li>
-            <AiOutlineSearch 
-                size={20}
-                className="icon"
-                style={{color:'#000'}}
+    <div className="fixed flex items-center justify-between top-0 right-20 px-6 py-4">
+      <div className="flex items-center h-20 justify-center space-x-4 bg-[#1F2839] rounded-lg">
+        <button onClick={handleMatchClick} className="flex h-20 flex-col items-center px-6 py-3 text-lg font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
+            <IoPeople 
+              size={30}
+              className="matchicon"
+              style={{color:'#FFFFF'}}
             />
-          </ul>
-        </div>
+            Matches
+        </button>
+        <button onClick={handleTaskClick} className="flex h-20 flex-col items-center px-6 py-3 text-lg font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
+            <FaCheck 
+              size={30}
+              className="tasksicon"
+              style={{color:'#FFFFF'}}
+            />
+            Tasks
+
+        </button>
+        <button onClick={handleChatClick} className="flex h-20 flex-col items-center px-6 py-3 text-lg font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
+            <CiChat1 
+              size={40}
+              className="chaticon"
+              style={{color:'#FFFFF'}}
+            />
+            Chat
+        </button>
+        <button onClick={handleProfileClick} className="flex h-20 flex-col items-center px-6 py-3 text-lg font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
+            <div className="w-10 h-10 rounded-full bg-blue-500"></div>
+            <div className="flex items-center">
+              Me
+              <IoMdArrowDropdown 
+                size={30}
+                className="profileicon"
+                style={{color:'#FFFFF'}}
+              />
+            </div>
+        </button>
       </div>
-    </nav>
+    </div>
   )
 }
 
-export default Navbar;
-
+export default navbar

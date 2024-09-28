@@ -1,14 +1,13 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
 import Navbar from '../navbar';
 
-const home = () => {
+const profile = () => {
   return (
     <div>
-      Home
+      Profile
       <Navbar />
     </div>
   )
 }
 
-export default home
+export default profile
