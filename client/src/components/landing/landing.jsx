@@ -8,7 +8,7 @@ import { IoCallOutline } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
   export const Landnavbar = () => {
     return (
-      <header className="fixed inset-0 relative w-full h-screen bg-cover bg-center z-negative h-[1000px]" style={{ backgroundImage: `url(${bgimage})`, backgroundPosition: 'center 0px', }}>
+      <header className="fixed inset-0 relative w-full h-screen bg-fixed bg-cover bg-center z-negative h-[1000px]" style={{ backgroundImage: `url(${bgimage})`, backgroundPosition: 'center 0px', }}>
       <nav className="flex items-center justify-between px-6 py-4">
       <div className="flex items-center">
         <img
@@ -84,10 +84,12 @@ import { MdOutlineEmail } from "react-icons/md";
         <div className='w-full bg-[#D6C7B1]  py-12 h-[350px]'>
          <div className='max-w-[1000px] m-auto grid grid-cols-3'>
          <div className="flex flex-col items-left">
-            <p className='p-4 text-4xl text-[#1F2839] font-semibold'>Lorem Ipsum</p>
-            <p className='p-4 text-2xl text-[#1F2839] text-opacity-55'>Dolor sit</p>
-            <p className='p-4 text-2xl text-[#1F2839] text-opacity-55'>Elit sid</p>
-            <p className='p-4 text-2xl text-[#1F2839] text-opacity-55'>Ut enim</p>
+            <p className='p-2 text-4xl text-[#1F2839] font-semibold'>Our Team</p>
+            <p className='p-2 text-2xl text-[#1F2839] text-opacity-55'>Lerich Osay</p>
+            <p className='p-2 text-2xl text-[#1F2839] text-opacity-55'>Neeti Ingle</p>
+            <p className='p-2 text-2xl text-[#1F2839] text-opacity-55'>Mia Sorola Yoshida</p>
+            <p className='p-2 text-2xl text-[#1F2839] text-opacity-55'>Ali Arkate</p>
+            <p className='p-2 text-2xl text-[#1F2839] text-opacity-55'>Chris Abraham</p>
           </div>
           <div className="flex flex-col items-left">
           <p className='p-4 text-4xl text-[#1F2839] font-semibold'>Directories</p>
