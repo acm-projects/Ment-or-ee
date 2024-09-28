@@ -6,7 +6,7 @@ import { IoPeople } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 
 
-const navbar = () => {
+const Navbar = () => {
   const navigate = useNavigate();
     
       const handleMatchClick = () => {
@@ -69,4 +69,4 @@ const navbar = () => {
   )
 }
 
-export default navbar
+export default Navbar
