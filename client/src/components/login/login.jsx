@@ -28,16 +28,20 @@ const Login = () => {
           
           <div class='mt-12'>
             {/* <label for='email'>Email</label> */}
-            <input type='text' id='email' class= 'w-[407px] border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full' placeholder="Email"/>
+            <input type='email' id='email' class= 'w-[407px] border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full' placeholder="Email"/>
           </div>
 
           <div class='mt-4'>
             {/* <label for='password'>Passowrd</label> */}
-            <input type='text' id='password' class= 'w-[407px] border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full' placeholder="Password"/>
+            <input type='password' id='password' class= 'w-[407px] border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full' placeholder="Password"/>
+          </div>
+
+          <div className="flex justify-between m-3">
+              <button className="border-none bg-none text-center hover:underline" onClick={() => navigate('/signup')}>Create an account</button>
           </div>
 
           <div class='mt-5'>
-            <button type="submit" className='border-2 border-[#1F2839] bg-[#1F2839] text-white py-1 px-5 rounded-md hover:bg-transparent hover:text-[#1F2839] font-semibold'>Login</button>
+            <button type="submit" className='border-2 border-[#1F2839] bg-[#1F2839] text-white py-1 px-5 rounded-md hover:bg-transparent hover:text-[#1F2839] font-semibold' onClick={() => navigate('/menteehome')}>Login</button>
           </div>
           
 

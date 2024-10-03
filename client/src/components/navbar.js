@@ -1,4 +1,5 @@
 import React from 'react'
+import logo from '../assets/logo.svg'
 import { FaCheck } from "react-icons/fa";
 import { CiChat1 } from "react-icons/ci";
 import { IoMdArrowDropdown } from "react-icons/io";
@@ -26,39 +27,51 @@ const Navbar = () => {
       };
   
   return (
-    <div className="fixed flex items-center justify-between top-0 right-20 px-6 py-4">
-      <div className="flex items-center h-20 justify-center space-x-4 bg-[#1F2839] rounded-lg">
-        <button onClick={handleMatchClick} className="flex h-20 flex-col items-center px-6 py-3 text-lg font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
+    <div className="fixed flex justify-start top-0 left-0 w-full px-6 py-4">
+      
+      <div className='w-1/2'>
+        <button onClick={() => navigate('/menteehome')} className="flex items-center px-6 py-4">
+          <img
+            src = {logo}
+            alt="mentor/ee logo"
+            className="h-16 w-auto mr-2"
+          />
+          <span className="text-3xl font-bold text-gray-800">mentor/ee</span>
+        </button>
+      </div>
+      
+      <div className="flex absolute top-4 right-4 items-center px-6 py-4 h-16 justify-center space-x-4 bg-[#1F2839] rounded-lg">
+        <button onClick={handleMatchClick} className="flex h-16 flex-col items-center py-2 px-6 text-base font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
             <IoPeople 
-              size={30}
+              size={25}
               className="matchicon"
               style={{color:'#FFFFF'}}
             />
             Matches
         </button>
-        <button onClick={handleTaskClick} className="flex h-20 flex-col items-center px-6 py-3 text-lg font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
+        <button onClick={handleTaskClick} className="flex h-16 flex-col items-center py-2 px-6 text-base font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
             <FaCheck 
-              size={30}
+              size={25}
               className="tasksicon"
               style={{color:'#FFFFF'}}
             />
             Tasks
 
         </button>
-        <button onClick={handleChatClick} className="flex h-20 flex-col items-center px-6 py-3 text-lg font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
+        <button onClick={handleChatClick} className="flex h-16 flex-col items-center py-2 px-6  text-base font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
             <CiChat1 
-              size={40}
+              size={25}
               className="chaticon"
               style={{color:'#FFFFF'}}
             />
             Chat
         </button>
-        <button onClick={handleProfileClick} className="flex h-20 flex-col items-center px-6 py-3 text-lg font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
-            <div className="w-10 h-10 rounded-full bg-blue-500"></div>
+        <button onClick={handleProfileClick} className="flex h-16 flex-col items-center py-2 px-6 text-base font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
+            <div className="w-7 h-7 rounded-full bg-blue-500"></div>
             <div className="flex items-center">
               Me
               <IoMdArrowDropdown 
-                size={30}
+                size={25}
                 className="profileicon"
                 style={{color:'#FFFFF'}}
               />

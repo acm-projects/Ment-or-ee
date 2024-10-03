@@ -3,11 +3,14 @@ import Navbar from '../navbar';
 
 const chat = () => {
   return (
-    <div>
+    <div className="flex flex-col space-y-20">
       <Navbar />
-      Chat
+      <div>
+        Chat
+      </div>
     </div>
   )
 }
+
 
 export default chat;
