@@ -1,8 +1,12 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const http = require('http');
 const { Server } = require('socket.io');
+
+//const MenteeModel = require('./models/menteeModel.js'); // Import Mentee model
+//const MentorModel = require('./models/mentorModel.js'); // Import Mentor model
 
 const app = express();
 
@@ -14,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://drive2winjoy:Akhrub123!@mentoree.c516s.mongodb.net/mentoree?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
@@ -84,6 +88,8 @@ io.on('connection', (socket) => {
   });
 });
 
+
+
 // Define basic routes
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -108,6 +114,10 @@ app.use('/api/mentees', menteeRoutes);
 // Mentor routes
 const mentorRoutes = require('./routes/mentor.routes'); 
 app.use('/api/mentors', mentorRoutes);
+
+// Meeting routes
+const meetingRoutes = require('./routes/meeting.routes'); 
+app.use('/api/meetings', meetingRoutes);
 
 // Start the HTTP server
 server.listen(port, () => {

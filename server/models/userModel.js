@@ -80,6 +80,11 @@ const userSchema = new mongoose.Schema({
     trim: true,
     enum: ['introvert', 'extrovert'] // Only these values are allowed
   },
+  major: {
+    type: String,
+    required: true,
+    trim: true
+  },
   skills: { 
     type: String, 
     required: true, 
