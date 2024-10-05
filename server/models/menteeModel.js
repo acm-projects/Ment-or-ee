@@ -14,12 +14,10 @@ const menteeSchema = new mongoose.Schema({
     required: true,
     trim: true,
     enum: [
-      'freshman',
-      'sophomore',
-      'junior',
-      'senior',
-      'masters',
-      'PhD'
+      'First Year',
+      'Second Year',
+      'Third Year',
+      'Fourth Year',
     ]
   }
 });
