@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentee Chat</title>
+    <style>
+        .room {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+            max-width: 400px;
+        }
+        .messages {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        #log {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select a Mentor</h1>
+    <button id="mentor1" data-mentor-id="mentor123">Chat with Mentor 1</button>
+    <button id="mentor2" data-mentor-id="mentor456">Chat with Mentor 2</button>
+
+    <div id="chat-rooms"></div>
+
+    <h2>Logs</h2>
+    <div id="log"></div> <!-- Log area to display messages -->
+
+    <script src="https://cdn.socket.io/4.4.0/socket.io.min.js"></script>
+    <script>
+        const socket = io('http://localhost:3000'); // Initialize Socket.IO client
+        const menteeId = 'menteeId'; // Replace with actual mentee ID
+
+        socket.on('connect', () => {
+            console.log('Connected to server with ID:', socket.id);
+        });
+
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                const mentorId = button.getAttribute('data-mentor-id');
+                const roomId = `${mentorId}_${menteeId}`;
+                socket.emit('joinRoom', { mentorId, menteeId });
+
+                // Create a new chat room only if it doesn't exist yet
+                if (!document.getElementById(roomId)) {
+                    const chatRoom = document.createElement('div');
+                    chatRoom.className = 'room';
+                    chatRoom.id = roomId;
+                    chatRoom.innerHTML = `<h2>Chat Room with ${mentorId}</h2><div class="messages"></div><input type="text" placeholder="Type your message..."><button>Send</button>`;
+                    document.getElementById('chat-rooms').appendChild(chatRoom);
+
+                    const messageInput = chatRoom.querySelector('input');
+                    const sendButton = chatRoom.querySelector('button');
+
+                    sendButton.addEventListener('click', () => {
+                        const message = messageInput.value;
+                        if (message) {
+                            socket.emit('message', { roomId, message }); // Include roomId in message
+                            messageInput.value = ''; // Clear input
+                        }
+                    });
+
+                    // Scoped listener for this specific room
+                    socket.on('message', (data) => {
+                        if (data.sender !== socket.id) { // Check if the message is not sent by this client
+                            const messagesDiv = chatRoom.querySelector('.messages');
+                            messagesDiv.innerHTML += `<p><strong>${data.sender}:</strong> ${data.message}</p>`;
+                            messagesDiv.scrollTop = messagesDiv.scrollHeight; // Auto-scroll
+                        }
+                    });
+                }
+            });
+        });
+
+        // Listen for log messages from the server
+        socket.on('log', (msg) => {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += `<p>${msg}</p>`; // Display log message
+            logDiv.scrollTop = logDiv.scrollHeight; // Auto-scroll
+        });
+
+        socket.on('roomFull', (msg) => {
+            alert(msg);
+        });
+
+        socket.on('userLeft', (msg) => {
+            console.log(msg);
+        });
+    </script>
+</body>
+</html>
