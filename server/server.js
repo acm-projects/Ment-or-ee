@@ -5,9 +5,6 @@ const bodyParser = require('body-parser');
 const http = require('http');
 const { Server } = require('socket.io');
 
-//const MenteeModel = require('./models/menteeModel.js'); // Import Mentee model
-//const MentorModel = require('./models/mentorModel.js'); // Import Mentor model
-
 const app = express();
 
 // Middleware to parse JSON
@@ -125,3 +122,6 @@ server.listen(port, () => {
 });
 
 
+//Auth routes
+const storeAuthRoutes = require('./routes/authenication/store-auth.routes');
+app.use('/api/authenication/store-auth', storeAuthRoutes);

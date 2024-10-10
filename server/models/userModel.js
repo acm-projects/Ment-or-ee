@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   },
   profilePic: {
     type: String,
-    required: true, // You can set this to false if the profile pic is optional
+    required: false, // You can set this to false if the profile pic is optional
     trim: true
   },
   name: { 
