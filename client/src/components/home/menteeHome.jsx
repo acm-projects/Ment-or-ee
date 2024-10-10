@@ -17,7 +17,7 @@ const menteeCalendar = () => (
   </div>
 );
 
-const menteeMatches = () => (
+const menteeMatches = (
   <ul className="list-disc pl-5">
     <li>Match</li>
     <li>Match</li>
@@ -25,15 +25,16 @@ const menteeMatches = () => (
   </ul>
 );
 
+
 const menteeHome = () => {
   return (
     <div>
       <div className="flex flex-col space-y-20">
         <Navbar />
         <Home
-          profile={<menteeProfile />}
-          calendar={<menteeCalendar />}
-          matches={<menteeMatches />}
+          profile={menteeProfile}
+          calendar={menteeCalendar}
+          matches={menteeMatches}
         />
       </div>
     </div>
