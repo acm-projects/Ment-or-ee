@@ -25,21 +25,13 @@ const meetingSchema = new Schema({
     type: Number,  // Duration of the meeting in minutes
     required: true,
   },
+  location: {
+    type: String,  // Physical or virtual location (e.g., Zoom link)
+    required: true,
+  },
   zoomLink: {
-    type: String,  // Zoom meeting link
-    required: true,
-  },
-  zoomMeetingId: {
-    type: String,  // Zoom meeting ID for reference
-    required: true,
-  },
-  zoomPassword: {
-    type: String,  // Optional Zoom password
-  },
-  status: {
-    type: String,
-    enum: ['scheduled', 'ongoing', 'completed', 'canceled'],
-    default: 'scheduled',
+    type: String,  // Field to store the Zoom meeting link
+    required: true,  // Ensure this field is required
   },
   description: {
     type: String,

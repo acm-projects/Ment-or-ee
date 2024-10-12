@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const http = require('http');
 const { Server } = require('socket.io');
+const { findMatchingMentors } = require('./algorithm');
+const MenteeModel = require('./models/menteeModel');
+
 
 const app = express();
 
@@ -85,6 +88,47 @@ io.on('connection', (socket) => {
   });
 });
 
+
+async function matchMentorToMentee(menteeId) {
+  try {
+    const mentee = await MenteeModel.findById(menteeId);
+
+    if (!mentee) {
+      console.log('Mentee not found');
+      return;
+    }
+
+    const matchedMentors = await findMatchingMentors(mentee);
+    
+    console.log('Top Matches:', matchedMentors);
+  } catch (error) {
+    console.error('Error matching mentors:', error);
+  }
+}
+
+// API endpoint to match a mentor to a mentee by their ID
+app.post('/api/matchMentorToMentee', async (req, res) => {
+  const { menteeId } = req.body;
+
+  try {
+    const mentee = await MenteeModel.findById(menteeId);
+
+    if (!mentee) {
+      return res.status(404).json({ message: 'Mentee not found' });
+    }
+
+    const matchedMentors = await findMatchingMentors(mentee);
+
+    if (matchedMentors.length === 0) {
+      return res.status(404).json({ message: 'No matching mentors found' });
+    }
+
+    return res.status(200).json({ matchedMentors });
+  } catch (error) {
+    console.error('Error matching mentors:', error);
+    return res.status(500).json({ message: 'Error matching mentors' });
+  }
+});
 
 
 // Define basic routes

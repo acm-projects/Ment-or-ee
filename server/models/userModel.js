@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   role: { // To differentiate between mentor and mentee
     type: String,
-    enum: ['mentor', 'mentee'],
+    enum: ['Mentor', 'Mentee'],
     required: true
   },
   profilePic: {
@@ -50,7 +50,6 @@ const userSchema = new mongoose.Schema({
   languages: {
     type: [String], // Store languages as an array of strings
     required: true,
-    trim: true,
     enum: [
       'English',
       'Spanish',
@@ -78,38 +77,33 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    enum: ['introvert', 'extrovert'] // Only these values are allowed
+    enum: ['Introvert', 'Extrovert'] // Only these values are allowed
   },
-  major: {
-    type: String,
+  fields: {
+    type: [String],
     required: true,
-    trim: true
-  },
-  skills: { 
-    type: String, 
-    required: true, 
-    trim: true 
   },
   availability: { 
     type: Boolean, 
+    required: true,
     default: true 
   },
-  // Array of review IDs where this user is being reviewed
-  reviews: [{
+  reviews: [{ // Array of review IDs where this user is being reviewed
     type: mongoose.Schema.Types.ObjectId,
     ref: 'ReviewModel'
   }],
-  meetings: [{
+  meetings: [{ // Reference to the Meeting model
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'MeetingModel' // Reference to the Meeting model
-  }]
-}, {
-  timestamps: true
-});
+    ref: 'MeetingModel'
+  }],
+  bio: {
+    type: String,
+    required: true,
+    trim: true,
+  }
+}, { timestamps: true }); // Correctly placing timestamps option
 
 // Compile and export the User model
 const UserModel = mongoose.model('User', userSchema);
 
 module.exports = UserModel;
-
-
