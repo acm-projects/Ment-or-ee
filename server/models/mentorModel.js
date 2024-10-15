@@ -1,15 +1,20 @@
 const mongoose = require('mongoose');
 const UserModel = require('./userModel'); // Import User model
-
+const { required } = require('joi');
 
 // Create Mentor schema extending the base user schema
 const mentorSchema = new mongoose.Schema({
-  mentorshipExperience: { 
+  company: { 
     type: String, 
     required: true 
   },
-  teachingStyle: { 
-    type: String 
+  jobTitle: { 
+    type: String,
+    required: true
+  },
+  degrees: { 
+    type: [String],
+    required: true
   },
   tasks: [{
     type: mongoose.Schema.Types.ObjectId,

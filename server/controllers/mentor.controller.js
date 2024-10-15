@@ -1,5 +1,4 @@
 const MentorModel = require('../models/mentorModel'); // Assuming mentorModel.js is in the models folder
-const mongoose = require('mongoose');
 
 // Create a new mentor
 const createMentor = async (req, res) => {
