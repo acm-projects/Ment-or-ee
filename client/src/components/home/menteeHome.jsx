@@ -1,9 +1,11 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import Navbar from '../navbar';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Navbar from '../../common/navbar';
 import Home from './home';
+// import UseAuth from '../../context/AuthContext';
 
-const menteeProfile = () => (
+
+const menteeProfile = (
   <ul className='list-disc pl-5'>
     <li>Bio</li>
     <li>Bio</li>
@@ -11,9 +13,9 @@ const menteeProfile = () => (
   </ul>
 );
 
-const menteeCalendar = () => (
+const menteeCalendar = (
   <div className="h-64 bg-gray-100 flex items-center justify-center">
-    Calender
+    Calendar
   </div>
 );
 
