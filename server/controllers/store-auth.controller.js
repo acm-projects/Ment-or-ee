@@ -1,5 +1,5 @@
 const User = require('../models/userModel'); // Import the user model
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
 
@@ -97,20 +97,21 @@ const refresh = (req, res) => {
  * @access Public
  */
 const signup = async (req, res) => {
-    const { username, email, password, role, dateOfBirth, language, personalityType, educationLevel, skills } = req.body;
-
+    const { name, email, password, role, dateOfBirth, language, personalityType, educationLevel, skills, city,state, university } = req.body;
+    console.log(process.env.ACCESS_TOKEN_SECRET)
+    console.log(process.env.REFRESH_TOKEN_SECRET)
     // Validate form data
-    if (validator.isEmpty(email) || validator.isEmpty(password) || validator.isEmpty(username)) {
+    if (validator.isEmpty(email) || validator.isEmpty(password) || validator.isEmpty(name)) {
         return res.status(400).json({ message: 'Please fill out all fields' });
     }
 
     if (!validator.isEmail(email)) return res.status(400).json({ message: 'Invalid email address' });
     if (!validator.isStrongPassword(password)) return res.status(400).json({ message: 'Password not strong enough' });
-    if (!validator.isAlphanumeric(username)) return res.status(400).json({ message: 'Username must be alphanumeric' });
+    if (!validator.isAlphanumeric(name)) return res.status(400).json({ message: 'Username must be alphanumeric' });
 
     try {
         // Check if user already exists
-        const foundUser = await User.findOne({ username }).exec();
+        const foundUser = await User.findOne({name }).exec();
         const foundEmail = await User.findOne({ email }).exec();
         if (foundUser || foundEmail) {
             return res.status(400).json({ message: 'User already exists' });
@@ -122,7 +123,7 @@ const signup = async (req, res) => {
 
         // Create new user
         const newUser = new User({
-            username,
+            name,
             email,
             password: hashedPassword,
             role,
@@ -130,7 +131,9 @@ const signup = async (req, res) => {
             language,
             personalityType,
             educationLevel,
-            skills
+            skills,
+            location: {city, state},
+            university
         });
         const savedUser = await newUser.save();
 
@@ -155,10 +158,12 @@ const signup = async (req, res) => {
         );
 
         // Send tokens
-        res.status(201).json({ accessToken, refreshToken, email: savedUser.email, id: savedUser._id, username: savedUser.username });
+        res.status(201).json({ accessToken, refreshToken, email: savedUser.email, id: savedUser._id, name: savedUser.name });
     } catch (error) {
+        console.log( error)
         res.status(500).json({ message: 'Internal Server Error', error });
     }
+    
 };
 
 /**

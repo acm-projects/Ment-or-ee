@@ -1,27 +1,12 @@
 const express = require('express');
-const {
-    getMentees,
-    getMentee,
-    createMentee,
-    deleteMentee,
-    updateMentee
-} = require('../controllers/mentee.controller'); // Adjust the path as needed
+const menteeController = require('../controllers/mentee.controller');
 
 const router = express.Router();
 
-// GET all mentees
-router.get('/', getMentees);
-
-// GET a single mentee by ID
-router.get('/:id', getMentee);
-
-// POST a new mentee
-router.post('/', createMentee);
-
-// DELETE a mentee by ID
-router.delete('/:id', deleteMentee);
-
-// UPDATE a mentee by ID
-router.patch('/:id', updateMentee);
+router.post('/', menteeController.createMentee); // Create a new mentee
+router.get('/', menteeController.getAllMentees); // Get all mentees
+router.get('/:id', menteeController.getMenteeById); // Get a single mentee by ID
+router.put('/:id', menteeController.updateMentee); // Update a mentee by ID
+router.delete('/:id', menteeController.deleteMentee); // Delete a mentee by ID
 
 module.exports = router;
