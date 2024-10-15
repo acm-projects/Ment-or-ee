@@ -32,7 +32,7 @@ import { useNavigate } from 'react-router-dom';
         <span className="text-4xl font-bold text-gray-800">mentor/ee</span>
       </div>
       <div className="flex space-x-4">
-        <button onClick={handleLoginClick} className="px-6 py-3 text-lg font-semibold text-white bg-[#1F2839] rounded-full hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
+        <button onClick={handleLoginClick} className="px-6 py-3 text-lg font-semibold text-white bg-[#1F3839] rounded-full hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
             Login
         </button>
         <button onClick={handleSignupClick} className="px-6 py-3 text-lg font-semibold text-gray-900 bg-white border border-gray-900 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300">
