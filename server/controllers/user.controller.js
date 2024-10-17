@@ -34,7 +34,7 @@ const getUserById = async (req, res) => {
 
 // Create a new user
 const createUser = async (req, res) => {
-    const { name, email, username, password , dateOfBirth, language, personalityType, educationLevel, role } = req.body;
+    const { name, email, username, password, dateOfBirth, language, personalityType, educationLevel, role } = req.body;
 
     // Validate required fields
     if (!name || !email || !username ||!password || !dateOfBirth || !language || !personalityType || !educationLevel || !role) {

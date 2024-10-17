@@ -111,7 +111,7 @@ const userSchema = new mongoose.Schema({
   }],
   bio: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
   }
 }, { timestamps: true }); // Correctly placing timestamps option
