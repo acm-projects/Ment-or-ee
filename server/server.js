@@ -6,14 +6,14 @@ const http = require('http');
 const { Server } = require('socket.io');
 const { findMatchingMentors } = require('./algorithm');
 const MenteeModel = require('./models/menteeModel');
-
+const cors = require('cors');
 
 const app = express();
 
 // Middleware to parse JSON
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(cors())
 // Set a port
 const port = process.env.PORT || 5001;
 
@@ -168,4 +168,5 @@ server.listen(port, () => {
 
 //Auth routes
 const storeAuthRoutes = require('./routes/authenication/store-auth.routes');
+const { countReset } = require('console');
 app.use('/api/authenication/store-auth', storeAuthRoutes);
