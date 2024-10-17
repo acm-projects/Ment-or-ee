@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../navbar';
+import Navbar from '../../common/navbar';
 import lerich_pfp from '../../assets/lerich_pfp.svg'
 import abis_pfp from '../../assets/abis_pfp.svg'
 import jeshna_pfp from '../../assets/jeshna_pfp.svg'
