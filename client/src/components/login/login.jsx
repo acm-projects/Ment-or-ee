@@ -53,14 +53,14 @@ const Login = () => {
           <form action="POST" >
             <div class='mt-12'>
               <label font-bold mb-2 block for='email'>Email</label>
-              <input type='email' onChange={(e)=>{setEmail(e.target.value)}} id='email' class= 'w-[450px] h-[50px] border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-3xl' placeholder="Email"/>
+              <input type='email' onChange={(e)=>{setEmail(e.target.value)}} id='email' class= 'w-[407px] border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-3xl' placeholder="Email"/>
             </div>
             <div class="mt-4">
               <label for='password'>Password</label>
-              <input type='password' onChange={(e)=>{setPassword(e.target.value)}} id='password' class= 'w-[450px] h-[50px] border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-3xl' placeholder="Password"/>
+              <input type='password' onChange={(e)=>{setPassword(e.target.value)}} id='password' class= 'w-[407px] border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-3xl' placeholder="Password"/>
             </div>
-            <div class='flex items-center jusitfy-between mt-10'>
-              <button type="submit" className='border-2 border-[#1F2839] w-[250px] h-[50px] bg-[#1F2839] text-2xl text-white py-1 px-5 rounded-3xl hover:bg-transparent hover:text-[#1F2839] font-semibold' onClick={handleSubmit}>Login</button>
+            <div class='flex items-center jusitfy-between mt-5'>
+              <button type="submit" className='border-2 border-[#1F2839] bg-[#1F2839] text-white py-1 px-5 rounded-md hover:bg-transparent hover:text-[#1F2839] font-semibold' onClick={handleSubmit}>Login</button>
             </div>
             <div className="flex justify-between m-3">
               <button className="border-none bg-none text-center hover:underline" onClick={() => navigate('/signup')}>Don't have an account?</button>

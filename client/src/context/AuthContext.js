@@ -19,7 +19,7 @@ export const AuthContextProvider = ({ children }) => {
 //check here
   const login = async (email, password) => {
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', { //check where its fetching
+      const response = await fetch('http://localhost:5000/api/authenication/store-auth/login', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -36,6 +36,7 @@ export const AuthContextProvider = ({ children }) => {
         return true;
       } else {
         const error = await response.json();
+        console.error(error)
         throw new Error(error.message);
       }
     } catch (error) {
@@ -49,7 +50,7 @@ export const AuthContextProvider = ({ children }) => {
   //complete this - route to landing page
   const logout = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/auth/logout', {
+      const response = await fetch('http://localhost:5000/api/auth/logout', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
