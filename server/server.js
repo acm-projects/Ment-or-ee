@@ -7,28 +7,20 @@ const http = require('http');
 const { Server } = require('socket.io');
 const { findMatchingMentors } = require('./algorithm');
 const MenteeModel = require('./models/menteeModel');
-<<<<<<< HEAD
-const methodOverride = require('method-override');
-
-=======
 const cors = require('cors');
->>>>>>> 7464ea17588bac3822c04cc482f033df67f95dfb
 
 const app = express();
+
 // Enable CORS for all routes
 app.use(cors());
 
 // Middleware to parse JSON
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-<<<<<<< HEAD
 app.use(methodOverride('_method'));
 
-=======
-app.use(cors())
->>>>>>> 7464ea17588bac3822c04cc482f033df67f95dfb
 // Set a port
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -184,5 +176,4 @@ server.listen(port, () => {
 
 //Auth routes
 const storeAuthRoutes = require('./routes/authenication/store-auth.routes');
-const { countReset } = require('console');
 app.use('/api/authenication/store-auth', storeAuthRoutes);
