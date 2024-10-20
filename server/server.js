@@ -1,18 +1,23 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const http = require('http');
 const { Server } = require('socket.io');
 const { findMatchingMentors } = require('./algorithm');
 const MenteeModel = require('./models/menteeModel');
+const methodOverride = require('method-override');
 
 
 const app = express();
+// Enable CORS for all routes
+app.use(cors());
 
 // Middleware to parse JSON
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 // Set a port
 const port = process.env.PORT || 5000;
@@ -159,6 +164,9 @@ app.use('/api/mentors', mentorRoutes);
 // Meeting routes
 const meetingRoutes = require('./routes/meeting.routes'); 
 app.use('/api/meetings', meetingRoutes);
+
+const filesRoute = require('./routes/files.routes');
+app.use('/files', filesRoute);
 
 // Start the HTTP server
 server.listen(port, () => {
