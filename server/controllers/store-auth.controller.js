@@ -9,8 +9,9 @@ const validator = require('validator');
  * @access Public
  */
 const login = async (req, res) => {
+    
     const { email, password } = req.body;
-
+    console.log(req.body)
     // Validate form data
     if (validator.isEmpty(email) || validator.isEmpty(password)) {
         return res.status(400).json({ message: 'Please fill out both fields' });
