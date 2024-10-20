@@ -7,7 +7,8 @@ const http = require('http');
 const { Server } = require('socket.io');
 const { findMatchingMentors } = require('./algorithm');
 const MenteeModel = require('./models/menteeModel');
-const cors = require('cors');
+const methodOverride = require('method-override');
+
 
 const app = express();
 
