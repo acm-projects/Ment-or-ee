@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { GridFsStorage } = require('multer-gridfs-storage');  // Note this change!
@@ -5,16 +6,14 @@ const multer = require('multer');
 const { GridFSBucket } = require('mongodb');
 const router = express.Router();
 
-// MongoDB URI - ensure this is correct
-const mongoURI = process.env.MONGO_URI || "mongodb+srv://drive2winjoy:Akhrub123!@mentoree.c516s.mongodb.net/mentoree?retryWrites=true&w=majority";
 
-// Create a MongoDB connection
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+
 
 
 // Set up GridFS storage
 const storage = new GridFsStorage({
-  url: mongoURI,
+  url: process.env.MONGO_URL,
   options: { useNewUrlParser: true, useUnifiedTopology: true },
   file: (req, file) => {
     return {
