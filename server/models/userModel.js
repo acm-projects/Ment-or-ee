@@ -17,6 +17,13 @@ const userSchema = new mongoose.Schema({
     required: true, 
     trim: true 
   },
+  password:{
+    type: String,
+    required: true,
+    trim: true,
+
+
+  },
   email: { 
     type: String, 
     required: true, 
@@ -79,9 +86,15 @@ const userSchema = new mongoose.Schema({
     trim: true,
     enum: ['Introvert', 'Extrovert'] // Only these values are allowed
   },
-  fields: {
-    type: [String],
-    required: true,
+  major: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  skills: { 
+    type: String, 
+    required: true, 
+    trim: true 
   },
   availability: { 
     type: Boolean, 
@@ -98,7 +111,7 @@ const userSchema = new mongoose.Schema({
   }],
   bio: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
   }
 }, { timestamps: true }); // Correctly placing timestamps option

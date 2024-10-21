@@ -1,7 +1,7 @@
-const User = require('../models/userModel'); // Import the user model
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const validator = require('validator');
+const User = require("../models/userModel"); // Import the user model
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const validator = require("validator");
 
 /**
  * @description Log in and provide users access and refresh tokens
@@ -9,47 +9,55 @@ const validator = require('validator');
  * @access Public
  */
 const login = async (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
+  console.log(req.body);
+  // Validate form data
+  if (validator.isEmpty(email) || validator.isEmpty(password)) {
+    return res.status(400).json({ message: "Please fill out both fields" });
+  }
 
-    // Validate form data
-    if (validator.isEmpty(email) || validator.isEmpty(password)) {
-        return res.status(400).json({ message: 'Please fill out both fields' });
-    }
+  try {
+    // User not found
+    const foundUser = await User.findOne({ email }).exec();
+    if (!foundUser)
+      return res.status(401).json({ message: "Invalid credentials" });
 
-    try {
-        // User not found
-        const foundUser = await User.findOne({ email }).exec();
-        if (!foundUser) return res.status(401).json({ message: 'Invalid credentials' });
+    // Compare password
+    const match = await bcrypt.compare(password, foundUser.password);
+    if (!match) return res.status(401).json({ message: "Invalid credentials" });
 
-        // Compare password
-        const match = await bcrypt.compare(password, foundUser.password);
-        if (!match) return res.status(401).json({ message: 'Invalid credentials' });
+    // Generate access token
+    const accessToken = jwt.sign(
+      {
+        user: {
+          id: foundUser._id,
+          email: foundUser.email,
+          role: foundUser.role,
+        },
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "1hr" }
+    );
 
-        // Generate access token
-        const accessToken = jwt.sign(
-            {
-                "user": {
-                    "id": foundUser._id,
-                    "email": foundUser.email,
-                    "role": foundUser.role
-                }
-            },
-            process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '1hr' }
-        );
+    // Generate refresh token
+    const refreshToken = jwt.sign(
+      { id: foundUser._id },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: "1d" }
+    );
 
-        // Generate refresh token
-        const refreshToken = jwt.sign(
-            { "id": foundUser._id },
-            process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: '1d' }
-        );
-
-        // Send tokens
-        res.json({ accessToken, refreshToken, email: foundUser.email, id: foundUser._id, username: foundUser.username });
-    } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error', error });
-    }
+    // Send tokens
+    res.json({
+      accessToken,
+      refreshToken,
+      email: foundUser.email,
+      id: foundUser._id,
+      username: foundUser.username,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error", error });
+  }
 };
 
 /**
@@ -58,37 +66,46 @@ const login = async (req, res) => {
  * @access Public
  */
 const refresh = (req, res) => {
-    const cookies = req.cookies;
+  const cookies = req.cookies;
 
-    if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized' });
+  if (!cookies?.jwt) return res.status(401).json({ message: "Unauthorized" });
 
-    const refreshToken = cookies.jwt;
+  const refreshToken = cookies.jwt;
 
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, decoded) => {
-        if (err) return res.status(403).json({ message: 'Forbidden' });
+  jwt.verify(
+    refreshToken,
+    process.env.REFRESH_TOKEN_SECRET,
+    async (err, decoded) => {
+      if (err) return res.status(403).json({ message: "Forbidden" });
 
-        try {
-            const foundUser = await User.findById(decoded.id).exec();
-            if (!foundUser) return res.status(401).json({ message: 'Unauthorized' });
+      try {
+        const foundUser = await User.findById(decoded.id).exec();
+        if (!foundUser)
+          return res.status(401).json({ message: "Unauthorized" });
 
-            // Generate new access token
-            const accessToken = jwt.sign(
-                {
-                    "user": {
-                        "id": foundUser._id,
-                        "email": foundUser.email,
-                        "role": foundUser.role
-                    }
-                },
-                process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '1hr' }
-            );
+        // Generate new access token
+        const accessToken = jwt.sign(
+          {
+            user: {
+              id: foundUser._id,
+              email: foundUser.email,
+              role: foundUser.role,
+            },
+          },
+          process.env.ACCESS_TOKEN_SECRET,
+          { expiresIn: "1hr" }
+        );
 
-            res.json({ accessToken, email: foundUser.email, username: foundUser.username });
-        } catch (error) {
-            res.status(500).json({ message: 'Internal Server Error', error });
-        }
-    });
+        res.json({
+          accessToken,
+          email: foundUser.email,
+          username: foundUser.username,
+        });
+      } catch (error) {
+        res.status(500).json({ message: "Internal Server Error", error });
+      }
+    }
+  );
 };
 
 /**
@@ -97,73 +114,100 @@ const refresh = (req, res) => {
  * @access Public
  */
 const signup = async (req, res) => {
-    const { name, email, password, role, dateOfBirth, language, personalityType, educationLevel, skills, city,state, university } = req.body;
-    console.log(process.env.ACCESS_TOKEN_SECRET)
-    console.log(process.env.REFRESH_TOKEN_SECRET)
-    // Validate form data
-    if (validator.isEmpty(email) || validator.isEmpty(password) || validator.isEmpty(name)) {
-        return res.status(400).json({ message: 'Please fill out all fields' });
+  const {
+    name,
+    email,
+    password,
+    role,
+    dateOfBirth,
+    language,
+    personalityType,
+    educationLevel,
+    skills,
+    city,
+    state,
+    university,
+  } = req.body;
+  console.log(process.env.ACCESS_TOKEN_SECRET);
+  console.log(process.env.REFRESH_TOKEN_SECRET);
+  // Validate form data
+  if (
+    validator.isEmpty(email) ||
+    validator.isEmpty(password) ||
+    validator.isEmpty(name)
+  ) {
+    return res.status(400).json({ message: "Please fill out all fields" });
+  }
+
+  if (!validator.isEmail(email))
+    return res.status(400).json({ message: "Invalid email address" });
+  if (!validator.isStrongPassword(password))
+    return res.status(400).json({ message: "Password not strong enough" });
+  if (!validator.isAlphanumeric(name))
+    return res.status(400).json({ message: "Username must be alphanumeric" });
+
+  try {
+    // Check if user already exists
+    const foundUser = await User.findOne({ name }).exec();
+    const foundEmail = await User.findOne({ email }).exec();
+    if (foundUser || foundEmail) {
+      return res.status(400).json({ message: "User already exists" });
     }
 
-    if (!validator.isEmail(email)) return res.status(400).json({ message: 'Invalid email address' });
-    if (!validator.isStrongPassword(password)) return res.status(400).json({ message: 'Password not strong enough' });
-    if (!validator.isAlphanumeric(name)) return res.status(400).json({ message: 'Username must be alphanumeric' });
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    try {
-        // Check if user already exists
-        const foundUser = await User.findOne({name }).exec();
-        const foundEmail = await User.findOne({ email }).exec();
-        if (foundUser || foundEmail) {
-            return res.status(400).json({ message: 'User already exists' });
-        }
+    // Create new user
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      role,
+      dateOfBirth,
+      language,
+      personalityType,
+      educationLevel,
+      skills,
+      location: { city, state },
+      university,
+    });
+    const savedUser = await newUser.save();
 
-        // Hash password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+    // Generate access token
+    const accessToken = jwt.sign(
+      {
+        user: {
+          id: savedUser._id,
+          email: savedUser.email,
+          role: savedUser.role,
+        },
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "1hr" }
+    );
 
-        // Create new user
-        const newUser = new User({
-            name,
-            email,
-            password: hashedPassword,
-            role,
-            dateOfBirth,
-            language,
-            personalityType,
-            educationLevel,
-            skills,
-            location: {city, state},
-            university
-        });
-        const savedUser = await newUser.save();
+    // Generate refresh token
+    const refreshToken = jwt.sign(
+      { id: savedUser._id },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: "1d" }
+    );
 
-        // Generate access token
-        const accessToken = jwt.sign(
-            {
-                "user": {
-                    "id": savedUser._id,
-                    "email": savedUser.email,
-                    "role": savedUser.role
-                }
-            },
-            process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '1hr' }
-        );
-
-        // Generate refresh token
-        const refreshToken = jwt.sign(
-            { "id": savedUser._id },
-            process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: '1d' }
-        );
-
-        // Send tokens
-        res.status(201).json({ accessToken, refreshToken, email: savedUser.email, id: savedUser._id, name: savedUser.name });
-    } catch (error) {
-        console.log( error)
-        res.status(500).json({ message: 'Internal Server Error', error });
-    }
-    
+    // Send tokens
+    res
+      .status(201)
+      .json({
+        accessToken,
+        refreshToken,
+        email: savedUser.email,
+        id: savedUser._id,
+        name: savedUser.name,
+      });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error", error });
+  }
 };
 
 /**
@@ -172,17 +216,17 @@ const signup = async (req, res) => {
  * @access Public
  */
 const logout = (req, res) => {
-    res.clearCookie('jwt', {
-        httpOnly: true,
-        secure: false,  // Set true in production
-        sameSite: 'None'
-    });
-    res.status(200).json({ message: 'Successfully logged out' });
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    secure: false, // Set true in production
+    sameSite: "None",
+  });
+  res.status(200).json({ message: "Successfully logged out" });
 };
 
 module.exports = {
-    login,
-    signup,
-    refresh,
-    logout
+  login,
+  signup,
+  refresh,
+  logout,
 };
