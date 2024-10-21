@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import logo from '../../assets/logo.svg'
 import { useNavigate } from 'react-router-dom';
-import TextQuestion from '../../common/TextQuestion'
-import ButtonQuestion from '../../common/ButtonQuestion'
+import TextQuestion from '../../common/TextQuestion.js'
+import ButtonQuestion from '../../common/ButtonQuestion.js'
 import DropdownQuestion from '../../common/DropdownQuestion.jsx'
 
 function Questions({ questions }) {
