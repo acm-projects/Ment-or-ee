@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -31,23 +30,47 @@ export const AuthContextProvider = ({ children }) => {
         }
       );
 
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("accessToken", data.accessToken);
-        localStorage.setItem("refreshToken", data.refreshToken);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        setAccessToken(data.accessToken);
-        setRefreshToken(data.refreshToken);
-        setUser(data.user);
-        return true;
-      } else {
+      if (!response.ok) {
         const error = await response.json();
         console.error(error);
         throw new Error(error.message);
       }
+      const data = await response.json();
+
+      const basicUserInfo = {
+        email: data.email,
+        user: data.user,
+        id: data.id,
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
+      };
+      const userResponse = await fetch(
+        `http://localhost:5001/api/users/users/${data.id}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (!userResponse.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+
+      const userData = await userResponse.json();
+
+      const completeUserInfo = { ...basicUserInfo, ...userData };
+
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("user", JSON.stringify(completeUserInfo));
+      setAccessToken(data.accessToken);
+      setRefreshToken(data.refreshToken);
+      setUser(completeUserInfo);
+
+      return true;
     } catch (error) {
       console.error("Login failed", error);
-      return false;
+      throw error;
     }
   };
 
@@ -86,6 +109,6 @@ export const AuthContextProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const UseAuth = () => useContext(AuthContext);
 
 export { AuthContext };

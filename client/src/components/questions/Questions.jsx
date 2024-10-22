@@ -150,8 +150,9 @@ export function Questions({
       options: ["First Year", "Second Year", "Third Year", "Fourth Year"],
       condition: () => formData.role === "Mentee",
     },
-    // { key: "majorJob", type: "text", text: "What is your major?", condition: () => formData.role === "Mentee" },
-    // { key: "majorJob", type: "text", text: "What is your job title?", condition: () => formData.role === "Mentor", },
+    // { key: "major", type: "text", text: "What is your major?", condition: () => formData.role === "Mentee" },
+    // { key: "degrees", type: "text", text: "What degrees do you have?", condition: () => formData.role === "Mentee" },
+    // { key: "jobTitle", type: "text", text: "What is your job title?", condition: () => formData.role === "Mentor", },
     // {
     //   key: "fields",
     //   type: "text",
@@ -181,16 +182,14 @@ export function Questions({
     //   condition: () => formData.role === "Mentee",
     // },
     // {
-    //   key: "importantCategories", //TODO: 3 inputs
+    //   key: "importantCategories", //TODO: slider for each of the categories
     //   type: "dropdown",
     //   text: "What categories do you find the most important?",
     //   options: [
     //     "Location",
     //     "Language",
     //     "University",
-    //     "Major",
     //     "Career Field",
-    //     "Growth Areas",
     //     "Introvert vs Extrovert",
     //   ],
     //   condition: () => formData.role === "Mentee",
@@ -205,7 +204,6 @@ export function Questions({
     updateFormData({ [curQuestion.key]: answer });
   };
 
-  //check here
   const getNextQuestionIndex = (curIndex) => {
     for (let i = curIndex + 1; i < questions.length; i++) {
       if (!questions[i].condition || questions[i].condition()) {
@@ -215,12 +213,12 @@ export function Questions({
     return -1;
   };
 
+  //displaying next question, submitting if reached end
   const handleNext = () => {
     const nextIndex = getNextQuestionIndex(curQuestionIndex);
     if (nextIndex !== -1) {
       setCurQuestionIndex(nextIndex);
     } else {
-      console.log("handling submission");
       handleSubmit();
     }
   };
@@ -229,6 +227,7 @@ export function Questions({
     return null;
   }
 
+  //displaying questions
   const renderQuestion = () => {
     switch (curQuestion.type) {
       case "button":
@@ -238,7 +237,7 @@ export function Questions({
             option1={curQuestion.option1}
             option2={curQuestion.option2}
             onAnswer={handleAnswer}
-            curAnswer={formData[curQuestion.key] || ""} //what does this do?
+            curAnswer={formData[curQuestion.key] || ""}
           />
         );
       case "text":

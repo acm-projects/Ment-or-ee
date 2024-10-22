@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { UseAuth } from "../../context/AuthContext";
 import { EmailPassForm } from "./emailpassform";
 import { Questions } from "../questions/Questions";
 
@@ -13,7 +13,7 @@ const Signup = () => {
 
   const [error, setError] = useState("");
 
-  const { login } = useAuth();
+  const { login } = UseAuth();
 
   const handleSubmit = async () => {
     setError("");
