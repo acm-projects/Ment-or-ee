@@ -9,8 +9,8 @@ const userSchema = new mongoose.Schema({
   },
   photo_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'fs.files'
-  },
+    ref: 'uploads.files'
+  },  
   name: { 
     type: String, 
     required: true, 

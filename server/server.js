@@ -13,7 +13,11 @@ const methodOverride = require('method-override');
 const app = express();
 
 // Enable CORS for all routes
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5000', // Allow specific domain
+  methods: ['GET', 'POST'], // Allow specific HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'] // Allow specific headers
+}));
 
 // Middleware to parse JSON
 app.use(bodyParser.json());
