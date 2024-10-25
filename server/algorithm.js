@@ -38,6 +38,12 @@ function calculateMatchScore(mentor, mentee) {
     matchScore += mentee.weights.fields; // Add fields weight if there are common fields of expertise
   }
 
+  // Calculate industries match
+  const commonIndustries = mentor.industries.filter(industry => mentee.industries.includes(industry));
+  if (commonIndustries.length > 0) {
+    matchScore += mentee.weights.industries; // Add industries weight if there are common industries
+  }
+
   return matchScore;
 }
 

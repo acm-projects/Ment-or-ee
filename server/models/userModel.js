@@ -104,7 +104,20 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-  }
+  },
+  headline: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  links: {
+    type: [String],
+    required: true,
+  },
+  industries: {
+    type: [String],
+    required: true,
+  },
 }, { timestamps: true }); // Correctly placing timestamps option
 
 // Compile and export the User model
