@@ -55,7 +55,7 @@ const Login = () => {
                   setEmail(e.target.value);
                 }}
                 id="email"
-                class="w-full block border w-full text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
+                class="w-full block border text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
                 placeholder="Email"
               />
             </div>
@@ -67,7 +67,7 @@ const Login = () => {
                   setPassword(e.target.value);
                 }}
                 id="password"
-                class="w-full block border w-full text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
+                class="w-full block border text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
                 placeholder="Password"
               />
             </div>
@@ -91,6 +91,10 @@ const Login = () => {
               </button>
             </div>
           </form>
+
+          <div>
+            <h2>Log in here with Google</h2>
+          </div>
         </div>
       </div>
 

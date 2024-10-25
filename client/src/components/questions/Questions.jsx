@@ -5,13 +5,7 @@ import TextQuestion from "../../common/TextQuestion.js";
 import ButtonQuestion from "../../common/ButtonQuestion.js";
 import DropdownQuestion from "../../common/DropdownQuestion.jsx";
 
-export function Questions({
-  formData,
-  updateFormData,
-  handleSubmit,
-  step,
-  setStep,
-}) {
+export function Questions({ formData, updateFormData, handleSubmit }) {
   const navigate = useNavigate();
 
   const questions = [
@@ -163,6 +157,18 @@ export function Questions({
     //   key: "fields",
     //   type: "text",
     //   text: "What career fields are you interested in teaching?",
+    //   condition: () => formData.role === "Mentor",
+    // },
+    // {
+    //   key: "industry",
+    //   type: "dropdown",
+    //   text: "What industries are you interested in working in?",
+    //   condition: () => formData.role === "Mentee",
+    // },
+    // {
+    //   key: "industry",
+    //   type: "dropdown",
+    //   text: "What industry do you work in?",
     //   condition: () => formData.role === "Mentor",
     // },
     // {

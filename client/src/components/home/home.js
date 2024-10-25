@@ -9,9 +9,9 @@ import CalendarBox from "../../common/CalendarBox";
 const Home = () => {
   const { user } = UseAuth();
 
-  if (!user) {
-    return <div>Please log in</div>;
-  }
+  // if (!user) {
+  //   return <div>Please log in</div>;
+  // }
 
   return (
     <div className="p-6 flex flex-col space-y-20">

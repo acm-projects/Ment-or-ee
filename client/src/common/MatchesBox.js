@@ -10,6 +10,7 @@ function MatchesBox() {
     fetchMatches();
   }, []);
 
+  console.log("testing matches");
   console.log(matches); //testing
 
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ function MatchesBox() {
         </div>
       </div>
 
-      <div class="mt-5">
+      <div className="mt-5">
         <button
           type="submit"
           className="border-2 border-[#B89C75] bg-[#B89C75] text-black py-1 px-5 rounded-md hover:bg-transparent hover:text-[#1F3839] font-semibold"
