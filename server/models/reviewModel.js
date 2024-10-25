@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const UserModel = require('./userModel'); // Import User model
 
 // Define schema
 const Schema = mongoose.Schema;
@@ -13,17 +14,17 @@ const reviewModelSchema = new Schema({
     required: true 
   },
   date: { 
-    type: Date, 
-    default: Date.now 
+    type: String, 
+    required: true 
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserModel', // Reference the User model
+    ref: UserModel, // Reference the User model
     required: true
   },
   reviewedUser: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserModel', // Reference the User model
+    ref: UserModel, // Reference the User model
     required: true
   }
 });

@@ -5,7 +5,7 @@ exports.createMentee = async (req, res) => {
   try {
     const mentee = new MenteeModel(req.body);
     await mentee.save();
-    res.status(201).json({ message: 'Mentee created successfully', mentee });
+    res.status(201).json({ mentee });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

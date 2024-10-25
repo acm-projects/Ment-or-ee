@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 
 // Create a new review
 const createReview = async (req, res) => {
-    const { rating, text, creator, reviewedUser } = req.body;
-
-    if (!rating || !text || !creator || !reviewedUser) {
+    const { rating, text, date, creator, reviewedUser } = req.body;
+    console.log(req.body); // Log the request body
+    if (!rating || !text || !date || !creator || !reviewedUser) {
         return res.status(400).json({ message: 'All fields are required' });
     }
 
@@ -13,8 +13,9 @@ const createReview = async (req, res) => {
         const review = new ReviewModel({
             rating,
             text,
-            creator: mongoose.Types.ObjectId(creator),
-            reviewedUser: mongoose.Types.ObjectId(reviewedUser),
+            date, // Make sure to include date here
+            creator: new mongoose.Types.ObjectId(creator),
+            reviewedUser: new mongoose.Types.ObjectId(reviewedUser),
         });
 
         const savedReview = await review.save();
@@ -23,6 +24,7 @@ const createReview = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
+
 
 // Get all reviews
 const getAllReviews = async (req, res) => {

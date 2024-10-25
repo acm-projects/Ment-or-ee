@@ -6,22 +6,28 @@ const MeetingModel = require('../models/meetingModel'); // Adjust the path as pe
 // Route to create a new meeting
 router.post('/create', async (req, res) => {
   try {
-    const { title, mentorId, menteeId, date, duration } = req.body;
+    const { title, mentorId, menteeId, date, duration, description } = req.body;
+
+    // Validate inputs
+    if (!title || !mentorId || !menteeId || !date || !duration) {
+      return res.status(400).json({ error: 'All fields are required.' });
+    }
 
     // Create a Zoom meeting
-    const zoomMeeting = await createZoomMeeting(title, date, duration);
+    const zoomMeeting = await createZoomMeeting(title, new Date(date).toISOString(), duration);
 
     // Save meeting details in the database
     const newMeeting = new MeetingModel({
       title,
       mentor: mentorId,
       mentee: menteeId,
-      date,
+      date: new Date(date), // Ensure date is a Date object
       duration,
       location: zoomMeeting.join_url,  // This is where the Zoom link is stored
       zoomLink: zoomMeeting.join_url,  // Add the zoomLink field here
       zoomMeetingId: zoomMeeting.id,
       zoomPassword: zoomMeeting.password,
+      description // Include description if provided
     });
 
     const savedMeeting = await newMeeting.save();

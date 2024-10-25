@@ -22,23 +22,27 @@ const menteeSchema = new mongoose.Schema({
   weights: {
     location: {
       type: Number,
-      default: 20 // Default weight for location matching
+      default: (100/6) // Default weight for location matching
     },
     languages: {
       type: Number,
-      default: 20 // Default weight for languages
+      default: (100/6) // Default weight for languages
     },
     personalityType: {
       type: Number,
-      default: 20 // Default weight for personality type
+      default: (100/6) // Default weight for personality type
     },
     university: {
       type: Number,
-      default: 20 // Default weight for university match
+      default: (100/6) // Default weight for university match
     },
     fields: {
       type: Number,
-      default: 20 // Default weight for fields of expertise
+      default: (100/6) // Default weight for fields of expertise
+    },
+    industries: {
+      type: Number,
+      default: (100/6) // Default weight for fields of expertise
     }
   },
 });

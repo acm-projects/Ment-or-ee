@@ -1,21 +1,31 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const http = require('http');
 const { Server } = require('socket.io');
 const { findMatchingMentors } = require('./algorithm');
 const MenteeModel = require('./models/menteeModel');
-const cors = require('cors');
+const methodOverride = require('method-override');
+
 
 const app = express();
+
+// Enable CORS for all routes
+app.use(cors({
+  origin: 'http://localhost:5000', // Allow specific domain
+  methods: ['GET', 'POST'], // Allow specific HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'] // Allow specific headers
+}));
 
 // Middleware to parse JSON
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors())
+app.use(methodOverride('_method'));
+
 // Set a port
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -160,6 +170,9 @@ app.use('/api/mentors', mentorRoutes);
 const meetingRoutes = require('./routes/meeting.routes'); 
 app.use('/api/meetings', meetingRoutes);
 
+const filesRoute = require('./routes/files.routes');
+app.use('/files', filesRoute);
+
 // Start the HTTP server
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
@@ -168,5 +181,4 @@ server.listen(port, () => {
 
 //Auth routes
 const storeAuthRoutes = require('./routes/authenication/store-auth.routes');
-const { countReset } = require('console');
 app.use('/api/authenication/store-auth', storeAuthRoutes);
