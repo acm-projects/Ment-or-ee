@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match Mentor to Mentee</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f1ea;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #3e3e3e;
+    }
+
+    h1 {
+      text-align: center;
+      color: #5b4a3e;
+    }
+
+    #matchForm {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #a6806c;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #8b6b54;
+    }
+
+    #result {
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .mentor-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: transform 0.2s;
+    }
+
+    .mentor-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .mentor-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .mentor-header h3 {
+      margin: 0;
+      font-size: 22px;
+      color: #5b4a3e;
+    }
+
+    .mentor-header span {
+      color: #a6806c;
+      font-weight: bold;
+    }
+
+    .mentor-info p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .mentor-info strong {
+      color: #5b4a3e;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 20px;
+      }
+
+      .mentor-card {
+        padding: 15px;
+      }
+    }
+  </style>
+
+  <script>
+    async function matchMentorToMentee(event) {
+      event.preventDefault();
+
+      // Mentee ID
+      const menteeId = "67180e75157b3c18a7d20242";
+
+      // Sending POST request to the API running on port 5000
+      try {
+        const response = await fetch('http://localhost:5000/api/matchMentorToMentee', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ menteeId })
+        });
+
+        // Handle the response
+        const result = await response.json();
+        if (response.ok) {
+          displayMentors(result.matchedMentors);
+        } else {
+          document.getElementById('result').innerText = 'Error: ' + result.message;
+        }
+      } catch (error) {
+        document.getElementById('result').innerText = 'Request failed: ' + error.message;
+      }
+    }
+
+    // Function to format and display mentor information
+    function displayMentors(mentors) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = ''; // Clear previous results
+
+      if (mentors.length > 0) {
+        mentors.forEach(item => {
+          const mentor = item.mentor;
+          const mentorInfo = `
+            <div class="mentor-card">
+              <div class="mentor-header">
+                <h3>${mentor.name} <span>(${mentor.jobTitle} at ${mentor.company})</span></h3>
+              </div>
+              <div class="mentor-info">
+                <p><strong>Email:</strong> ${mentor.email}</p>
+                <p><strong>Location:</strong> ${mentor.location.city}, ${mentor.location.state}</p>
+                <p><strong>University:</strong> ${mentor.university}</p>
+                <p><strong>Fields:</strong> ${mentor.fields.join(', ')}</p>
+                <p><strong>Languages:</strong> ${mentor.languages.join(', ')}</p>
+                <p><strong>Personality Type:</strong> ${mentor.personalityType}</p>
+                <p><strong>Degrees:</strong> ${mentor.degrees.join(', ')}</p>
+                <p><strong>Bio:</strong> ${mentor.bio}</p>
+                <p><strong>Match Score:</strong> ${item.score}</p>
+              </div>
+            </div>
+          `;
+          resultDiv.innerHTML += mentorInfo;
+        });
+      } else {
+        resultDiv.innerText = 'No matching mentors found.';
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <h1>Match Mentor to Mentee</h1>
+
+    <!-- Button to trigger mentor matching -->
+    <form id="matchForm" onsubmit="matchMentorToMentee(event)">
+      <button type="submit">Match Mentor to Mentee</button>
+    </form>
+
+    <!-- Display result -->
+    <div id="result"></div>
+  </div>
+</body>
+</html>
