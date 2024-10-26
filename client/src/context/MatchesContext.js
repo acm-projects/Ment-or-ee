@@ -1,50 +1,65 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useCallback } from "react";
 import { UseAuth } from "./AuthContext";
 
 const MatchesContext = createContext();
 
 export const MatchesContextProvider = ({ children }) => {
-  const menteeId = "67180e75157b3c18a7d20242";
-  console.log("got here0"); //testing
-  console.log(menteeId); //testing
-
-  // const { user } = UseAuth();
   const [matches, setMatches] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const fetchMatches = async () => {
+  const { user } = UseAuth();
+
+  const fetchMatches = useCallback(async () => {
+    if (!user) {
+      setError("User not authenticated");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
     try {
-      console.log("got here1"); //testing
+      console.log("Fetching matches for user ID:", user.id);
       const response = await fetch(
-        "http://localhost:5001/api/matchMentorToMentee",
-
+        "http://localhost:5000/api/matchMentorToMentee",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ menteeID: menteeId }),
+          body: JSON.stringify({ menteeID: user.id }),
         }
       );
 
       if (!response.ok) {
-        const error = await response.json();
-        console.error(error);
-        throw new Error(error.message);
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch matches");
       }
+
       const data = await response.json();
+      console.log("Received matches:", data);
       setMatches(data);
-      return true;
     } catch (error) {
-      console.error("Error fetching matches", error);
-      throw error;
+      console.error("Error fetching matches:", error);
+      setError(error.message);
+      setMatches([]);
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [user]);
 
   return (
-    <MatchesContext.Provider value={{ matches, fetchMatches }}>
+    <MatchesContext.Provider value={{ matches, fetchMatches, error, loading }}>
       {children}
     </MatchesContext.Provider>
   );
 };
 
-export const useMatches = () => useContext(MatchesContext);
+export const useMatches = () => {
+  const context = useContext(MatchesContext);
+  if (!context) {
+    throw new Error("useMatches must be used within a MatchesContextProvider");
+  }
+  return context;
+};
 
 export { MatchesContext };

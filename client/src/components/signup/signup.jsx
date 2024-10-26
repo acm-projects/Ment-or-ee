@@ -18,7 +18,7 @@ const Signup = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/authenication/store-auth/signup",
+        "http://localhost:5000/api/authenication/store-auth/signup",
         {
           method: "POST",
           headers: {

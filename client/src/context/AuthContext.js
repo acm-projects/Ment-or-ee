@@ -22,7 +22,7 @@ export const AuthContextProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await fetch(
-        "http://localhost:5001/api/authenication/store-auth/login",
+        "http://localhost:5000/api/authenication/store-auth/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -45,7 +45,7 @@ export const AuthContextProvider = ({ children }) => {
         refreshToken: data.refreshToken,
       };
       const userResponse = await fetch(
-        `http://localhost:5001/api/users/users/${data.id}`,
+        `http://localhost:5000/api/users/users/${data.id}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

@@ -1,9 +1,9 @@
 // components/HomePage.js
 import React from "react";
 import Navbar from "../../common/navbar";
-import ChatBox from "./ChatBox";
+import ChatBox from "./ChatBox/ChatBox";
 import { UseAuth } from "../../context/AuthContext";
-import ChatDMs from "./ChatDMs";
+import ChatDMs from "./ChatDMs/ChatDMs";
 
 const Chat = () => {
   const { user } = UseAuth();

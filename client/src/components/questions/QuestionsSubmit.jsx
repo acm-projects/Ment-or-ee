@@ -20,7 +20,7 @@ const QuestionsSubmit = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/authenication/store-auth/", //get uri for questionnaire
+        "http://localhost:5000/api/authenication/store-auth/", //get uri for questionnaire
         {
           method: "POST",
           headers: {
