@@ -45,9 +45,14 @@ const menteeSchema = new mongoose.Schema({
       default: (100/6) // Default weight for fields of expertise
     }
   },
+// Reference to the User model
+user: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'User',
+  required: true,
+}
 });
 
-// Create Mentee model, inheriting from the User model
-const MenteeModel = UserModel.discriminator('Mentee', menteeSchema);
+const MenteeModel = mongoose.model('Mentee', menteeSchema);
 
 module.exports = MenteeModel;
