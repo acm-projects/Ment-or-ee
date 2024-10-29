@@ -10,6 +10,9 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
 
   const questions = [
     {
+      type: "intro",
+    },
+    {
       key: "role",
       type: "button",
       text: "Are you a Mentor or a Mentee?",
@@ -21,6 +24,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
     {
       key: "state",
       type: "dropdown",
+      multi: false,
       text: "What state do you live in?",
       options: [
         "Alabama",
@@ -78,6 +82,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
     {
       key: "languages",
       type: "dropdown",
+      multi: true,
       text: "What languages do you speak?",
       options: [
         "English",
@@ -140,6 +145,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
     {
       key: "educationLevel",
       type: "dropdown",
+      multi: false,
       text: "What is your level of education",
       options: ["First Year", "Second Year", "Third Year", "Fourth Year"],
       condition: () => formData.role === "Mentee",
@@ -162,18 +168,21 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
     // {
     //   key: "industry",
     //   type: "dropdown",
+    //   multi: true,
     //   text: "What industries are you interested in working in?",
     //   condition: () => formData.role === "Mentee",
     // },
     // {
     //   key: "industry",
     //   type: "dropdown",
+    //   multi: false,
     //   text: "What industry do you work in?",
     //   condition: () => formData.role === "Mentor",
     // },
     // {
     //   key: "growthAreas", //TODO: multi select
     //   type: "dropdown",
+    //   multi: true,
     //   text: "What are some growth areas you would like to focus on?",
     //   options: [
     //     "Resume",
@@ -236,6 +245,21 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
   //displaying questions
   const renderQuestion = () => {
     switch (curQuestion.type) {
+      case "intro":
+        return (
+          <div data-testid="question introduction">
+            <h2 className="text-4xl font-semibold mb-6 text-[#B69D74]">
+              Welcome!
+            </h2>
+            <p className="text-2xl mb-6">
+              Please answer a few questions so we can best match you with a
+              mentor. You can edit your answers later.
+            </p>
+            <p className="text-lg text-gray-500">
+              Note: Time estimate 1-2 minutes
+            </p>
+          </div>
+        );
       case "button":
         return (
           <ButtonQuestion
@@ -260,6 +284,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
           <DropdownQuestion
             question={curQuestion.text}
             options={curQuestion.options}
+            multi={curQuestion.multi}
             onAnswer={handleAnswer}
             curAnswer={formData[curQuestion.key] || ""}
           />
@@ -270,30 +295,31 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
   };
 
   return (
-    <div
-      data-testid={"questions background"}
-      className="w-full h-screen bg-[#1F3839]"
-    >
-      <div data-testid={"padding"} className="p-10">
-        <div
-          onClick={() => navigate("/")}
-          className="flex items-center px-6 py-4"
-        >
-          <img src={logo} alt="mentor/ee logo" className="h-16 w-auto mr-2" />
-          <div className="text-3xl font-bold text-white">mentor/ee</div>
-        </div>
-        <div
-          data-testid={"Question container"}
-          className="flex text-center items-center justify-center h-screen"
-        >
-          <div className="text-center">
-            {renderQuestion()}
+    <div className="relative min-h-screen w-full overflow-hidden bg-[#1F3839]">
+      <div className="absolute inset-0 bg-[#1F2839] backdrop-filter z-10"></div>
 
-            <div className="mt-6 ">
+      <div className="relative z-20 min-h-screen w-full flex items-center justify-center p-6">
+        <div className="bg-white bg-opacity-80 rounded-lg shadow-lg p-10 max-w-2xl w-full">
+          <div className="flex items-center absolute top-10 left-10">
+            <img
+              src={logo}
+              alt="Logo"
+              // className="absolute bottom-10 right-20 w-60 object-cover filter blur-md opacity-30"
+              className="h-16 w-auto mr-2"
+            />
+            <span className="text-3xl font-bold text-white">mentor/ee</span>
+          </div>
+          <div
+            data-testid={"Question container"}
+            className="flex flex-col text-center items-center justify-center "
+          >
+            <div className="text-center flex flex-col items-center">
+              {renderQuestion()}
+
               <button
                 data-testid="next button"
                 onClick={handleNext}
-                className="flex justify-center border-2 border-[#B69D74] bg-[#B69D74] text-[#1F2839] py-2 px-5 rounded-full hover:bg-transparent hover:text-[#D9D9D9] font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B69D74]"
+                className="mt-6 border-2 border-[#B69D74] bg-[#B69D74] text-[#1F2839] py-2 px-5 rounded-full hover:bg-transparent hover:text-[#1F2839] font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B69D74]"
               >
                 {getNextQuestionIndex(curQuestionIndex) === -1
                   ? "Sign Up"
@@ -302,8 +328,8 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
             </div>
           </div>
         </div>
-        <div data-testid={"progress bar"}>{/* finish later if time */}</div>
       </div>
+      <div data-testid={"progress bar"}>{/* finish later if time */}</div>
     </div>
   );
 }

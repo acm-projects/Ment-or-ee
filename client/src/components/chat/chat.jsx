@@ -15,7 +15,7 @@ const Chat = () => {
   return (
     <div className="p-6 flex flex-col space-y-20">
       <Navbar />
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:h-[450px] md:h-[550px]">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:h-[450px] md:h-[600px]">
         <div className="lg:col-span-1 bg-[#E3E0E0] shadow rounded-lg overflow-hidden">
           <ChatDMs user={user} />
         </div>

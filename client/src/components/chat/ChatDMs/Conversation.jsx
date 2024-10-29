@@ -1,7 +1,7 @@
 import React from "react";
 import AutoProfile from "../../../assets/autoprofile.png";
 
-const Conversation = () => {
+const Conversation = ({ conversation, lastIdx }) => {
   return (
     <>
       <div className="flex gap-2 items-center hover:bg-[#D7CFC5] rounded p-2 py-1 cursor-pointer">
