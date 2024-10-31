@@ -185,5 +185,119 @@ server.listen(port, () => {
 const storeAuthRoutes = require('./routes/authenication/store-auth.routes');
 app.use('/api/authenication/store-auth', storeAuthRoutes);
 
+const session = require('express-session');
+const { google } = require('googleapis');
 
 
+
+// Google OAuth2 credentials
+const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
+
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+
+// Middleware for session management
+app.use(session({
+  secret: 'yo', // Replace with a strong secret
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+      secure: false, // Set to true if using HTTPS
+      maxAge: 1000 * 60 * 60 * 24 // 1 day (adjust as needed)
+  }
+}));
+
+
+
+// Routes
+app.get('/auth/google', (req, res) => {
+    const authUrl = oAuth2Client.generateAuthUrl({
+        access_type: 'offline',
+        scope: ['https://www.googleapis.com/auth/calendar'],
+    });
+    console.log('Redirecting to Google OAuth URL:', authUrl);
+    res.redirect(authUrl);
+});
+
+app.get('/auth/google/callback', async (req, res) => {
+  const { code } = req.query;
+  console.log('Received authorization code:', code);
+  try {
+      const { tokens } = await oAuth2Client.getToken(code);
+      oAuth2Client.setCredentials(tokens);
+      
+      // Store tokens in session
+      req.session.tokens = tokens;
+      console.log('Tokens successfully retrieved and stored in session:', req.session.tokens);
+      console.log('Current session after storing tokens:', req.session);
+      
+      res.send('Google Calendar authorization successful! You can now create events.');
+  } catch (error) {
+      console.error('Error retrieving access token:', error);
+      res.status(500).send('Authentication failed');
+  }
+});
+
+
+app.post('/tasks', async (req, res) => {
+    console.log('Received request to create task');
+    console.log('Current session:', req.session); // Log entire session object
+
+    // Check if the user is authenticated
+    if (!req.session.tokens) {
+        console.log('Tokens not found in session. User is not authenticated.'); // Log error for debugging
+        return res.status(401).send('User not authenticated with Google');
+    }
+
+    // Check if the token has expired
+    const tokenExpiryDate = req.session.tokens.expiry_date;
+    console.log('Token expiry date:', tokenExpiryDate);
+    if (tokenExpiryDate <= Date.now()) {
+        console.log('Access token has expired. Attempting to refresh token...');
+        try {
+            const { credentials } = await oAuth2Client.refreshAccessToken(); // Use credentials to get new tokens
+            req.session.tokens = credentials; // Update session with new tokens
+            oAuth2Client.setCredentials(credentials); // Set new credentials
+            console.log('Tokens refreshed and stored in session:', req.session.tokens);
+        } catch (error) {
+            console.error('Error refreshing access token:', error);
+            return res.status(401).send('Failed to refresh access token');
+        }
+    } else {
+        console.log('Access token is still valid. Proceeding to create event.');
+    }
+
+    // Set the credentials for the API call
+    oAuth2Client.setCredentials(req.session.tokens);
+
+    // Set up the calendar API
+    const calendar = google.calendar({ version: 'v3', auth: oAuth2Client });
+
+    // Define the event you want to create
+    const event = {
+        summary: 'New Event',
+        location: '123 Example St.',
+        description: 'This is a test event',
+        start: {
+            dateTime: '2024-10-31T10:00:00-07:00', // Adjust to your desired time
+        },
+        end: {
+            dateTime: '2024-10-31T11:00:00-07:00', // Adjust to your desired time
+        },
+    };
+    console.log('Event details:', event);
+
+    try {
+        // Attempt to create the event
+        const response = await calendar.events.insert({
+            calendarId: 'primary',
+            resource: event,
+        });
+        console.log('Event created successfully:', response.data);
+        res.send('Event created: ' + response.data.htmlLink);
+    } catch (error) {
+        console.error('Error creating event:', error);
+        res.status(500).send('Failed to create event');
+    }
+});
