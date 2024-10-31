@@ -184,7 +184,7 @@ const signupBasic = async (req, res) => {
 
     if (!validator.isEmail(email)) return res.status(400).json({ message: 'Invalid email address' });
     if (!validator.isStrongPassword(password)) return res.status(400).json({ message: 'Password not strong enough' });
-    if (!validator.isAlphanumeric(name)) return res.status(400).json({ message: 'Username must be alphanumeric' });
+    //if (!validator.isAlphanumeric(name)) return res.status(400).json({ message: 'Username must be alphanumeric' });
 
     try {
         // Check if user already exists
