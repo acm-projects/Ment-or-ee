@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 // Set a port
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -145,7 +145,7 @@ app.post('/api/matchMentorToMentee', async (req, res) => {
 
 // Define basic routes
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello world!');
 });
 
 // User routes
@@ -186,86 +186,4 @@ const storeAuthRoutes = require('./routes/authenication/store-auth.routes');
 app.use('/api/authenication/store-auth', storeAuthRoutes);
 
 
-const { google } = require('googleapis');
-const session = require('express-session');
 
-
-const TaskModel = require('./models/taskModel'); // Import your task model
-
-
-
-// Middleware for sessions
-app.use(session({
-  secret: 'your_secret_key',
-  resave: false,
-  saveUninitialized: true,
-}));
-
-
-
-// Google OAuth2 client setup
-const oAuth2Client = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  process.env.GOOGLE_REDIRECT_URI
-);
-
-// Step 5: Generate Auth URL
-app.get('/auth/google', (req, res) => {
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: ['https://www.googleapis.com/auth/calendar'],
-  });
-  res.redirect(authUrl);
-});
-
-// Step 6: Handle Google Callback
-app.get('/auth/google/callback', async (req, res) => {
-  const { code } = req.query;
-  const { tokens } = await oAuth2Client.getToken(code);
-  oAuth2Client.setCredentials(tokens);
-  req.session.tokens = tokens;
-  res.redirect('/'); // Redirect to your desired page after authentication
-});
-
-// Step 7: Create a function to add events to Google Calendar
-const addEventToCalendar = async (event) => {
-  const calendar = google.calendar({ version: 'v3', auth: oAuth2Client });
-  try {
-    const response = await calendar.events.insert({
-      calendarId: 'primary',
-      resource: event,
-    });
-    console.log('Event created: %s', response.data.htmlLink);
-  } catch (error) {
-    console.error('Error creating event: ', error);
-  }
-};
-
-// Example of creating a task and adding it to Google Calendar
-app.post('/tasks', async (req, res) => {
-  const { title, description, deadline } = req.body;
-
-  // Create a task in MongoDB
-  const task = new TaskModel({ title, description, deadline, check: false });
-  await task.save();
-
-  // Create a Google Calendar event
-  const event = {
-    summary: title,
-    description,
-    start: {
-      dateTime: new Date(deadline).toISOString(),
-    },
-    end: {
-      dateTime: new Date(new Date(deadline).getTime() + 60 * 60 * 1000).toISOString(), // 1 hour later
-    },
-  };
-
-  await addEventToCalendar(event);
-  res.status(201).json(task);
-});
-
-console.log('Google Client ID:', process.env.GOOGLE_CLIENT_ID);
-console.log('Google Client Secret:', process.env.GOOGLE_CLIENT_SECRET);
-console.log('Google Redirect URI:', process.env.GOOGLE_REDIRECT_URI);
