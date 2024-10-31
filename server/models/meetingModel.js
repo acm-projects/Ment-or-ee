@@ -9,12 +9,12 @@ const meetingSchema = new Schema({
   },
   mentor: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',  // Reference to the User model for mentor
+    ref: 'UserModel',  // Reference to the User model for mentor
     required: true,
   },
   mentee: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',  // Reference to the User model for mentee
+    ref: 'UserModel',  // Reference to the User model for mentee
     required: true,
   },
   date: {

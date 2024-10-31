@@ -27,8 +27,8 @@ const createZoomMeeting = async (topic, startTime, duration) => {
 
     return response.data;
   } catch (error) {
-    console.error('Error creating Zoom meeting:', error);
-    throw error;
+    console.error('Error creating Zoom meeting:', error.response ? error.response.data : error.message);
+    throw new Error('Zoom meeting creation failed');
   }
 };
 

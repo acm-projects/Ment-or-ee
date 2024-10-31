@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Images</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        img {
+            max-width: 300px; /* Ensure images are not too big */
+            margin: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Uploaded Images</h1>
+<div id="imageContainer"></div>
+
+<script>
+async function fetchImages() {
+  try {
+    const response = await fetch('http://localhost:5000/files/files');
+    console.log('Fetch response:', response); // Log the response for debugging
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const files = await response.json();
+    const imageContainer = document.getElementById('imageContainer');
+
+    if (files.length === 0) {
+      imageContainer.innerHTML = '<p>No images found.</p>';
+      return;
+    }
+
+    files.forEach(file => {
+      if (file.contentType && file.contentType.startsWith('image/')) {
+        const img = document.createElement('img');
+        const imageUrl = `http://localhost:5000/files/files/${encodeURIComponent(file.filename)}`;
+        img.src = imageUrl;
+        img.alt = file.filename;
+        imageContainer.appendChild(img);
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    document.getElementById('imageContainer').innerHTML = '<p>Error fetching images.</p>';
+  }
+}
+
+
+    // Fetch images when the page loads
+    window.onload = fetchImages;
+</script>
+
+</body>
+</html>

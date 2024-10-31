@@ -7,22 +7,19 @@ const userSchema = new mongoose.Schema({
     enum: ['Mentor', 'Mentee'],
     required: true
   },
-  profilePic: {
-    type: String,
-    required: false, // You can set this to false if the profile pic is optional
-    trim: true
-  },
+  photo_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'uploads.files'
+  },  
   name: { 
     type: String, 
     required: true, 
     trim: true 
   },
-  password:{
-    type: String,
-    required: true,
-    trim: true,
-
-
+  password: { 
+    type: String, 
+    required: true, 
+    trim: true 
   },
   email: { 
     type: String, 
@@ -86,15 +83,9 @@ const userSchema = new mongoose.Schema({
     trim: true,
     enum: ['Introvert', 'Extrovert'] // Only these values are allowed
   },
-  major: {
-    type: String,
-    required: false,
-    trim: true
-  },
-  skills: { 
-    type: String, 
-    required: true, 
-    trim: true 
+  fields: {
+    type: [String],
+    required: true,
   },
   availability: { 
     type: Boolean, 
@@ -111,9 +102,22 @@ const userSchema = new mongoose.Schema({
   }],
   bio: {
     type: String,
-    required: false,
+    required: true,
     trim: true,
-  }
+  },
+  headline: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  links: {
+    type: [String],
+    required: true,
+  },
+  industries: {
+    type: [String],
+    required: true,
+  },
 }, { timestamps: true }); // Correctly placing timestamps option
 
 // Compile and export the User model

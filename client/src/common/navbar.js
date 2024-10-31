@@ -1,43 +1,41 @@
-import React from 'react';
-import logo from '../assets/logo.svg';
+import React from "react";
+import logo from "../assets/logo.svg";
 import { FaCheck } from "react-icons/fa";
 import { CiChat1 } from "react-icons/ci";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoPeople } from "react-icons/io5";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
 
   const handleMatchClick = () => {
-    navigate('/matches');
+    navigate("/matches");
   };
 
   const handleTaskClick = () => {
-    navigate('/tasks');
+    navigate("/tasks");
   };
 
   const handleChatClick = () => {
-    navigate('/chat');
+    navigate("/chat");
   };
 
   const handleProfileClick = () => {
-    navigate('/profile');
+    navigate("/profile");
   };
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#1F2839] shadow-md z-50">
       {/* Navbar Container */}
       <div className="flex justify-between items-center w-full px-6 py-2">
-        
         {/* Logo and Name inside the same navbar box */}
         <div className="flex items-center">
-          <button onClick={() => navigate('/menteehome')} className="flex items-center">
-            <img
-              src={logo}
-              alt="mentor/ee logo"
-              className="h-16 w-auto mr-2"
-            />
+          <button
+            onClick={() => navigate("/menteehome")}
+            className="flex items-center"
+          >
+            <img src={logo} alt="mentor/ee logo" className="h-16 w-auto mr-2" />
             <span className="text-3xl font-bold text-white">mentor/ee</span>
           </button>
         </div>

@@ -1,38 +1,40 @@
 import React, { useState } from "react";
 import { UseAuth } from "../../context/AuthContext";
-import { EmailPassForm } from "./emailpassform";
+import { Questions } from "../questions/Questions";
 import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
-  const [signupData, setSignupData] = useState({});
+const QuestionsSubmit = () => {
+  const [formData, setFormData] = useState({});
   const navigate = useNavigate();
-
+  const updateFormData = (data) => {
+    setFormData((prevData) => ({ ...prevData, ...data }));
+  };
   const [error, setError] = useState("");
 
-  const { login } = UseAuth();
+  const { user } = UseAuth(); //use when user submits questionnaire
 
   const handleSubmit = async () => {
+    console.log("handling question submission"); //testing
+    console.log(formData); //testing
     setError("");
-    console.log("attempting signup submit"); //testing
-    console.log(signupData);
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/authenication/store-auth/signup",
+        "http://localhost:5000/api/authenication/store-auth/", //get uri for questionnaire
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(signupData),
+          body: JSON.stringify(formData),
         }
       );
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Registration failed");
+        throw new Error(errorData.message || "Questionnaire submission failed");
       } else {
-        login(signupData.username, signupData.password);
-        navigate("/questions");
+        //do somethign here is successful
+        navigate("/home");
       }
     } catch (error) {
       setError(error.message);
@@ -42,9 +44,9 @@ const Signup = () => {
   return (
     <div className="w-screen h-screen flex flex-col">
       <div className="flex-grow flex">
-        <EmailPassForm
-          signupData={signupData}
-          setSignupData={setSignupData}
+        <Questions
+          formData={formData}
+          updateFormData={updateFormData}
           handleSubmit={handleSubmit}
         />
       </div>
@@ -52,4 +54,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default QuestionsSubmit;

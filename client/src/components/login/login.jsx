@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo from "../../assets/logo.svg";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { UseAuth } from "../../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { login } = useAuth();
+  const { login } = UseAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,10 +22,9 @@ const Login = () => {
     setError("");
 
     const success = await login(email, password);
+
     if (success) {
-      navigate("/menteehome");
-      // navigate("/menteehome",{state:{id:email}}) //check if mentee or mentor; consider history
-      // history.push("/menteehome")
+      navigate("/home");
     } else {
       setError("Invalid email or password");
     }
@@ -49,32 +48,30 @@ const Login = () => {
 
           <form action="POST">
             <div class="mt-12">
-              <label font-bold mb-2 block for="email">
-                Email
-              </label>
+              <label font-bold mb-2 block for="email"></label>
               <input
                 type="email"
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
                 id="email"
-                class="w-full block border w-full text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
+                class="w-full block border text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
                 placeholder="Email"
               />
             </div>
             <div class="mt-4">
-              <label for="password">Password</label>
+              <label for="password"></label>
               <input
                 type="password"
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
                 id="password"
-                class="w-full block border w-full text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
+                class="w-full block border text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
                 placeholder="Password"
               />
             </div>
-            <div class="flex items-center jusitfy-between mt-5">
+            <div class="flex items-center justify-between mt-5">
               <button
                 type="submit"
                 className="border-2 border-[#1F2839] bg-[#1F2839] text-white py-1 px-5 rounded-md hover:bg-transparent hover:text-[#1F2839] font-semibold"
@@ -83,6 +80,8 @@ const Login = () => {
                 Login
               </button>
             </div>
+
+            {/* <p className="flex justify-between m-3">or</p> */}
             <div className="flex justify-between m-3">
               <button
                 className="border-none bg-none text-center hover:underline"
@@ -92,6 +91,10 @@ const Login = () => {
               </button>
             </div>
           </form>
+
+          <div>
+            <h2>Log in here with Google</h2>
+          </div>
         </div>
       </div>
 

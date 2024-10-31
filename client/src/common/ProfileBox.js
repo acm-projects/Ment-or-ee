@@ -1,37 +1,60 @@
-import React from 'react'
+import React from "react";
+import AutoProfile from "../assets/autoprofile.png";
+import { TiEdit } from "react-icons/ti";
+import LeftBox from "./LeftBox";
 
 function profileBox({ user }) {
-  return (
-    <div data-testid={'profile'}>
-        <div data-testid={'header'} className='px-4 py-2'></div> 
-        <div data-testid={'personalinfo'}>
-            <h1 className="text-2xl text-black font-semibold mb-2 text-center">
-                Hi {user.name}! 
-            </h1> 
-            {/* add profile pic */}
-            <h2 className="text-center text-xl">
-                {user.mentoree} 
-                {/* Mentee or Mentor */}
-            </h2>
-            <h3 className="text-lg">
-                Location: {user.location}
-            </h3>
-            <h3 className="text-lg">
-                Career Field: {user.career}
-            </h3>
-            <h3 className="text-lg">
-                Personality Type: {user.personality}
-            </h3>
-        </div>
-        <div data-testid={'history'}>
-            <h3>
-                {/* Current (prop) : (prop)   current mentees or mentors*/}
-            </h3>
-        </div>
+  console.log(user); //testing
 
-    </div>
-      
-  )
+  if (user.role === "Mentor") {
+    return (
+      <LeftBox title="Profile" name={user.name} role={user.role}>
+        {/* add profile pic */}
+        <h3 className="text-lg">
+          Location: {user.location.city}, {user.location.state}
+        </h3>
+        <h3 className="text-lg py-2">Languages: {user.languages}</h3>
+        <h3 className="text-lg py-2">Career Field:</h3>
+        {/* populate career field later */}
+        {/* <h3 className="text-lg">Skills: {user.skills}</h3>
+          <h3 className="text-lg">University: {user.university}</h3> */}
+        <h3 className="text-lg py-2">
+          Personality Type: {user.personalityType}
+        </h3>
+        <div
+          data-testid={"history"}
+          className="w-full flex flex-col justify-center"
+        >
+          <h3 className="text-lg py-2">Current Mentees: </h3>
+          <h3 className="text-lg py-2">Past Mentees: </h3>
+        </div>
+      </LeftBox>
+    );
+  } else {
+    return (
+      <LeftBox title="Profile" name={user.name} role={user.role}>
+        {/* add profile pic */}
+        <h3 className="text-lg">
+          Location: {user.location.city}, {user.location.state}
+        </h3>
+        <h3 className="text-lg py-2">Languages: {user.languages}</h3>
+        <h3 className="text-lg py-2">Career Field:</h3>
+        {/* populate career field later */}
+        {/* <h3 className="text-lg">Skills: {user.skills}</h3>
+          <h3 className="text-lg">University: {user.university}</h3> */}
+        <h3 className="text-lg py-2">
+          Personality Type: {user.personalityType}
+        </h3>
+        <div
+          data-testid={"history"}
+          className="w-full flex flex-col justify-center"
+        >
+          <h3 className="text-lg py-2">Current Mentors: </h3>
+          <h3 className="text-lg py-2">Past Mentors: </h3>
+        </div>
+      </LeftBox>
+    );
+  }
 }
 
 export default profileBox;
