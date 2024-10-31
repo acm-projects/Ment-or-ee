@@ -1,111 +1,174 @@
-import React from 'react';
-//import Navbar from '../../common/navbar';
+import React, { useState } from 'react';
+import Navbar from '../../common/navbar';
+import FilterBox from '../../common/FilterBoxes';
 import MatchCard from '../../common/MatchCard';
-import lerich_pfp from '../../assets/lerich_pfp.svg'
-import abis_pfp from '../../assets/abis_pfp.svg'
-import jeshna_pfp from '../../assets/jeshna_pfp.svg'
 
 
 const Matches = () => {
+  const [careerFieldFilter, setCareerFieldFilter] = useState('');
+  const [headlineFilter, setHeadlineFilter] = useState('');
+  const [roleFilter, setRoleFilter] = useState('');
+  const [industryFilter, setIndustryFilter] = useState('');
+  const [locationFilter, setLocationFilter] = useState('');
+  const [collegeFilter, setCollegeFilter] = useState('');
+  const [personalityFilter, setPersonalityFilter] = useState('');
+  const [languageFilter, setLanguageFilter] = useState('');
+
   const matches = [
     {
       name: 'Lerich',
-      imgUrl: {lerich_pfp},
+      imgUrl: "https://example.com/profile.jpg",
+      headline: "yuh",
+      role: "Mentor",
       careerField: 'Computer Science',
+      industry: 'Law',
       location: 'Dallas, TX',
       college: 'The University of Texas at Dallas',
+      personality: 'Introvert',
       language: 'English',
     },
     {
       name: 'Abis',
-      imgUrl: {abis_pfp}, 
+      imgUrl: "https://example.com/profile.jpg",
+      headline: "slay",
+      role: "Mentor",
       careerField: 'Computer Science',
+      industry: 'Health',
       location: 'Houston, TX',
       college: 'The University of Texas at Austin',
+      personality: 'Extrovert',
       language: 'English',
     },
     {
       name: 'Jeshna',
-      imgUrl: {jeshna_pfp},
+      imgUrl: "https://example.com/profile.jpg",
+      headline: "yay",
+      role: "Mentor",
       careerField: 'Computer Science',
+      industry: 'Education',
       location: 'San Francisco, California',
       college: 'Stanford University',
+      personality: 'Extrovert',
       language: 'English',
     },
   ];
 
+  // Apply filters to the matches
+  const filteredMatches = matches.filter((match) => {
+    return (
+      (careerFieldFilter === '' || match.careerField === careerFieldFilter) &&
+      (headlineFilter === '' || match.headline === headlineFilter) &&
+      (roleFilter === '' || match.role === roleFilter) &&
+      (industryFilter === '' || match.industry === industryFilter) &&
+      (locationFilter === '' || match.location === locationFilter) &&
+      (collegeFilter === '' || match.college === collegeFilter) &&
+      (personalityFilter === '' || match.personality === personalityFilter) &&
+      (languageFilter === '' || match.language === languageFilter)
+    );
+  });
+
   return (
-    <div className="p-8">
-      {matches.map((match, index) => (
-        <MatchCard
-          key={index}
-          name={match.name}
-          imgUrl={match.imgUrl}
-          careerField={match.careerField}
-          location={match.location}
-          college={match.college}
-          language={match.language}
-        />
-      ))}
+    <div className="flex flex-col space-y-20">
+      <Navbar />
+
+      <div className="w-full flex p-12">
+        {/* Left side filter boxes */}
+        <div className="w-1/4 pr-4">
+          <FilterBox title="Career Field">
+            <select
+              className="w-full p-2 border"
+              value={careerFieldFilter}
+              onChange={(e) => setCareerFieldFilter(e.target.value)}
+            >
+              <option value="">All</option>
+              <option value="Computer Science">Computer Science</option>
+            </select>
+          </FilterBox>
+
+          <FilterBox title="Industry">
+            <select
+              className="w-full p-2 border"
+              value={industryFilter}
+              onChange={(e) => setIndustryFilter(e.target.value)}
+            >
+              <option value="">All</option>
+              <option value="Law">Law</option>
+              <option value="Health">Health</option>
+              <option value="Education">Education</option>
+            </select>
+          </FilterBox>
+
+          <FilterBox title="Location">
+            <select
+              className="w-full p-2 border"
+              value={locationFilter}
+              onChange={(e) => setLocationFilter(e.target.value)}
+            >
+              <option value="">All</option>
+              <option value="Dallas, TX">Dallas, TX</option>
+              <option value="Houston, TX">Houston, TX</option>
+              <option value="San Francisco, California">San Francisco, California</option>
+            </select>
+          </FilterBox>
+
+          <FilterBox title="College">
+            <select
+              className="w-full p-2 border"
+              value={collegeFilter}
+              onChange={(e) => setCollegeFilter(e.target.value)}
+            >
+              <option value="">All</option>
+              <option value="The University of Texas at Dallas">The University of Texas at Dallas</option>
+              <option value="The University of Texas at Austin">The University of Texas at Austin</option>
+              <option value="Stanford University">Stanford University</option>
+            </select>
+          </FilterBox>
+
+          <FilterBox title="Personality">
+            <select
+              className="w-full p-2 border"
+              value={personalityFilter}
+              onChange={(e) => setPersonalityFilter(e.target.value)}
+            >
+              <option value="">All</option>
+              <option value="Introvert">Introvert</option>
+              <option value="Extrovert">Extrovert</option>
+            </select>
+          </FilterBox>
+
+          <FilterBox title="Language">
+            <select
+              className="w-full p-2 border"
+              value={languageFilter}
+              onChange={(e) => setLanguageFilter(e.target.value)}
+            >
+              <option value="">All</option>
+              <option value="English">English</option>
+            </select>
+          </FilterBox>
+        </div>
+
+        {/* Right side match cards */}
+        <div className="w-3/4">
+          {filteredMatches.map((match, index) => (
+            <MatchCard
+              key={index}
+              name={match.name}
+              imgUrl={match.imgUrl}
+              headline={match.headline}
+              role={match.role}
+              careerField={match.careerField}
+              industry= {match.industry}
+              location={match.location}
+              college={match.college}
+              personality={match.personality}
+              language={match.language}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default Matches;
-
-// const profiles = [
-//   { name: 'Lerich', career: 'Computer Science', language: 'English', imgSrc: lerich_pfp },
-//   { name: 'Abis', career: 'Computer Science', language: 'English', imgSrc: abis_pfp },
-//   { name: 'Jeshna', career: 'Computer Science', language: 'English', imgSrc: jeshna_pfp },
-//   { name: 'Anonymous', career: 'Gaming', language: 'English', imgSrc: ""}
-// ];
-
-// const Matches = () => {
-//   return (
-
-    
-//     <div className="flex flex-col">
-//       <Navbar />
-      
-//       <div className="mt-24 flex mx-auto max-w-7xl">
-//         <div className="w-1/4"></div> 
-
-//         <div className="w-1/2 px-6"> 
-//           <h1 className="text-2xl font-bold mb-6 mt-8">Matches</h1> 
-
-//           <div className="space-y-4"> 
-//   {profiles.map((profile, index) => (
-//     <div key={index} className="flex items-stretch bg-[#E3E0E0] p-2 rounded-3xl shadow-md w-[800px] h-[200px]" data-testid="jeshna_help_2">
-      
-//       {/* Left Profile Section */}
-//       <div className="bg-[#B89C75] w-1/4 flex justify-center items-center rounded-l-3xl" data-testid={"jeshna help"}>
-//         {profile.imgSrc ? (
-//           <img src={profile.imgSrc} alt={`${profile.name} profile`} className=" rounded-full" />
-//         ) : (
-//           <div className="w-20 h-20 rounded-full bg-black"></div> // Placeholder for anonymous
-//         )}
-//       </div>
-      
-//       {/* Right Details Section */}
-//       <div className="flex flex-col justify-center w-3/4 pl-4">
-//         <h2 className="text-2xl font-bold">{profile.name}</h2>
-//         <p className="text-lg">Career Field: {profile.career}</p>
-//         <p className="text-lg">Language: {profile.language}, ...</p>
-//       </div>
-
-//       {/* View More Button */}
-//       <div className="ml-auto pr-4 flex items-center">
-//         <button className="text-blue-600 text-lg flex items-center">
-//           View more <span className="ml-2">→</span>
-//         </button>
-//       </div>
-//     </div>
-//   ))}
-// </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Matches;

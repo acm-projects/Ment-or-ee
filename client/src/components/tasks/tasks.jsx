@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../../common/navbar';
+import ProfileBox from '../../common/ProfileBox';
 
 const tasks = () => {
   return (
