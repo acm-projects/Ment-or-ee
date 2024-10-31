@@ -26,7 +26,7 @@ export const MatchesContextProvider = ({ children }) => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ menteeID: user.id }),
+          body: JSON.stringify({ menteeId: user.id }),
         }
       );
 

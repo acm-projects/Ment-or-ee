@@ -2,10 +2,15 @@ const mongoose = require('mongoose');
 
 // Define the user schema
 const userSchema = new mongoose.Schema({
+  googleId: { // For OAuth users
+    type: String,
+    unique: true,
+    sparse: true, // Allows this field to be null for non-Google users
+  },
   role: { // To differentiate between mentor and mentee
     type: String,
     enum: ['Mentor', 'Mentee'],
-    required: true
+    required: false
   },
   photo_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -31,12 +36,12 @@ const userSchema = new mongoose.Schema({
   location: {
     city: {
       type: String,
-      required: true,
+      required: false,
       trim: true
     },
     state: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       enum: [
         'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
@@ -53,7 +58,7 @@ const userSchema = new mongoose.Schema({
   },
   languages: {
     type: [String], // Store languages as an array of strings
-    required: true,
+    required: false,
     enum: [
       'English',
       'Spanish',
@@ -74,22 +79,22 @@ const userSchema = new mongoose.Schema({
   },
   university: {
     type: String, // String for the university name
-    required: true,
+    required: false,
     trim: true
   },
   personalityType: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
     enum: ['Introvert', 'Extrovert'] // Only these values are allowed
   },
   fields: {
     type: [String],
-    required: true,
+    required: false,
   },
   availability: { 
     type: Boolean, 
-    required: true,
+    required: false,
     default: true 
   },
   reviews: [{ // Array of review IDs where this user is being reviewed
@@ -102,7 +107,7 @@ const userSchema = new mongoose.Schema({
   }],
   bio: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
   },
   headline: {

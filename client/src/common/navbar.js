@@ -32,7 +32,7 @@ const Navbar = () => {
         {/* Logo and Name inside the same navbar box */}
         <div className="flex items-center">
           <button
-            onClick={() => navigate("/menteehome")}
+            onClick={() => navigate("/home")}
             className="flex items-center"
           >
             <img src={logo} alt="mentor/ee logo" className="h-16 w-auto mr-2" />

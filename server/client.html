@@ -1,102 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mentee Chat</title>
-    <style>
-        .room {
-            border: 1px solid #ccc;
-            margin: 10px;
-            padding: 10px;
-            max-width: 400px;
-        }
-        .messages {
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            padding: 5px;
-            margin-bottom: 10px;
-        }
-        #log {
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            padding: 5px;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Express Server Chat Test</title>
 </head>
 <body>
-    <h1>Select a Mentor</h1>
-    <button id="mentor1" data-mentor-id="mentor123">Chat with Mentor 1</button>
-    <button id="mentor2" data-mentor-id="mentor456">Chat with Mentor 2</button>
+  <h1>Express Server Test</h1>
 
-    <div id="chat-rooms"></div>
+  <div>
+    <h2>Check Server Connection</h2>
+    <button onclick="checkServerConnection()">Test Connection</button>
+    <p id="connectionResponse"></p>
+  </div>
 
-    <h2>Logs</h2>
-    <div id="log"></div> <!-- Log area to display messages -->
+  <div>
+    <h2>Join WebSocket Room</h2>
+    <label for="mentorId">Mentor ID:</label>
+    <input type="text" id="mentorId" placeholder="Enter Mentor ID">
+    <label for="menteeIdSocket">Mentee ID:</label>
+    <input type="text" id="menteeIdSocket" placeholder="Enter Mentee ID">
+    <button onclick="joinRoom()">Join Room</button>
+    <p id="roomJoinResponse"></p>
+  </div>
 
-    <script src="https://cdn.socket.io/4.4.0/socket.io.min.js"></script>
-    <script>
-        const socket = io('http://localhost:3000'); // Initialize Socket.IO client
-        const menteeId = 'menteeId'; // Replace with actual mentee ID
+  <div id="chatSection" style="display: none;">
+    <h2>Chat Room</h2>
+    <div id="chatMessages" style="border: 1px solid #000; height: 200px; overflow-y: scroll; margin-bottom: 10px;">
+      <!-- Messages will appear here -->
+    </div>
+    <input type="text" id="chatInput" placeholder="Type a message">
+    <button onclick="sendMessage()">Send</button>
+  </div>
 
-        socket.on('connect', () => {
-            console.log('Connected to server with ID:', socket.id);
-        });
+  <!-- Include Socket.IO client library before your script -->
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+  
+  <script>
+    const serverUrl = 'http://localhost:5000'; // Update if necessary
+    let socket; // Declare socket in a higher scope for reuse in chat functions
 
-        document.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', () => {
-                const mentorId = button.getAttribute('data-mentor-id');
-                const roomId = `${mentorId}_${menteeId}`;
-                socket.emit('joinRoom', { mentorId, menteeId });
+    // Test connection to server
+    async function checkServerConnection() {
+      try {
+        const response = await fetch(serverUrl);
+        const data = await response.text();
+        document.getElementById('connectionResponse').innerText = data;
+      } catch (error) {
+        document.getElementById('connectionResponse').innerText = `Error: ${error}`;
+      }
+    }
 
-                // Create a new chat room only if it doesn't exist yet
-                if (!document.getElementById(roomId)) {
-                    const chatRoom = document.createElement('div');
-                    chatRoom.className = 'room';
-                    chatRoom.id = roomId;
-                    chatRoom.innerHTML = `<h2>Chat Room with ${mentorId}</h2><div class="messages"></div><input type="text" placeholder="Type your message..."><button>Send</button>`;
-                    document.getElementById('chat-rooms').appendChild(chatRoom);
+    // Join WebSocket room and enable chat
+    function joinRoom() {
+      socket = io(serverUrl); // Initialize socket
 
-                    const messageInput = chatRoom.querySelector('input');
-                    const sendButton = chatRoom.querySelector('button');
+      const mentorId = document.getElementById('mentorId').value;
+      const menteeIdSocket = document.getElementById('menteeIdSocket').value;
 
-                    sendButton.addEventListener('click', () => {
-                        const message = messageInput.value;
-                        if (message) {
-                            socket.emit('message', { roomId, message }); // Include roomId in message
-                            messageInput.value = ''; // Clear input
-                        }
-                    });
+      socket.emit('joinRoom', { mentorId, menteeId: menteeIdSocket });
 
-                    // Scoped listener for this specific room
-                    socket.on('message', (data) => {
-                        if (data.sender !== socket.id) { // Check if the message is not sent by this client
-                            const messagesDiv = chatRoom.querySelector('.messages');
-                            messagesDiv.innerHTML += `<p><strong>${data.sender}:</strong> ${data.message}</p>`;
-                            messagesDiv.scrollTop = messagesDiv.scrollHeight; // Auto-scroll
-                        }
-                    });
-                }
-            });
-        });
+      socket.on('roomJoined', (message) => {
+        document.getElementById('roomJoinResponse').innerText = message;
+        document.getElementById('chatSection').style.display = 'block'; // Show chat section
+      });
 
-        // Listen for log messages from the server
-        socket.on('log', (msg) => {
-            const logDiv = document.getElementById('log');
-            logDiv.innerHTML += `<p>${msg}</p>`; // Display log message
-            logDiv.scrollTop = logDiv.scrollHeight; // Auto-scroll
-        });
+      socket.on('roomFull', (message) => {
+        document.getElementById('roomJoinResponse').innerText = message;
+      });
 
-        socket.on('roomFull', (msg) => {
-            alert(msg);
-        });
+      // Listen for messages from server
+      socket.on('message', ({ sender, message }) => {
+        displayMessage(`${sender}: ${message}`);
+      });
+    }
 
-        socket.on('userLeft', (msg) => {
-            console.log(msg);
-        });
-    </script>
+    // Send a message to the server
+    function sendMessage() {
+      const message = document.getElementById('chatInput').value;
+      const mentorId = document.getElementById('mentorId').value;
+      const menteeIdSocket = document.getElementById('menteeIdSocket').value;
+      const roomId = `${mentorId}_${menteeIdSocket}`;
+
+      if (message.trim()) {
+        socket.emit('message', { roomId, message });
+        displayMessage(`You: ${message}`); // Display sent message on client
+        document.getElementById('chatInput').value = ''; // Clear input
+      }
+    }
+
+    // Display messages in the chat section
+    function displayMessage(message) {
+      const chatMessages = document.getElementById('chatMessages');
+      const messageElement = document.createElement('p');
+      messageElement.textContent = message;
+      chatMessages.appendChild(messageElement);
+      chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to the latest message
+    }
+  </script>
 </body>
 </html>

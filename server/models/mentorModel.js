@@ -19,13 +19,15 @@ const mentorSchema = new mongoose.Schema({
   tasks: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'TaskModel' // Reference to the Task model
-  }]
+  }],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+     ref: 'User',
+     required: true,
+   }
 });
 
-
-// Create Mentor model, inheriting from the User model
-const MentorModel = UserModel.discriminator('Mentor', mentorSchema);
-
+const MentorModel = mongoose.model('Mentor', mentorSchema);
 
 module.exports = MentorModel;
 

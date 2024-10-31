@@ -1,69 +1,74 @@
-import React, { useState } from 'react';
-import Navbar from '../../common/navbar';
-import FilterBox from '../../common/FilterBoxes';
-import MatchCard from '../../common/MatchCard';
-
+import React, { useState } from "react";
+import Navbar from "../../common/navbar";
+import FilterBox from "../../common/FilterBoxes";
+import MatchCard from "../../common/MatchCard";
 
 const Matches = () => {
-  const [careerFieldFilter, setCareerFieldFilter] = useState('');
-  const [headlineFilter, setHeadlineFilter] = useState('');
-  const [roleFilter, setRoleFilter] = useState('');
-  const [industryFilter, setIndustryFilter] = useState('');
-  const [locationFilter, setLocationFilter] = useState('');
-  const [collegeFilter, setCollegeFilter] = useState('');
-  const [personalityFilter, setPersonalityFilter] = useState('');
-  const [languageFilter, setLanguageFilter] = useState('');
+  const [careerFieldFilter, setCareerFieldFilter] = useState("");
+  const [headlineFilter, setHeadlineFilter] = useState("");
+  const [roleFilter, setRoleFilter] = useState("");
+  const [industryFilter, setIndustryFilter] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
+  const [collegeFilter, setCollegeFilter] = useState("");
+  const [personalityFilter, setPersonalityFilter] = useState("");
+  const [languageFilter, setLanguageFilter] = useState("");
 
   const matches = [
     {
-      name: 'Lerich',
+      name: "Lerich",
       imgUrl: "https://example.com/profile.jpg",
       headline: "yuh",
       role: "Mentor",
-      careerField: 'Computer Science',
-      industry: 'Law',
-      location: 'Dallas, TX',
-      college: 'The University of Texas at Dallas',
-      personality: 'Introvert',
-      language: 'English',
+      fields: ["Computer Science"],
+      industries: ["Law"],
+      location: "Dallas, TX",
+      university: "The University of Texas at Dallas",
+      personalityType: "Introvert",
+      languages: ["English"],
+      bio: "I really look forward to being a mentor and having a positive impact on the community!",
+      links: [],
     },
     {
-      name: 'Abis',
+      name: "Abis",
       imgUrl: "https://example.com/profile.jpg",
       headline: "slay",
       role: "Mentor",
-      careerField: 'Computer Science',
-      industry: 'Health',
-      location: 'Houston, TX',
-      college: 'The University of Texas at Austin',
-      personality: 'Extrovert',
-      language: 'English',
+      fields: ["Computer Science"],
+      industries: ["Health"],
+      location: "Houston, TX",
+      university: "The University of Texas at Austin",
+      personalityType: "Extrovert",
+      languages: ["English"],
+      bio: "I really look forward to being a mentor and having a positive impact on the community!",
+      links: [],
     },
     {
-      name: 'Jeshna',
+      name: "Jeshna",
       imgUrl: "https://example.com/profile.jpg",
       headline: "yay",
       role: "Mentor",
-      careerField: 'Computer Science',
-      industry: 'Education',
-      location: 'San Francisco, California',
-      college: 'Stanford University',
-      personality: 'Extrovert',
-      language: 'English',
+      fields: ["Computer Science"],
+      industries: ["Education"],
+      location: "San Francisco, California",
+      university: "Stanford University",
+      personalityType: "Extrovert",
+      languages: ["English"],
+      bio: "I really look forward to being a mentor and having a positive impact on the community!",
+      links: [],
     },
   ];
 
   // Apply filters to the matches
   const filteredMatches = matches.filter((match) => {
     return (
-      (careerFieldFilter === '' || match.careerField === careerFieldFilter) &&
-      (headlineFilter === '' || match.headline === headlineFilter) &&
-      (roleFilter === '' || match.role === roleFilter) &&
-      (industryFilter === '' || match.industry === industryFilter) &&
-      (locationFilter === '' || match.location === locationFilter) &&
-      (collegeFilter === '' || match.college === collegeFilter) &&
-      (personalityFilter === '' || match.personality === personalityFilter) &&
-      (languageFilter === '' || match.language === languageFilter)
+      (careerFieldFilter === "" || match.careerField === careerFieldFilter) &&
+      (headlineFilter === "" || match.headline === headlineFilter) &&
+      (roleFilter === "" || match.role === roleFilter) &&
+      (industryFilter === "" || match.industry === industryFilter) &&
+      (locationFilter === "" || match.location === locationFilter) &&
+      (collegeFilter === "" || match.college === collegeFilter) &&
+      (personalityFilter === "" || match.personality === personalityFilter) &&
+      (languageFilter === "" || match.language === languageFilter)
     );
   });
 
@@ -107,7 +112,9 @@ const Matches = () => {
               <option value="">All</option>
               <option value="Dallas, TX">Dallas, TX</option>
               <option value="Houston, TX">Houston, TX</option>
-              <option value="San Francisco, California">San Francisco, California</option>
+              <option value="San Francisco, California">
+                San Francisco, California
+              </option>
             </select>
           </FilterBox>
 
@@ -118,8 +125,12 @@ const Matches = () => {
               onChange={(e) => setCollegeFilter(e.target.value)}
             >
               <option value="">All</option>
-              <option value="The University of Texas at Dallas">The University of Texas at Dallas</option>
-              <option value="The University of Texas at Austin">The University of Texas at Austin</option>
+              <option value="The University of Texas at Dallas">
+                The University of Texas at Dallas
+              </option>
+              <option value="The University of Texas at Austin">
+                The University of Texas at Austin
+              </option>
               <option value="Stanford University">Stanford University</option>
             </select>
           </FilterBox>
@@ -151,19 +162,7 @@ const Matches = () => {
         {/* Right side match cards */}
         <div className="w-3/4">
           {filteredMatches.map((match, index) => (
-            <MatchCard
-              key={index}
-              name={match.name}
-              imgUrl={match.imgUrl}
-              headline={match.headline}
-              role={match.role}
-              careerField={match.careerField}
-              industry= {match.industry}
-              location={match.location}
-              college={match.college}
-              personality={match.personality}
-              language={match.language}
-            />
+            <MatchCard key={index} match={match} />
           ))}
         </div>
       </div>
