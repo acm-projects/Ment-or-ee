@@ -8,6 +8,8 @@ const { Server } = require('socket.io');
 const { findMatchingMentors } = require('./algorithm');
 const MenteeModel = require('./models/menteeModel');
 const methodOverride = require('method-override');
+// const passport = require('./middleware/passport');
+// const googleOAuthRoutes = require('./routes/authentication/google-oauth.routes');
 
 
 const app = express();
@@ -25,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 // Set a port
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
