@@ -7,6 +7,7 @@ function Chatcomponent({ currentUser, otherUser }) {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
 
+  //check here
   useEffect(() => {
     // Login the current user
     socket.emit("login", currentUser._id);
@@ -52,7 +53,12 @@ function Chatcomponent({ currentUser, otherUser }) {
         type="text"
         value={inputMessage}
         onChange={(e) => setInputMessage(e.target.value)}
-        onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+          }
+        }}
       />
       <button onClick={sendMessage}>Send</button>
     </div>

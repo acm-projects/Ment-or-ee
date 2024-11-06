@@ -2,7 +2,7 @@ import React from "react";
 import SearchInput from "./SearchInput";
 import Conversations from "./Conversations";
 
-function ChatDMs() {
+function ChatDMs({ match }) {
   return (
     <div>
       <div data-testid={"header"} className="bg-[#B89C75] w-full ">
@@ -11,10 +11,10 @@ function ChatDMs() {
         </h1>
       </div>
       <div className="p-4 pt-2 flex flex-col">
-        <SearchInput />
+        {/* <SearchInput /> */}
         <div className="divider px-3"></div>
         <div data-testid={"conversations"}>
-          <Conversations />
+          <Conversations match={match} />
         </div>
       </div>
     </div>

@@ -16,6 +16,7 @@ const Matches = () => {
   const matches = [
     {
       name: "Lerich",
+      id: "67180e89157b3c18a7d20248",
       imgUrl: "https://example.com/profile.jpg",
       headline: "yuh",
       role: "Mentor",
@@ -36,7 +37,9 @@ const Matches = () => {
       fields: ["Computer Science"],
       industries: ["Health"],
       location: "Houston, TX",
-      university: "The University of Texas at Austin",
+      university: "The University of Texas at Dallas",
+      jobTitle: "Software Engineer",
+      company: "Texas Instruments",
       personalityType: "Extrovert",
       languages: ["English"],
       bio: "I really look forward to being a mentor and having a positive impact on the community!",

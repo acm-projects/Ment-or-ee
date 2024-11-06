@@ -12,7 +12,7 @@ const ViewMore = () => {
 
   return (
     <div className="flex flex-col">
-      <ProfileComponent user={user} />
+      <ProfileComponent user={user} selfView={false} />
       {user.industries.join(", ")}
     </div>
   );

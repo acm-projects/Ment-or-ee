@@ -3,7 +3,7 @@ import Navbar from "../../common/navbar";
 import MatchCard from "../../common/MatchCard";
 import Slider from "../../common/Slider";
 
-const ProfileComponent = ({ user }) => {
+const ProfileComponent = ({ user, selfView }) => {
   // const matchData = {
   //   imgUrl: "https://example.com/profile.jpg",
   //   name: "John Doe",
@@ -143,7 +143,7 @@ const ProfileComponent = ({ user }) => {
 
       <div className="bg-[#D3C7B3] w-1/2 h-72 p-10 flex items-center justify-center mt-20">
         <div className="w-full h-full flex justify-center items-center">
-          <MatchCard match={user} compact={true} selfView={true} />
+          <MatchCard match={user} compact={true} selfView={selfView} />
         </div>
       </div>
 
