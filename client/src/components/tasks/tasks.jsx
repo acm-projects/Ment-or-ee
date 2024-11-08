@@ -4,7 +4,7 @@ import Navbar from '../../common/navbar';
 import LeftBox from '../../common/LeftBox';
 import TaskItem from '../../common/TaskItem';
 import TaskStatus from '../../common/TaskStatus';
-import ProgressChart from '../../common/ProgressChart'; // Import ProgressChart
+import ProgressChart from '../../common/ProgressChart'; 
 
 const Tasks = () => {
   // State for current and past tasks
