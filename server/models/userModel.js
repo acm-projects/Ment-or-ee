@@ -114,6 +114,7 @@ const userSchema = new mongoose.Schema({
   },
   headline: {
     type: String,
+    required: false,
     trim: true,
   },
   links: {

@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
 const UserModel = require('../models/userModel'); // Adjust the path if needed
+const UserModel = require('../models/userModel'); // Adjust the path if needed
 
 /**
  * @description Log in and provide users access and refresh tokens
@@ -272,7 +273,8 @@ const signupBasic = async (req, res) => {
 
 const signupComplete = async (req, res) => {
     const {
-        userId, role, languages, personalityType, fields, city, state, university,
+        userId, role, language, personalityType,
+        educationLevel,fields, city, state, university,
         major = 'Undeclared', collegeYear = 'First Year', // Default values for Mentee
         company = 'N/A', jobTitle = 'N/A', degrees = ['None'] // Default values for Mentor
     } = req.body;
