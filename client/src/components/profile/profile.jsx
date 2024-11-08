@@ -7,7 +7,7 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col">
-      <ProfileComponent user={user} />
+      <ProfileComponent user={user} selfView={true} />
     </div>
   );
 };

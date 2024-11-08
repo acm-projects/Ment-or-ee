@@ -14,10 +14,10 @@ const Home = () => {
   // }
 
   return (
-    <div className="p-6 flex flex-col space-y-20">
+    <div className="min-h-screen p-6 flex flex-col space-y-20">
       <Navbar />
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-1 bg-[#E3E0E0] shadow rounded-lg overflow-hidden">
+        <div className="flex-grow lg:col-span-1 bg-[#E3E0E0] shadow rounded-lg overflow-hidden">
           <ProfileBox user={user} />
         </div>
 

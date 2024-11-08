@@ -2,7 +2,7 @@ import React from "react";
 import AutoProfile from "../../../assets/autoprofile.png";
 import useConversation from "../../../store/useConversation";
 
-const Conversation = ({ conversation, lastIdx }) => {
+const Conversation = ({ conversation, lastIdx, match }) => {
   // const { selectedConversation, setSelectedConversation } = useConversation();
 
   // const isSelected = selectedConversation?._id === conversation._id;
@@ -34,7 +34,7 @@ const Conversation = ({ conversation, lastIdx }) => {
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
             {/* <p className="font-semibold text-black">{conversation.name}</p> */}
-            <p className="font-semibold text-black">John Doe</p>
+            <p className="font-semibold text-black">{match.name}</p>
           </div>
         </div>
       </div>
