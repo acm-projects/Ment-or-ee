@@ -5,7 +5,7 @@ import TextQuestion from "../../common/TextQuestion.js";
 import ButtonQuestion from "../../common/ButtonQuestion.js";
 import DropdownQuestion from "../../common/DropdownQuestion.jsx";
 import Slider from "../../common/Slider.jsx";
-import { LinearProgress, Typography, Box } from "@mui/material";
+// import { LinearProgress, Typography, Box } from "@mui/material";
 
 export function Questions({ formData, updateFormData, handleSubmit }) {
   const navigate = useNavigate();
