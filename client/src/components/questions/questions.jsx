@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import TextQuestion from "../../common/TextQuestion.js";
 import ButtonQuestion from "../../common/ButtonQuestion.js";
 import DropdownQuestion from "../../common/DropdownQuestion.jsx";
+import Slider from "../../common/Slider.jsx";
+import { LinearProgress, Typography, Box } from "@mui/material";
 
 export function Questions({ formData, updateFormData, handleSubmit }) {
   const navigate = useNavigate();
@@ -101,7 +103,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
         "Hindi",
         "Persian",
       ],
-    }, //TODO: multiselect
+    },
     {
       key: "personalityType",
       type: "button",
@@ -130,18 +132,18 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
       text: "What university did you graduate from?",
       condition: () => formData.role === "Mentor",
     },
-    // {
-    //   key: "degrees",
-    //   type: "text",
-    //   text: "What degrees do you have?",
-    //   condition: () => formData.role === "Mentor",
-    // },
-    // {
-    //   key: "company",
-    //   type: "text",
-    //   text: "What company do you currently work for?",
-    //   condition: () => formData.role === "Mentor",
-    // },
+    {
+      key: "degrees",
+      type: "text",
+      text: "What degree do you have?",
+      condition: () => formData.role === "Mentor",
+    },
+    {
+      key: "company",
+      type: "text",
+      text: "What company do you currently work for?",
+      condition: () => formData.role === "Mentor",
+    },
     {
       key: "educationLevel",
       type: "dropdown",
@@ -150,35 +152,46 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
       options: ["First Year", "Second Year", "Third Year", "Fourth Year"],
       condition: () => formData.role === "Mentee",
     },
-    // { key: "major", type: "text", text: "What is your major?", condition: () => formData.role === "Mentee" },
-    // { key: "degrees", type: "text", text: "What degrees do you have?", condition: () => formData.role === "Mentee" },
-    // { key: "jobTitle", type: "text", text: "What is your job title?", condition: () => formData.role === "Mentor", },
-    // {
-    //   key: "fields",
-    //   type: "text",
-    //   text: "What career fields are you interested in?",
-    //   condition: () => formData.role === "Mentee",
-    // },
-    // {
-    //   key: "fields",
-    //   type: "text",
-    //   text: "What career fields are you interested in teaching?",
-    //   condition: () => formData.role === "Mentor",
-    // },
-    // {
-    //   key: "industry",
-    //   type: "dropdown",
-    //   multi: true,
-    //   text: "What industries are you interested in working in?",
-    //   condition: () => formData.role === "Mentee",
-    // },
-    // {
-    //   key: "industry",
-    //   type: "dropdown",
-    //   multi: false,
-    //   text: "What industry do you work in?",
-    //   condition: () => formData.role === "Mentor",
-    // },
+    {
+      key: "major",
+      type: "text",
+      text: "What is your major?",
+      condition: () => formData.role === "Mentee",
+    },
+    {
+      key: "jobTitle",
+      type: "text",
+      text: "What is your job title?",
+      condition: () => formData.role === "Mentor",
+    },
+    {
+      key: "fields",
+      type: "text",
+      text: "What career fields are you interested in?",
+      condition: () => formData.role === "Mentee", //make it into a multiselect
+    },
+    {
+      key: "fields",
+      type: "text",
+      text: "What career fields are you interested in teaching?",
+      condition: () => formData.role === "Mentor", //make it into a multiselect
+    },
+    {
+      key: "industry",
+      type: "dropdown",
+      multi: true,
+      text: "What industries are you interested in working in?",
+      condition: () => formData.role === "Mentee", //temp options
+      options: ["Law", "Education", "Medical"],
+    },
+    {
+      key: "industry",
+      type: "dropdown",
+      multi: false,
+      text: "What industry do you work in?",
+      condition: () => formData.role === "Mentor", //temp options
+      options: ["Law", "Education", "Medical"],
+    },
     // {
     //   key: "growthAreas", //TODO: multi select
     //   type: "dropdown",
@@ -196,20 +209,26 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
     //   ],
     //   condition: () => formData.role === "Mentee",
     // },
-    // {
-    //   key: "importantCategories", //TODO: slider for each of the categories
-    //   type: "dropdown",
-    //   text: "What categories do you find the most important?",
-    //   options: [
-    //     "Location",
-    //     "Language",
-    //     "University",
-    //     "Career Field",
-    //     "Introvert vs Extrovert",
-    //   ],
-    //   condition: () => formData.role === "Mentee",
-    // },
+    {
+      key: "importantCategories", //TODO: slider for each of the categories
+      type: "slider",
+      text: "What categories do you find the most important?",
+      condition: () => formData.role === "Mentee",
+    },
   ];
+
+  const sliderFields = [
+    { id: "college", label: "College" },
+    { id: "careerField", label: "Career Field" },
+    { id: "location", label: "Location" },
+    { id: "personality", label: "Personality" },
+    { id: "language", label: "Language" },
+    { id: "industry", label: "Industry" },
+  ];
+
+  const handleWeightageChange = (newWeightages) => {
+    console.log("New Weightages:", newWeightages);
+  };
 
   const [curQuestionIndex, setCurQuestionIndex] = useState(0);
 
@@ -228,12 +247,17 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
     return -1;
   };
 
+  const progress = (curQuestionIndex / 10) * 100;
+
+  // console.log(progress); //testing
+
   //displaying next question, submitting if reached end
   const handleNext = () => {
     const nextIndex = getNextQuestionIndex(curQuestionIndex);
     if (nextIndex !== -1) {
       setCurQuestionIndex(nextIndex);
     } else {
+      console.log(formData); //testing
       handleSubmit();
     }
   };
@@ -289,6 +313,16 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
             curAnswer={formData[curQuestion.key] || ""}
           />
         );
+
+      case "slider":
+        return (
+          <Slider
+            fields={sliderFields}
+            onWeightageChange={handleWeightageChange}
+            onAnswer={handleAnswer}
+            curAnswer={formData[curQuestion.key] || ""}
+          />
+        );
       default:
         return null;
     }
@@ -297,8 +331,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[#1F3839]">
       <div className="absolute inset-0 bg-[#1F2839] backdrop-filter z-10"></div>
-
-      <div className="relative z-20 min-h-screen w-full flex items-center justify-center p-6">
+      <div className="relative z-20 min-h-screen w-full flex flex-col items-center justify-center p-6">
         <div className="bg-white bg-opacity-80 rounded-lg shadow-lg p-10 max-w-2xl w-full">
           <div className="flex items-center absolute top-10 left-10">
             <img
@@ -328,8 +361,17 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
             </div>
           </div>
         </div>
+        {/* <div data-testid={"progress bar"}>
+          <Box sx={{ width: "100%", mr: 1 }}>
+            <LinearProgress variant="determinate" value={progress} />
+            <Box sx={{ minWidth: 200 }}>
+              <Typography variant="body2" color="white">{`${Math.round(
+                progress
+              )}%`}</Typography>
+            </Box>
+          </Box>
+        </div> */}
       </div>
-      <div data-testid={"progress bar"}>{/* finish later if time */}</div>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import Chatbody from "./Chatbody";
 import MessageInput from "./MessageInput";
 import { TiMessages } from "react-icons/ti";
 import { io } from "socket.io-client";
+import { TbBrandZoom } from "react-icons/tb";
 
 const socket = io("http://localhost:5000");
 
@@ -56,12 +57,17 @@ function ChatBox({ user, match }) {
         <>
           <div
             data-testid={"header"}
-            className="bg-[#B89C75] w-full p-1 pt-4 px-4 mb-2"
+            className="flex justify-between bg-[#B89C75] w-full p-1 pt-4 px-4 mb-2"
           >
-            <span className="label-text text-xl">To:</span>{" "}
-            <span className="p-2 pl-4 pt-4 text-2xl mb-2 text-gray-900 font-semibold">
-              {match.name}
-            </span>
+            <div className="text-left">
+              <span className="label-text text-xl">To:</span>{" "}
+              <span className="p-2 pl-4 pt-4 text-2xl mb-2 text-gray-900 font-semibold">
+                {match.name}
+              </span>
+            </div>
+            <button className="text-right">
+              <TbBrandZoom className="text-2xl" />
+            </button>
           </div>
           <Chatbody messages={messages} />
           <MessageInput onSend={sendMessage} />

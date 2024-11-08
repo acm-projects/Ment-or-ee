@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../../common/navbar";
 import MatchCard from "../../common/MatchCard";
 import Slider from "../../common/Slider";
+import ReviewComponent from "./ReviewComponent";
 
 const ProfileComponent = ({ user, selfView }) => {
   // const matchData = {
@@ -28,7 +29,7 @@ const ProfileComponent = ({ user, selfView }) => {
     { id: "location", label: "Location", value: user.location },
     { id: "personality", label: "Personality", value: user.personalityType },
     { id: "language", label: "Language", value: user.languages },
-    { id: "industry", label: "Industry", value: industries },
+    { id: "industry", label: "Industry", value: user.industries },
   ];
 
   const handleWeightageChange = (newWeightages) => {
@@ -129,10 +130,10 @@ const ProfileComponent = ({ user, selfView }) => {
           )}
         </div>
 
-        <Slider
+        {/* <Slider
           fields={sliderFields}
           onWeightageChange={handleWeightageChange}
-        />
+        /> */}
       </div>
     );
   };
@@ -148,6 +149,7 @@ const ProfileComponent = ({ user, selfView }) => {
       </div>
 
       <ProfileCard />
+      {user.role === "Mentor" && <ReviewComponent selfView={selfView} />}
     </div>
   );
 };

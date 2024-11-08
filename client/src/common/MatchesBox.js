@@ -10,7 +10,7 @@ const matches = [
     name: "Lerich",
     id: "67180e89157b3c18a7d20248",
     imgUrl: "https://example.com/profile.jpg",
-    headline: "yuh",
+    headline: "Passionate Engineer | Driving Innovation and Growth in Law",
     role: "Mentor",
     fields: ["Computer Science"],
     industries: ["Law"],
@@ -24,7 +24,7 @@ const matches = [
   {
     name: "Abis",
     imgUrl: "https://example.com/profile.jpg",
-    headline: "slay",
+    headline: "Strategic Thinker | Specializing in Data Analysis slay",
     role: "Mentor",
     fields: ["Computer Science"],
     industries: ["Health"],
@@ -40,7 +40,7 @@ const matches = [
   {
     name: "Jeshna",
     imgUrl: "https://example.com/profile.jpg",
-    headline: "yay",
+    headline: "Creative Problem Solver | Front-End Developer",
     role: "Mentor",
     fields: ["Computer Science"],
     industries: ["Education"],
@@ -64,9 +64,9 @@ function MatchesBox() {
   //   }
   // }, [user, fetchMatches]);
 
-  if (!user) {
-    return <div>Please log in to see matches.</div>;
-  }
+  // if (!user) {
+  //   return <div>Please log in to see matches.</div>;
+  // }
 
   // if (loading) {
   //   return <div>Loading matches...</div>;
@@ -94,7 +94,7 @@ function MatchesBox() {
         {matches.length > 0 ? (
           <div>
             {matches.map((match) => (
-              <div key={match.id} className="flex rounded-3xl w-full mb-4">
+              <div key={match.id} className="flex rounded-3xl w-full mb-1">
                 <div className="w-1/4 flex items-center justify-center">
                   <ProfilePicture
                     imgUrl={match.imgUrl}

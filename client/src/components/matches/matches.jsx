@@ -18,7 +18,7 @@ const Matches = () => {
       name: "Lerich",
       id: "67180e89157b3c18a7d20248",
       imgUrl: "https://example.com/profile.jpg",
-      headline: "yuh",
+      headline: "Passionate Engineer | Driving Innovation and Growth in Law",
       role: "Mentor",
       fields: ["Computer Science"],
       industries: ["Law"],
@@ -32,7 +32,7 @@ const Matches = () => {
     {
       name: "Abis",
       imgUrl: "https://example.com/profile.jpg",
-      headline: "slay",
+      headline: "Strategic Thinker | Specializing in Data Analysis slay",
       role: "Mentor",
       fields: ["Computer Science"],
       industries: ["Health"],
@@ -48,7 +48,7 @@ const Matches = () => {
     {
       name: "Jeshna",
       imgUrl: "https://example.com/profile.jpg",
-      headline: "yay",
+      headline: "Creative Problem Solver | Front-End Developer",
       role: "Mentor",
       fields: ["Computer Science"],
       industries: ["Education"],
