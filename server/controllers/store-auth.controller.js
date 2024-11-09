@@ -2,6 +2,7 @@ const User = require('../models/userModel'); // Import the user model
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
+const UserModel = require('../models/userModel'); // Adjust the path if needed
 
 /**
  * @description Log in and provide users access and refresh tokens
@@ -271,8 +272,7 @@ const signupBasic = async (req, res) => {
 
 const signupComplete = async (req, res) => {
     const {
-        userId, role, language, personalityType,
-        educationLevel,fields, city, state, university,
+        userId, role, languages, personalityType,fields, city, state, university,
         major = 'Undeclared', collegeYear = 'First Year', // Default values for Mentee
         company = 'N/A', jobTitle = 'N/A', degrees = ['None'] // Default values for Mentor
     } = req.body;
@@ -290,10 +290,10 @@ const signupComplete = async (req, res) => {
         // Update common user fields
         user.role = role;
         user.fields = fields || user.fields; // Retain existing value if not provided
-        user.language = language || user.language; // Retain existing value if not provided
+        user.languages = languages || user.languages; // Retain existing value if not provided
         user.personalityType = personalityType || user.personalityType; // Retain existing value if not provided
-        user.educationLevel = educationLevel || user.educationLevel; // Retain existing value if not provided
-        user.skills = skills || user.skills; // Retain existing value if not provided
+        //user.educationLevel = educationLevel || user.educationLevel; Retain existing value if not provided
+        //user.skills = skills || user.skills; // Retain existing value if not provided
         user.location = { city: city || user.location.city, state: state || user.location.state };
         user.university = university || user.university; // Retain existing value if not provided
 
@@ -337,7 +337,8 @@ const signupComplete = async (req, res) => {
         // Send success response
         res.status(200).json({ message: 'User profile updated successfully' });
     } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error', error });
+        console.error(error); // Log full error details to the console
+        res.status(500).json({ message: 'Internal Server Error', error: error.message || error });
     }
 };
 

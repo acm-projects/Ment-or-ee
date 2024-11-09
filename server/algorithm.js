@@ -1,78 +1,61 @@
-const mongoose = require('mongoose');
-const MentorModel = require('./models/mentorModel'); // Import Mentor model
-const MenteeModel = require('./models/menteeModel'); // Import Mentee model
+// algorithm.js
 
-/**
- * Calculate match score between a mentor and mentee.
- * @param {Object} mentor - Mentor object.
- * @param {Object} mentee - Mentee object.
- * @return {Number} - Match score (0 to 100).
- */
-function calculateMatchScore(mentor, mentee) {
-  let matchScore = 0;
+const calculateMatchScore = (mentee, mentor, menteeWeights) => {
+  let score = 0;
 
-  // Calculate location match
-  if (mentor.location.state === mentee.location.state) {
-    matchScore += mentee.weights.location; // Add location weight if states match
+  // Location Match
+  if (
+      mentee.user.location.city === mentor.user.location.city &&
+      mentee.user.location.state === mentor.user.location.state
+  ) {
+      score += menteeWeights.location;
   }
 
-  // Calculate language match
-  const commonLanguages = mentor.languages.filter(language => mentee.languages.includes(language));
-  if (commonLanguages.length > 0) {
-    matchScore += mentee.weights.languages; // Add language weight if there are common languages
+  // Language Match
+  const languageMatch = mentee.user.languages.filter(lang =>
+      mentor.user.languages.includes(lang)
+  ).length;
+  score += (languageMatch * menteeWeights.languages) / mentee.user.languages.length;
+
+  // Field Match
+  const fieldMatch = mentee.user.fields.filter(field =>
+      mentor.user.fields.includes(field)
+  ).length;
+  score += (fieldMatch * menteeWeights.fields) / mentee.user.fields.length;
+
+  // Industry Match
+  const industryMatch = mentee.user.industries.filter(industry =>
+      mentor.user.industries.includes(industry)
+  ).length;
+  score += (industryMatch * menteeWeights.industries) / mentee.user.industries.length;
+
+  // University Match
+  if (mentee.user.university === mentor.user.university) {
+      score += menteeWeights.university;
   }
 
-  // Calculate personality type match
-  if (mentor.personalityType === mentee.personalityType) {
-    matchScore += mentee.weights.personalityType; // Add personality type weight if types match
+  // Personality Type Match
+  if (mentee.user.personalityType === mentor.user.personalityType) {
+      score += menteeWeights.personalityType;
   }
 
-  // Calculate university match
-  if (mentor.university === mentee.university) {
-    matchScore += mentee.weights.university; // Add university weight if they attended the same university
-  }
+  return score;
+};
 
-  // Calculate fields of expertise match
-  const commonFields = mentor.fields.filter(field => mentee.fields.includes(field));
-  if (commonFields.length > 0) {
-    matchScore += mentee.weights.fields; // Add fields weight if there are common fields of expertise
-  }
+const matchMenteeToMentors = async (mentee, mentors) => {
+  const menteeWeights = mentee.weights;
 
-  // Calculate industries match
-  const commonIndustries = mentor.industries.filter(industry => mentee.industries.includes(industry));
-  if (commonIndustries.length > 0) {
-    matchScore += mentee.weights.industries; // Add industries weight if there are common industries
-  }
-
-  return matchScore;
-}
-
-/**
- * Find matching mentors for a given mentee.
- * @param {Object} mentee - Mentee object.
- * @return {Array} - List of matched mentors with their match scores.
- */
-async function findMatchingMentors(mentee) {
-  try {
-    // Fetch all available mentors
-    const availableMentors = await MentorModel.find({ availability: true });
-
-    // Calculate match score for each mentor
-    const mentorMatches = availableMentors.map(mentor => {
-      const score = calculateMatchScore(mentor, mentee);
+  const mentorMatches = mentors.map(mentor => {
+      const score = calculateMatchScore(mentee, mentor, menteeWeights);
       return { mentor, score };
-    });
+  });
 
-    // Sort mentors by score (highest score first)
-    mentorMatches.sort((a, b) => b.score - a.score);
-
-    return mentorMatches;
-  } catch (error) {
-    console.error('Error finding matching mentors:', error);
-    throw error;
-  }
-}
+  // Sort mentors by match score in descending order
+  mentorMatches.sort((a, b) => b.score - a.score);
+  return mentorMatches;
+};
 
 module.exports = {
-  findMatchingMentors
+  calculateMatchScore,
+  matchMenteeToMentors
 };

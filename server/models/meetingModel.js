@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const MentorModel = require('./mentorModel'); // Import User model
+const MenteeModel = require('./menteeModel'); // Import User model
 const { Schema } = mongoose;
 
 // Define the Meetings Schema
@@ -9,12 +11,12 @@ const meetingSchema = new Schema({
   },
   mentor: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserModel',  // Reference to the User model for mentor
+    ref: MentorModel,  // Reference to the User model for mentor
     required: true,
   },
   mentee: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserModel',  // Reference to the User model for mentee
+    ref: MenteeModel,  // Reference to the User model for mentee
     required: true,
   },
   date: {

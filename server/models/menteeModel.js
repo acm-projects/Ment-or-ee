@@ -3,6 +3,10 @@ const UserModel = require('./userModel'); // Import User model
 
 // Create Mentee schema extending the base user schema
 const menteeSchema = new mongoose.Schema({
+  photo_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'uploads.files'
+  },  
   major: { 
     type: String,
     required: true,
@@ -48,7 +52,7 @@ const menteeSchema = new mongoose.Schema({
 // Reference to the User model
 user: {
   type: mongoose.Schema.Types.ObjectId,
-  ref: 'User',
+  ref: UserModel,
   required: true,
 }
 });
