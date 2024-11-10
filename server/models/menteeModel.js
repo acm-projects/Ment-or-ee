@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const MentorModel = require('./mentorModel'); // Import Mentor model
 const UserModel = require('./userModel'); // Import User model
 
 // Create Mentee schema extending the base user schema
@@ -7,6 +8,10 @@ const menteeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'uploads.files'
   },  
+  mentors: [{ // Reference to the Mentor model
+    type: mongoose.Schema.Types.ObjectId,
+    ref: MentorModel
+  }],
   major: { 
     type: String,
     required: true,

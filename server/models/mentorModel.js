@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const MenteeModel = require('./menteeModel'); // Import Mentee model
 const UserModel = require('./userModel'); // Import User model
 const TaskModel = require('./taskModel'); // Import Task model
 
@@ -8,6 +9,10 @@ const mentorSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'uploads.files'
   },  
+  mentees: [{ // Reference to the Mentor model
+    type: mongoose.Schema.Types.ObjectId,
+    ref: MenteeModel
+  }],
   company: { 
     type: String, 
     required: true 

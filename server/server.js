@@ -101,38 +101,80 @@ io.on('connection', (socket) => {
   });
 });
 
+const router = express.Router();
 
-// Route to get matched mentors for a mentee
+router.post('/addMenteeToMentor', async (req, res) => {
+  const { mentorId, menteeId } = req.body;
+
+  try {
+    // Find the mentor by ID and add the mentee ID to their mentees array
+    const mentor = await MentorModel.findById(mentorId);
+    if (!mentor) {
+      return res.status(404).json({ message: 'Mentor not found' });
+    }
+    
+    // Add mentee ID if it does not already exist
+    if (!mentor.mentees.includes(menteeId)) {
+      mentor.mentees.push(menteeId);
+      await mentor.save();
+    }
+
+    // Find the mentee by ID and add the mentor ID to their mentors array
+    const mentee = await MenteeModel.findById(menteeId);
+    if (!mentee) {
+      return res.status(404).json({ message: 'Mentee not found' });
+    }
+
+    // Add mentor ID if it does not already exist
+    if (!mentee.mentors.includes(mentorId)) {
+      mentee.mentors.push(mentorId);
+      await mentee.save();
+    }
+
+    res.status(200).json({ message: 'Mentee added to mentor successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
+
+module.exports = router;
+
 app.get('/api/match/:menteeId', async (req, res) => {
   try {
-      const menteeId = req.params.menteeId;
-      const mentee = await MenteeModel.findById(menteeId).populate('user');
+    const menteeId = req.params.menteeId;
 
-      if (!mentee) {
-          return res.status(404).json({ success: false, message: 'Mentee not found' });
-      }
+    // Find the mentee and populate the user details
+    const mentee = await MenteeModel.findById(menteeId).populate('user');
+    if (!mentee) {
+      return res.status(404).json({ success: false, message: 'Mentee not found' });
+    }
 
-      const mentors = await MentorModel.find().populate('user');
-      const matchedMentors = await matchMenteeToMentors(mentee, mentors);
+    // Fetch all mentors and populate user details for each
+    const mentors = await MentorModel.find().populate('user');
 
-      // Send response with matched mentors
-      res.json({
-          success: true,
-          matchedMentors: matchedMentors.map(match => ({
-              mentorId: match.mentor._id,
-              name: match.mentor.user.name,
-              score: match.score,
-              location: match.mentor.user.location,
-              languages: match.mentor.user.languages,
-              fields: match.mentor.user.fields,
-              industries: match.mentor.user.industries,
-              university: match.mentor.user.university,
-              personalityType: match.mentor.user.personalityType
-          }))
-      });
+    // Get the matched mentors
+    const matchedMentors = await matchMenteeToMentors(mentee, mentors);
+
+    // Send response with matched mentors
+    res.json({
+      success: true,
+      matchedMentors: matchedMentors.map(match => ({
+        mentorId: match.mentor._id,
+        name: match.mentor.user.name,
+        score: match.score,  // Include the calculated score
+        location: match.mentor.user.location,
+        languages: match.mentor.user.languages,
+        fields: match.mentor.user.fields,
+        industries: match.mentor.user.industries,
+        university: match.mentor.user.university,
+        personalityType: match.mentor.user.personalityType
+      }))
+    });
+
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: error.message });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 });
 

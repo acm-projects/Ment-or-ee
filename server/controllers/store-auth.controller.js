@@ -272,7 +272,7 @@ const signupBasic = async (req, res) => {
 
 const signupComplete = async (req, res) => {
     const {
-        userId, role, languages, personalityType,fields, city, state, university,
+        userId, role, languages, personalityType, fields, city, state, university,
         major = 'Undeclared', collegeYear = 'First Year', // Default values for Mentee
         company = 'N/A', jobTitle = 'N/A', degrees = ['None'] // Default values for Mentor
     } = req.body;
