@@ -1,6 +1,7 @@
 // upload.js
 const { GridFsStorage } = require('multer-gridfs-storage');
 const multer = require('multer');
+require('dotenv').config();
 
 const storage = new GridFsStorage({
   url: process.env.MONGO_URL,

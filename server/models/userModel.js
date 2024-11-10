@@ -112,16 +112,13 @@ const userSchema = new mongoose.Schema({
   },
   headline: {
     type: String,
-    required: true,
     trim: true,
   },
   links: {
     type: [String],
-    required: true,
   },
   industries: {
     type: [String],
-    required: true,
   },
 }, { timestamps: true }); // Correctly placing timestamps option
 
