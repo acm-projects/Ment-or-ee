@@ -33,13 +33,21 @@ export const EmailPassForm = ({ signupData, setSignupData, handleSubmit }) => {
             </h1>
 
             <div className="w-64 flex flex-col justify-center">
-              <form onSubmit={handleSubmit}>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSubmit();
+                }}
+              >
                 <div className="mt-12">
                   <label htmlFor="email"></label>
                   <input
                     type="email"
                     onChange={(e) => {
-                      setSignupData({ email: e.target.value });
+                      setSignupData({
+                        ...signupData,
+                        ...{ email: e.target.value },
+                      });
                     }}
                     id="email"
                     className="w-full block border text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
@@ -52,7 +60,11 @@ export const EmailPassForm = ({ signupData, setSignupData, handleSubmit }) => {
                   <input
                     type="password"
                     onChange={(e) => {
-                      setSignupData({ password: e.target.value });
+                      setSignupData({
+                        ...signupData,
+                        ...{ password: e.target.value },
+                      });
+                      // console.log(signupData);
                     }}
                     id="password"
                     className="w-full block border text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
@@ -64,7 +76,6 @@ export const EmailPassForm = ({ signupData, setSignupData, handleSubmit }) => {
                   <button
                     type="submit"
                     className="border-2 border-[#1F3839] bg-[#1F3839] text-white py-1 px-5 rounded-md hover:bg-transparent hover:text-[#1F3839] font-semibold"
-                    onClick={handleSubmit}
                   >
                     Sign Up
                   </button>

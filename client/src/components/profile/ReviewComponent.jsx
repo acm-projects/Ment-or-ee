@@ -132,7 +132,7 @@ const ReviewComponent = ({ selfView }) => {
 
   return (
     <div className="w-full bg-[#D6C7B1] px-5 py-8">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 m-6">
         <div className="lg:col-span-1 m-2">
           <h1 className="text-2xl">Mentee Reviews</h1>
           <div className="py-3 flex items-center">
@@ -143,12 +143,12 @@ const ReviewComponent = ({ selfView }) => {
         </div>
 
         <div className="lg:col-span-2 m-2">
-          <h1 className="text-2xl py-3">Review this mentor</h1>
-          <h2 className="text-1xl py-2">
-            Share your thoughts with other mentees
-          </h2>
           {!selfView && (
             <div>
+              <h1 className="text-2xl py-3">Review this mentor</h1>
+              <h2 className="text-1xl py-2">
+                Share your thoughts with other mentees
+              </h2>
               {showReviewForm ? (
                 <ReviewForm
                   onSubmit={handleSubmitReview}
@@ -162,9 +162,10 @@ const ReviewComponent = ({ selfView }) => {
                   Write a review
                 </button>
               )}
+              <div className="w-full border-t border-[#1F2839] my-4"></div>
             </div>
           )}
-          <div className="w-full border-t border-[#1F2839] my-4"></div>
+
           {reviews.length > 0 ? (
             <ul>
               {reviews.map((review, index) => (

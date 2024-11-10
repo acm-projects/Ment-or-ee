@@ -5,90 +5,90 @@ import ProfilePicture from "./ProfilePicture";
 import { useNavigate } from "react-router-dom";
 
 // const matches = []; //testing
-const matches = [
-  {
-    name: "Lerich",
-    id: "67180e89157b3c18a7d20248",
-    imgUrl: "https://example.com/profile.jpg",
-    headline: "Passionate Engineer | Driving Innovation and Growth in Law",
-    role: "Mentor",
-    fields: ["Computer Science"],
-    industries: ["Law"],
-    location: "Dallas, TX",
-    university: "The University of Texas at Dallas",
-    personalityType: "Introvert",
-    languages: ["English"],
-    bio: "I really look forward to being a mentor and having a positive impact on the community!",
-    links: [],
-  },
-  {
-    name: "Abis",
-    imgUrl: "https://example.com/profile.jpg",
-    headline: "Strategic Thinker | Specializing in Data Analysis slay",
-    role: "Mentor",
-    fields: ["Computer Science"],
-    industries: ["Health"],
-    location: "Houston, TX",
-    university: "The University of Texas at Dallas",
-    jobTitle: "Software Engineer",
-    company: "Texas Instruments",
-    personalityType: "Extrovert",
-    languages: ["English"],
-    bio: "I really look forward to being a mentor and having a positive impact on the community!",
-    links: [],
-  },
-  {
-    name: "Jeshna",
-    imgUrl: "https://example.com/profile.jpg",
-    headline: "Creative Problem Solver | Front-End Developer",
-    role: "Mentor",
-    fields: ["Computer Science"],
-    industries: ["Education"],
-    location: "San Francisco, California",
-    university: "Stanford University",
-    personalityType: "Extrovert",
-    languages: ["English"],
-    bio: "I really look forward to being a mentor and having a positive impact on the community!",
-    links: [],
-  },
-];
+// const matches = [
+//   {
+//     name: "Lerich",
+//     id: "67180e89157b3c18a7d20248",
+//     imgUrl: "https://example.com/profile.jpg",
+//     headline: "Passionate Engineer | Driving Innovation and Growth in Law",
+//     role: "Mentor",
+//     fields: ["Computer Science"],
+//     industries: ["Law"],
+//     location: "Dallas, TX",
+//     university: "The University of Texas at Dallas",
+//     personalityType: "Introvert",
+//     languages: ["English"],
+//     bio: "I really look forward to being a mentor and having a positive impact on the community!",
+//     links: [],
+//   },
+//   {
+//     name: "Abis",
+//     imgUrl: "https://example.com/profile.jpg",
+//     headline: "Strategic Thinker | Specializing in Data Analysis slay",
+//     role: "Mentor",
+//     fields: ["Computer Science"],
+//     industries: ["Health"],
+//     location: "Houston, TX",
+//     university: "The University of Texas at Dallas",
+//     jobTitle: "Software Engineer",
+//     company: "Texas Instruments",
+//     personalityType: "Extrovert",
+//     languages: ["English"],
+//     bio: "I really look forward to being a mentor and having a positive impact on the community!",
+//     links: [],
+//   },
+//   {
+//     name: "Jeshna",
+//     imgUrl: "https://example.com/profile.jpg",
+//     headline: "Creative Problem Solver | Front-End Developer",
+//     role: "Mentor",
+//     fields: ["Computer Science"],
+//     industries: ["Education"],
+//     location: "San Francisco, California",
+//     university: "Stanford University",
+//     personalityType: "Extrovert",
+//     languages: ["English"],
+//     bio: "I really look forward to being a mentor and having a positive impact on the community!",
+//     links: [],
+//   },
+// ];
 
 function MatchesBox() {
-  // const { matches, fetchMatches, error, loading } = useMatches();
+  const { matches, fetchMatches, error, loading } = useMatches();
   const { user } = UseAuth();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (user) {
-  //     fetchMatches();
-  //   }
-  // }, [user, fetchMatches]);
+  useEffect(() => {
+    if (user) {
+      fetchMatches();
+    }
+  }, [user, fetchMatches]);
 
-  // if (!user) {
-  //   return <div>Please log in to see matches.</div>;
-  // }
+  if (!user) {
+    return <div>Please log in to see matches.</div>;
+  }
 
-  // if (loading) {
-  //   return <div>Loading matches...</div>;
-  // }
+  if (loading) {
+    return <div>Loading matches...</div>;
+  }
 
-  // if (error) {
-  //   return (
-  //     <div>
-  //       <h1 className=" pt-2 text-2xl text-black font-semibold mb-2 text-center">
-  //         Matches
-  //       </h1>
-  //       <p className="p-2 text-lg">
-  //         No matches currently found. Please visit another time!
-  //       </p>
-  //     </div>
-  //   );
-  // }
+  if (error) {
+    return (
+      <div>
+        <h1 className=" pt-2 text-2xl text-black font-semibold mb-2 text-center">
+          Matches
+        </h1>
+        <p className="p-2 text-lg">
+          No matches currently found. Please visit another time!
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div>
       <h1 className=" pt-2 text-2xl text-black font-semibold mb-2 text-center">
-        Matches
+        {user.role === "Mentee" ? "Matches" : "Match Requests"}
       </h1>
       <div className="m-2 items-center">
         {matches.length > 0 ? (
@@ -115,7 +115,9 @@ function MatchesBox() {
               onClick={() => navigate("/matches")}
               className="px-4 py-2 text-lg text-black bg-[#B89C75] rounded-full flex items-center hover:bg-[#B89C75] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
             >
-              Discover More Matches
+              {user.role === "Mentee"
+                ? "Discover More Matches"
+                : "Discover More Requests"}
             </button>
           </div>
         ) : (

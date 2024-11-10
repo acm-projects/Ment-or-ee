@@ -2,6 +2,7 @@ const User = require("../models/userModel"); // Import the user model
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
+const UserModel = require("../models/userModel"); // Adjust the path if needed
 
 /**
  * @description Log in and provide users access and refresh tokens
@@ -55,7 +56,6 @@ const login = async (req, res) => {
       username: foundUser.username,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Internal Server Error", error });
   }
 };
@@ -235,14 +235,12 @@ const signupBasic = async (req, res) => {
       { expiresIn: "1hr" }
     );
 
-    res
-      .status(201)
-      .json({
-        accessToken,
-        email: savedUser.email,
-        id: savedUser._id,
-        name: savedUser.name,
-      });
+    res.status(201).json({
+      accessToken,
+      email: savedUser.email,
+      id: savedUser._id,
+      name: savedUser.name,
+    });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error", error });
   }
@@ -304,9 +302,8 @@ const signupComplete = async (req, res) => {
   const {
     userId,
     role,
-    language,
+    languages,
     personalityType,
-    educationLevel,
     fields,
     city,
     state,
@@ -331,10 +328,10 @@ const signupComplete = async (req, res) => {
     // Update common user fields
     user.role = role;
     user.fields = fields || user.fields; // Retain existing value if not provided
-    user.language = language || user.language; // Retain existing value if not provided
+    user.languages = languages || user.languages; // Retain existing value if not provided
     user.personalityType = personalityType || user.personalityType; // Retain existing value if not provided
-    user.educationLevel = educationLevel || user.educationLevel; // Retain existing value if not provided
-    user.skills = skills || user.skills; // Retain existing value if not provided
+    //user.educationLevel = educationLevel || user.educationLevel; Retain existing value if not provided
+    //user.skills = skills || user.skills; // Retain existing value if not provided
     user.location = {
       city: city || user.location.city,
       state: state || user.location.state,
@@ -381,7 +378,11 @@ const signupComplete = async (req, res) => {
     // Send success response
     res.status(200).json({ message: "User profile updated successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error", error });
+    console.error(error); // Log full error details to the console
+    res.status(500).json({
+      message: "Internal Server Error",
+      error: error.message || error,
+    });
   }
 };
 

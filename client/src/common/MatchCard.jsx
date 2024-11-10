@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const MatchCard = ({ match, compact, selfView }) => {
   const navigate = useNavigate();
   return (
-    <div className="flex rounded-3xl shadow-lg bg-[#E3E0E0] w-full mb-4">
+    <div className="flex rounded-3xl shadow-lg bg-[#E3E0E0] w-full mb-6">
       <div className="bg-[#B89C75] w-1/4 rounded-l-3xl flex items-center justify-center">
         <ProfilePicture
           imgUrl={match.imgUrl}
@@ -31,7 +31,10 @@ const MatchCard = ({ match, compact, selfView }) => {
                   onClick={() => navigate("/chat", { state: { match: match } })}
                   className="px-3 py-1 text-lg text-white bg-[#1F2839] rounded-full flex items-center hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
                 >
-                  Connect with Mentor <span className="ml-1"></span>
+                  {match.role === "Mentor"
+                    ? "Connect with Mentor"
+                    : "Accept Request"}{" "}
+                  <span className="ml-1"></span>
                 </button>
               </div>
             )}

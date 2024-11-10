@@ -39,7 +39,7 @@ const ProfileComponent = ({ user, selfView }) => {
   const ProfileCard = () => {
     return (
       <div>
-        <div className="flex w-full px-4 py-2 space-x-8 mt-4">
+        <div className="flex w-full px-10 py-2 space-x-8 m-6">
           <div className="w-1/2 px-2 py-2 bg-white rounded">
             <h2 className="text-3xl mb-2">About Me</h2>
             <h2 className="text-xl text-[#B89C75] mb-2">Bio</h2>
@@ -142,8 +142,8 @@ const ProfileComponent = ({ user, selfView }) => {
     <div className="flex flex-col">
       <Navbar />
 
-      <div className="bg-[#D3C7B3] w-1/2 h-72 p-10 flex items-center justify-center mt-20">
-        <div className="w-full h-full flex justify-center items-center">
+      <div className="bg-[#D3C7B3] h-72 p-10 flex items-center justify-center mt-20">
+        <div className="w-3/4 h-full flex justify-center items-center">
           <MatchCard match={user} compact={true} selfView={selfView} />
         </div>
       </div>

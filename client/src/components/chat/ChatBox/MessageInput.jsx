@@ -4,27 +4,27 @@ import { BsSend } from "react-icons/bs";
 const MessageInput = ({ onSend }) => {
   const [inputMessage, setInputMessage] = useState("");
 
-  const handleSend = () => {
+  const handleSend = (e) => {
+    e.preventDefault();
     if (inputMessage.trim()) {
+      console.log(inputMessage); //testing
       onSend(inputMessage);
       setInputMessage("");
     }
   };
 
   return (
-    <form className="px-4 my-3">
+    <form onSubmit={handleSend} className="px-4 my-3">
       <div className="w-full relative">
         <input
           type="text"
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
-          onClick={(e) => e.key === "Enter" && handleSend()}
           className="border text-sm rounded-lg block w-full p-2.5 bg-[#D7CFC5] border-black text-black"
           placeholder="Send a message"
         />
         <button
           type="submit"
-          onClick={handleSend}
           className="absolute inset-y-0 end-0 flex items-center pe-3"
         >
           <BsSend />

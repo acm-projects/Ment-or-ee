@@ -11,33 +11,36 @@ const Signup = () => {
 
   const { login } = UseAuth();
 
-  const handleSubmit = async () => {
-    setError("");
-    console.log("attempting signup submit"); //testing
-    console.log(signupData);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setError("");
+  //   console.log("attempting signup submit"); //testing
+  //   console.log(signupData);
+  //   // navigate("/questions");
 
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/authenication/store-auth/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(signupData),
-        }
-      );
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Registration failed");
-      } else {
-        login(signupData.username, signupData.password);
-        navigate("/questions");
-      }
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+  //   try {
+  //     const response = await fetch(
+  //       "http://localhost:5000/api/authenication/store-auth/signup-basic",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(signupData),
+  //       }
+  //     );
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       throw new Error(errorData.message || "Registration failed");
+  //     } else {
+  //       // login(signupData.username, signupData.password);
+  //       navigate("/questions");
+  //     }
+  //   } catch (error) {
+  //     setError(error.message);
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div className="w-screen h-screen flex flex-col">
@@ -45,7 +48,11 @@ const Signup = () => {
         <EmailPassForm
           signupData={signupData}
           setSignupData={setSignupData}
-          handleSubmit={handleSubmit}
+          handleSubmit={() =>
+            navigate("/questions", {
+              state: { prevSignupData: signupData },
+            })
+          }
         />
       </div>
     </div>
