@@ -11,12 +11,12 @@ const meetingSchema = new Schema({
   },
   mentor: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: MentorModel,  // Reference to the User model for mentor
+    ref: 'Mentor',  // Reference to the User model for mentor
     required: true,
   },
   mentee: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: MenteeModel,  // Reference to the User model for mentee
+    ref: 'Mentee',  // Reference to the User model for mentee
     required: true,
   },
   date: {
@@ -46,6 +46,6 @@ const meetingSchema = new Schema({
 });
 
 // Export the Meetings model
-const Meeting = mongoose.model('Meeting', meetingSchema);
+const MeetingModel = mongoose.model('Meeting', meetingSchema);
 
-module.exports = Meeting;
+module.exports = MeetingModel;

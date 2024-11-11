@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const http = require('http');
 const { Server } = require('socket.io');
 const { matchMenteeToMentors } = require('./algorithm');
+const taskController = require('./controllers/task.controller'); // Adjust path as needed
 const MentorModel = require('./models/mentorModel'); // Adjust the path as necessary
 const MenteeModel = require('./models/menteeModel');
 const methodOverride = require('method-override');
@@ -140,36 +141,61 @@ router.post('/addMenteeToMentor', async (req, res) => {
 
 module.exports = router;
 
-app.get('/api/match/:menteeId', async (req, res) => {
+// Function to get MenteeId based on UserId
+const getMenteeIdByUserId = async (userId) => {
   try {
-    const menteeId = req.params.menteeId;
+    // Query MenteeModel to find the mentee based on userId
+    const mentee = await MenteeModel.findOne({ user: userId }).exec();
 
-    // Find the mentee and populate the user details
+    // If mentee is found, return the menteeId
+    if (mentee) {
+      return mentee._id;
+    } else {
+      throw new Error('Mentee not found for the provided userId');
+    }
+  } catch (error) {
+    console.error(error);  // Log the error
+    throw new Error('Error retrieving menteeId');
+  }
+};
+app.get('/api/match/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    // Step 1: Get the menteeId using the userId
+    const menteeId = await getMenteeIdByUserId(userId);
+
+    // Step 2: Find the mentee and populate the user details
     const mentee = await MenteeModel.findById(menteeId).populate('user');
     if (!mentee) {
       return res.status(404).json({ success: false, message: 'Mentee not found' });
     }
 
-    // Fetch all mentors and populate user details for each
+    // Step 3: Fetch all mentors and populate user details for each
     const mentors = await MentorModel.find().populate('user');
 
-    // Get the matched mentors
+    // Step 4: Get the matched mentors
     const matchedMentors = await matchMenteeToMentors(mentee, mentors);
 
     // Send response with matched mentors
     res.json({
       success: true,
-      matchedMentors: matchedMentors.map(match => ({
-        mentorId: match.mentor._id,
-        name: match.mentor.user.name,
-        score: match.score,  // Include the calculated score
-        location: match.mentor.user.location,
-        languages: match.mentor.user.languages,
-        fields: match.mentor.user.fields,
-        industries: match.mentor.user.industries,
-        university: match.mentor.user.university,
-        personalityType: match.mentor.user.personalityType
-      }))
+      matchedMentors: matchedMentors.map(match => {
+        // Check if mentor.user exists before trying to access its properties
+        const mentorUser = match.mentor.user || {};
+
+        return {
+          mentorId: match.mentor._id,
+          name: mentorUser.name || 'Unknown',  // Default if name is missing
+          score: match.score,  // Include the calculated score
+          location: mentorUser.location || 'Unknown location',  // Default if location is missing
+          languages: mentorUser.languages || [],
+          fields: mentorUser.fields || [],
+          industries: mentorUser.industries || [],
+          university: mentorUser.university || 'Unknown university',
+          personalityType: mentorUser.personalityType || 'Unknown',
+        };
+      })
     });
 
   } catch (error) {
@@ -177,6 +203,7 @@ app.get('/api/match/:menteeId', async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 });
+
 
 
 
@@ -211,6 +238,9 @@ app.use('/api/meetings', meetingRoutes);
 
 const filesRoute = require('./routes/files.routes');
 app.use('/files', filesRoute);
+
+
+app.get('/tasks/assigned/:userId', taskController.getTasksAssignedToMentee);
 
 // Start the HTTP server
 server.listen(port, () => {

@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const MeetingModel = require('./meetingModel'); // Import User model
+const ReviewModel = require('./reviewModel'); // Import User model
 
 // Define the user schema
 const userSchema = new mongoose.Schema({
@@ -99,11 +101,11 @@ const userSchema = new mongoose.Schema({
   },
   reviews: [{ // Array of review IDs where this user is being reviewed
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'ReviewModel'
+    ref: ReviewModel
   }],
   meetings: [{ // Reference to the Meeting model
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'MeetingModel'
+    ref: MeetingModel
   }],
   bio: {
     type: String,

@@ -20,12 +20,12 @@ const reviewModelSchema = new Schema({
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: MenteeModel, // Reference the User model
+    ref: 'Mentee', // Reference the User model
     required: true
   },
   reviewedUser: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: MentorModel, // Reference the User model
+    ref: 'Mentor', // Reference the User model
     required: true
   }
 });
