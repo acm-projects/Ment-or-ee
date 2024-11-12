@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken');
 const validator = require('validator');
 const UserModel = require('../models/userModel'); // Adjust the path if needed
 //const UserModel = require('../models/userModel'); // Adjust the path if needed
-const MentorModel = require('../model/mentorModel');
-const MenteeModel = require('../model/menteeModel');
+const MentorModel = require('../models/mentorModel');
+const MenteeModel = require('../models/menteeModel');
 
 
 /**
