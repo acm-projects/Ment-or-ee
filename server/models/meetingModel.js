@@ -12,16 +12,16 @@ const meetingSchema = new Schema({
   mentor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Mentor',  // Reference to the User model for mentor
-    required: true,
+    required: false,
   },
   mentee: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Mentee',  // Reference to the User model for mentee
-    required: true,
+    required: false,
   },
   date: {
     type: Date,
-    required: true,
+    required: false,
   },
   duration: {
     type: Number,  // Duration of the meeting in minutes
@@ -29,7 +29,7 @@ const meetingSchema = new Schema({
   },
   location: {
     type: String,  // Physical or virtual location (e.g., Zoom link)
-    required: true,
+    required: false,
   },
   zoomLink: {
     type: String,  // Field to store the Zoom meeting link

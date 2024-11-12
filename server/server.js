@@ -109,45 +109,60 @@ io.on("connection", (socket) => {
 
 const router = express.Router();
 
-router.post("/addMenteeToMentor", async (req, res) => {
+app.post("/addMenteeToMentor", async (req, res) => {
   const { mentorId, menteeId } = req.body;
-  console.log(mentorId, menteeId);
+
+  console.log("Received request to add mentee to mentor:");
+  console.log(`Mentor ID: ${mentorId}, Mentee ID: ${menteeId}`);
 
   try {
-    // Find the mentor by ID and add the mentee ID to their mentees array
+    // Find the mentor by ID
+    console.log("Looking for mentor...");
     const mentor = await MentorModel.findById(mentorId);
     if (!mentor) {
+      console.log("Mentor not found");
       return res.status(404).json({ message: "Mentor not found" });
     }
+    console.log("Mentor found:", mentor);
 
-    // Add mentee ID if it does not already exist
+    // Add mentee ID to the mentor's mentees array
     if (!mentor.mentees.includes(menteeId)) {
+      console.log("Adding mentee to mentor...");
       mentor.mentees.push(menteeId);
       await mentor.save();
+      console.log("Mentee added to mentor");
+    } else {
+      console.log("Mentee already associated with this mentor");
     }
 
-    // Find the mentee by ID and add the mentor ID to their mentors array
+    // Find the mentee by ID
+    console.log("Looking for mentee...");
     const mentee = await MenteeModel.findById(menteeId);
     if (!mentee) {
+      console.log("Mentee not found");
       return res.status(404).json({ message: "Mentee not found" });
     }
+    console.log("Mentee found:", mentee);
 
-    // Add mentor ID if it does not already exist
+    // Add mentor ID to the mentee's mentors array
     if (!mentee.mentors.includes(mentorId)) {
+      console.log("Adding mentor to mentee...");
       mentee.mentors.push(mentorId);
       await mentee.save();
+      console.log("Mentor added to mentee");
+    } else {
+      console.log("Mentor already associated with this mentee");
     }
 
     res.status(200).json({ message: "Mentee added to mentor successfully" });
+    console.log("Response sent: Mentee added to mentor successfully");
   } catch (error) {
-    console.error(error);
+    console.error("Error occurred:", error);
     res
       .status(500)
       .json({ message: "An error occurred", error: error.message });
   }
 });
-
-module.exports = router;
 
 // Function to get MenteeId based on UserId
 const getMenteeIdByUserId = async (userId) => {
@@ -210,6 +225,72 @@ app.get("/api/match/:userId", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// Function to get mentor ID by user ID
+const getMentorIdByUserId = async (userId) => {
+  try {
+    console.log(`Searching for mentor with user ID: ${userId}`);
+
+    const mentor = await MentorModel.findOne({ user: userId }).exec();
+
+    if (mentor) {
+      console.log(`Mentor found: ${mentor._id}`);
+      return mentor._id;
+    } else {
+      console.log(`No mentor found for user ID: ${userId}`);
+      throw new Error("Mentor not found for the provided userId");
+    }
+  } catch (error) {
+    console.error("Error in getMentorIdByUserId:", error.message);
+    throw new Error("Error retrieving mentorId");
+  }
+};
+
+app.get("/mentees/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  console.log("Received request to get mentees for userId:", userId);
+
+  try {
+    // Get mentor ID based on user ID
+    console.log("Fetching mentor ID for userId:", userId);
+    const mentorId = await getMentorIdByUserId(userId);
+    console.log("Found mentor ID:", mentorId);
+
+    if (!mentorId) {
+      console.log("No mentor ID found for userId:", userId);
+      return res
+        .status(404)
+        .json({ message: "Mentor ID not found for the given userId." });
+    }
+
+    // Fetch the mentor's mentees using the mentor ID
+    console.log("Looking for mentor with ID:", mentorId);
+    const mentor = await MentorModel.findById(mentorId)
+      .populate("user") // Populate the mentees array with full mentee documents
+      .exec();
+
+    if (!mentor) {
+      console.log("No mentor found with ID:", mentorId);
+      return res.status(404).json({ message: "Mentor not found." });
+    }
+
+    console.log("Found mentor:", mentor);
+
+    if (mentor.mentees && mentor.mentees.length > 0) {
+      console.log(
+        `Found ${mentor.mentees.length} mentees for mentor ID: ${mentorId}`
+      );
+      res.status(200).json({ mentees: mentor.mentees });
+    } else {
+      console.log("No mentees found for mentor:", mentorId);
+      res.status(404).json({ message: "No mentees found for this mentor." });
+    }
+  } catch (error) {
+    console.error("Error in /mentees/:userId endpoint:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 

@@ -20,11 +20,11 @@ const MatchCard = ({ match, compact, selfView }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify({ mentorId: match.mentorId, menteeId: user.id }),
-        body: JSON.stringify({
-          menteeId: "6732d1e474bfa2e4f82b0db2",
-          mentorId: "6732d20c74bfa2e4f82b0db7",
-        }),
+        body: JSON.stringify({ mentorId: match.mentorId, menteeId: user.id }),
+        // body: JSON.stringify({
+        //   menteeId: "6732d1e474bfa2e4f82b0db2",
+        //   mentorId: "6732d20c74bfa2e4f82b0db7",
+        // }),
       });
       console.log(response);
       if (!response.ok) {
