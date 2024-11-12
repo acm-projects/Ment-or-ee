@@ -1,9 +1,18 @@
 const mongoose = require('mongoose');
+const MenteeModel = require('./menteeModel'); // Import Mentee model
 const UserModel = require('./userModel'); // Import User model
-const { required } = require('joi');
+const TaskModel = require('./taskModel'); // Import Task model
 
 // Create Mentor schema extending the base user schema
 const mentorSchema = new mongoose.Schema({
+  photo_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'uploads.files'
+  },  
+  mentees: [{ // Reference to the Mentor model
+    type: mongoose.Schema.Types.ObjectId,
+    ref: MenteeModel
+  }],
   company: { 
     type: String, 
     required: true 
@@ -18,11 +27,11 @@ const mentorSchema = new mongoose.Schema({
   },
   tasks: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'TaskModel' // Reference to the Task model
+    ref: TaskModel // Reference to the Task model
   }],
   user: {
     type: mongoose.Schema.Types.ObjectId,
-     ref: 'User',
+     ref: UserModel,
      required: true,
    }
 });

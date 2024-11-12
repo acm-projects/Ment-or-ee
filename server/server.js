@@ -1,13 +1,15 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const http = require("http");
-const { Server } = require("socket.io");
-const { findMatchingMentors } = require("./algorithm");
-const MenteeModel = require("./models/menteeModel");
-const methodOverride = require("method-override");
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const http = require('http');
+const { Server } = require('socket.io');
+const { matchMenteeToMentors } = require('./algorithm');
+const taskController = require('./controllers/task.controller'); // Adjust path as needed
+const MentorModel = require('./models/mentorModel'); // Adjust the path as necessary
+const MenteeModel = require('./models/menteeModel');
+const methodOverride = require('method-override');
 // const passport = require('./middleware/passport');
 // const googleOAuthRoutes = require('./routes/authentication/google-oauth.routes');
 
@@ -105,46 +107,110 @@ io.on("connection", (socket) => {
   });
 });
 
-/*async function matchMentorToMentee(menteeId) {
-  try {
-    const mentee = await MenteeModel.findById(menteeId);
+const router = express.Router();
 
-    if (!mentee) {
-      console.log("Mentee not found");
-      return;
+router.post('/addMenteeToMentor', async (req, res) => {
+  const { mentorId, menteeId } = req.body;
+
+  try {
+    // Find the mentor by ID and add the mentee ID to their mentees array
+    const mentor = await MentorModel.findById(mentorId);
+    if (!mentor) {
+      return res.status(404).json({ message: 'Mentor not found' });
+    }
+    
+    // Add mentee ID if it does not already exist
+    if (!mentor.mentees.includes(menteeId)) {
+      mentor.mentees.push(menteeId);
+      await mentor.save();
     }
 
-    const matchedMentors = await findMatchingMentors(mentee);
-
-    console.log("Top Matches:", matchedMentors);
-  } catch (error) {
-    console.error("Error matching mentors:", error);
-  }
-}*/
-
-// API endpoint to match a mentor to a mentee by their ID
-app.post("/api/matchMentorToMentee", async (req, res) => {
-  const { menteeId } = req.body;
-
-  try {
+    // Find the mentee by ID and add the mentor ID to their mentors array
     const mentee = await MenteeModel.findById(menteeId);
-
     if (!mentee) {
       return res.status(404).json({ message: "Mentee not found" });
     }
 
-    const matchedMentors = await findMatchingMentors(mentee);
-
-    if (matchedMentors.length === 0) {
-      return res.status(404).json({ message: "No matching mentors found" });
+    // Add mentor ID if it does not already exist
+    if (!mentee.mentors.includes(mentorId)) {
+      mentee.mentors.push(mentorId);
+      await mentee.save();
     }
 
-    return res.status(200).json({ matchedMentors });
+    res.status(200).json({ message: 'Mentee added to mentor successfully' });
   } catch (error) {
-    console.error("Error matching mentors:", error);
-    return res.status(500).json({ message: "Error matching mentors" });
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred', error: error.message });
   }
 });
+
+module.exports = router;
+
+// Function to get MenteeId based on UserId
+const getMenteeIdByUserId = async (userId) => {
+  try {
+    // Query MenteeModel to find the mentee based on userId
+    const mentee = await MenteeModel.findOne({ user: userId }).exec();
+
+    // If mentee is found, return the menteeId
+    if (mentee) {
+      return mentee._id;
+    } else {
+      throw new Error('Mentee not found for the provided userId');
+    }
+  } catch (error) {
+    console.error(error);  // Log the error
+    throw new Error('Error retrieving menteeId');
+  }
+};
+app.get('/api/match/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    // Step 1: Get the menteeId using the userId
+    const menteeId = await getMenteeIdByUserId(userId);
+
+    // Step 2: Find the mentee and populate the user details
+    const mentee = await MenteeModel.findById(menteeId).populate('user');
+    if (!mentee) {
+      return res.status(404).json({ success: false, message: 'Mentee not found' });
+    }
+
+    // Step 3: Fetch all mentors and populate user details for each
+    const mentors = await MentorModel.find().populate('user');
+
+    // Step 4: Get the matched mentors
+    const matchedMentors = await matchMenteeToMentors(mentee, mentors);
+
+    // Send response with matched mentors
+    res.json({
+      success: true,
+      matchedMentors: matchedMentors.map(match => {
+        // Check if mentor.user exists before trying to access its properties
+        const mentorUser = match.mentor.user || {};
+
+        return {
+          mentorId: match.mentor._id,
+          name: mentorUser.name || 'Unknown',  // Default if name is missing
+          score: match.score,  // Include the calculated score
+          location: mentorUser.location || 'Unknown location',  // Default if location is missing
+          languages: mentorUser.languages || [],
+          fields: mentorUser.fields || [],
+          industries: mentorUser.industries || [],
+          university: mentorUser.university || 'Unknown university',
+          personalityType: mentorUser.personalityType || 'Unknown',
+        };
+      })
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+
+
 
 // Define basic routes
 app.get("/", (req, res) => {
@@ -175,8 +241,11 @@ app.use("/api/mentors", mentorRoutes);
 const meetingRoutes = require("./routes/meeting.routes");
 app.use("/api/meetings", meetingRoutes);
 
-const filesRoute = require("./routes/files.routes");
-app.use("/files", filesRoute);
+const filesRoute = require('./routes/files.routes');
+app.use('/files', filesRoute);
+
+
+app.get('/tasks/assigned/:userId', taskController.getTasksAssignedToMentee);
 
 // Start the HTTP server
 server.listen(port, () => {
@@ -187,128 +256,3 @@ server.listen(port, () => {
 const storeAuthRoutes = require("./routes/authenication/store-auth.routes");
 app.use("/api/authenication/store-auth", storeAuthRoutes);
 
-const session = require("express-session");
-const { google } = require("googleapis");
-
-// Google OAuth2 credentials
-const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-const REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
-
-const oAuth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URI
-);
-
-// Middleware for session management
-app.use(
-  session({
-    secret: "yo", // Replace with a strong secret
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      secure: false, // Set to true if using HTTPS
-      maxAge: 1000 * 60 * 60 * 24, // 1 day (adjust as needed)
-    },
-  })
-);
-
-// Routes
-app.get("/auth/google", (req, res) => {
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: "offline",
-    scope: ["https://www.googleapis.com/auth/calendar"],
-  });
-  console.log("Redirecting to Google OAuth URL:", authUrl);
-  res.redirect(authUrl);
-});
-
-app.get("/auth/google/callback", async (req, res) => {
-  const { code } = req.query;
-  console.log("Received authorization code:", code);
-  try {
-    const { tokens } = await oAuth2Client.getToken(code);
-    oAuth2Client.setCredentials(tokens);
-
-    // Store tokens in session
-    req.session.tokens = tokens;
-    console.log(
-      "Tokens successfully retrieved and stored in session:",
-      req.session.tokens
-    );
-    console.log("Current session after storing tokens:", req.session);
-
-    res.send(
-      "Google Calendar authorization successful! You can now create events."
-    );
-  } catch (error) {
-    console.error("Error retrieving access token:", error);
-    res.status(500).send("Authentication failed");
-  }
-});
-
-app.post("/tasks", async (req, res) => {
-  console.log("Received request to create task");
-  console.log("Current session:", req.session); // Log entire session object
-
-  // Check if the user is authenticated
-  if (!req.session.tokens) {
-    console.log("Tokens not found in session. User is not authenticated."); // Log error for debugging
-    return res.status(401).send("User not authenticated with Google");
-  }
-
-  // Check if the token has expired
-  const tokenExpiryDate = req.session.tokens.expiry_date;
-  console.log("Token expiry date:", tokenExpiryDate);
-  if (tokenExpiryDate <= Date.now()) {
-    console.log("Access token has expired. Attempting to refresh token...");
-    try {
-      const { credentials } = await oAuth2Client.refreshAccessToken(); // Use credentials to get new tokens
-      req.session.tokens = credentials; // Update session with new tokens
-      oAuth2Client.setCredentials(credentials); // Set new credentials
-      console.log(
-        "Tokens refreshed and stored in session:",
-        req.session.tokens
-      );
-    } catch (error) {
-      console.error("Error refreshing access token:", error);
-      return res.status(401).send("Failed to refresh access token");
-    }
-  } else {
-    console.log("Access token is still valid. Proceeding to create event.");
-  }
-
-  // Set the credentials for the API call
-  oAuth2Client.setCredentials(req.session.tokens);
-
-  // Set up the calendar API
-  const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
-
-  // Define the event you want to create
-  const event = {
-    summary: "New Event",
-    location: "123 Example St.",
-    description: "This is a test event",
-    start: {
-      dateTime: "2024-10-31T10:00:00-07:00", // Adjust to your desired time
-    },
-    end: {
-      dateTime: "2024-10-31T11:00:00-07:00", // Adjust to your desired time
-    },
-  };
-  console.log("Event details:", event);
-
-  try {
-    // Attempt to create the event
-    const response = await calendar.events.insert({
-      calendarId: "primary",
-      resource: event,
-    });
-    console.log("Event created successfully:", response.data);
-    res.send("Event created: " + response.data.htmlLink);
-  } catch (error) {
-    console.error("Error creating event:", error);
-    res.status(500).send("Failed to create event");
-  }
-});
