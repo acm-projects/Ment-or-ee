@@ -469,8 +469,7 @@ const logout = (req, res) => {
 
 module.exports = {
     login,
-    signupBasic,
-    signupComplete,
+    signup,
     refresh,
     logout
 };
