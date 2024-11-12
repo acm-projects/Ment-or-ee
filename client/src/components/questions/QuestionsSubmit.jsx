@@ -45,8 +45,15 @@ const QuestionsSubmit = () => {
         const errorData = await response.json();
         throw new Error(errorData.message || "Signup failed");
       } else {
-        login(formData.username, formData.password);
-        navigate("/home");
+        console.log("successful signup");
+
+        const success = await login(formData.email, formData.password);
+
+        if (success) {
+          navigate("/home");
+        } else {
+          setError("Invalid email or password");
+        }
       }
     } catch (error) {
       setError(error.message);

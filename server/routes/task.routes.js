@@ -1,19 +1,19 @@
 const express = require('express');
 const {
-    getTasks,
-    getTask,
     createTask,
-    deleteTask,
-    updateTask
+    getAllTasks,
+    getTaskById,
+    updateTask,
+    deleteTask
 } = require('../controllers/task.controller'); // Adjust the path as needed
 
 const router = express.Router();
 
 // GET all tasks
-router.get('/', getTasks);
+router.get('/', getAllTasks);
 
 // GET a single task by ID
-router.get('/:id', getTask);
+router.get('/:id', getTaskById);
 
 // POST a new task
 router.post('/', createTask);

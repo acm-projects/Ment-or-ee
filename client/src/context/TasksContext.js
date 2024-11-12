@@ -22,7 +22,7 @@ export const TasksContextProvider = ({ children }) => {
     try {
       console.log("Fetching tasks for user ID:", user.id);
       const response = await fetch(
-        `http://localhost:5000/api/tasks/${user.id}`,
+        `http://localhost:5000/api/tasks/assigned/${user.id}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -46,8 +46,31 @@ export const TasksContextProvider = ({ children }) => {
     }
   }, [user]);
 
+  const assignTask = async (task) => {
+    console.log("attemping tasks submit"); //testing
+    console.log(task); //testing
+    try {
+      const response = await fetch("http://localhost:5000/api/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(task),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Adding task failed");
+      }
+      return true;
+    } catch (error) {
+      console.error("assign task failed", error);
+      throw error;
+    }
+  };
+
   return (
-    <TasksContext.Provider value={{ tasks, fetchTasks, error, loading }}>
+    <TasksContext.Provider
+      value={{ tasks, assignTask, fetchTasks, error, loading }}
+    >
       {children}
     </TasksContext.Provider>
   );
@@ -62,30 +85,3 @@ export const useTasks = () => {
 };
 
 export { TasksContext };
-
-//add to tasks page
-// const handleSubmit = async () => {
-//     console.log("attemping tasks submit"); //testing
-//     // console.log(formData); //testing
-
-//     try {
-//       const response = await fetch(
-//         "http://localhost:5000/addTask",
-//         {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify({ newTask }),
-//         }
-//       );
-//       if (!response.ok) {
-//         const errorData = await response.json();
-//         throw new Error(errorData.message || "Adding task failed");
-//       } else {
-//         // adding tasks success
-//       }
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
