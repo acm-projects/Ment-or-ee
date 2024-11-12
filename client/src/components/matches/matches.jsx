@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../common/navbar";
 import FilterBox from "../../common/FilterBoxes";
 import MatchCard from "../../common/MatchCard";
 import { UseAuth } from "../../context/AuthContext";
+import { useMatches } from "../../context/MatchesContext";
 
 const Matches = () => {
   const { user } = UseAuth();
+  const { matches, fetchMatches, error, loading } = useMatches();
   const [careerFieldFilter, setCareerFieldFilter] = useState("");
   const [headlineFilter, setHeadlineFilter] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
@@ -15,83 +17,89 @@ const Matches = () => {
   const [personalityFilter, setPersonalityFilter] = useState("");
   const [languageFilter, setLanguageFilter] = useState("");
 
-  const matches = [
-    {
-      name: "Shane",
-      id: "672e3c25bd7073becceae3b4",
-      imgUrl: "https://example.com/profile.jpg",
-      headline: "Passionate Scientist | Driving Innovation and Growth in Law",
-      role: "Mentor",
-      fields: ["Biology"],
-      industries: ["Law"],
-      location: "Dallas, TX",
-      university: "The University of Texas at Dallas",
-      personalityType: "Introvert",
-      languages: ["English"],
-      bio: "I really look forward to being a mentor and having a positive impact on the community!",
-      links: [],
-    },
-    {
-      name: "Chris",
-      id: "6719aabd4b36027a26a4560c",
-      imgUrl: "https://example.com/profile.jpg",
-      headline: "Passionate Engineer | Driving Innovation and Growth in Law",
-      role: "Mentee",
-      fields: ["Computer Science"],
-      industries: ["Law"],
-      location: "Dallas, TX",
-      university: "The University of Texas at Dallas",
-      personalityType: "Introvert",
-      languages: ["English"],
-      bio: "I really look forward to being a mentor and having a positive impact on the community!",
-      links: [],
-    },
-    {
-      name: "Lerich",
-      id: "67180e89157b3c18a7d20248",
-      imgUrl: "https://example.com/profile.jpg",
-      headline: "Passionate Engineer | Driving Innovation and Growth in Law",
-      role: "Mentor",
-      fields: ["Computer Science"],
-      industries: ["Law"],
-      location: "Dallas, TX",
-      university: "The University of Texas at Dallas",
-      personalityType: "Introvert",
-      languages: ["English"],
-      bio: "I really look forward to being a mentor and having a positive impact on the community!",
-      links: [],
-    },
-    {
-      name: "Abis",
-      imgUrl: "https://example.com/profile.jpg",
-      headline: "Strategic Thinker | Specializing in Data Analysis slay",
-      role: "Mentor",
-      fields: ["Computer Science"],
-      industries: ["Health"],
-      location: "Houston, TX",
-      university: "The University of Texas at Dallas",
-      jobTitle: "Software Engineer",
-      company: "Texas Instruments",
-      personalityType: "Extrovert",
-      languages: ["English"],
-      bio: "I really look forward to being a mentor and having a positive impact on the community!",
-      links: [],
-    },
-    {
-      name: "Jeshna",
-      imgUrl: "https://example.com/profile.jpg",
-      headline: "Creative Problem Solver | Front-End Developer",
-      role: "Mentor",
-      fields: ["Computer Science"],
-      industries: ["Education"],
-      location: "San Francisco, California",
-      university: "Stanford University",
-      personalityType: "Extrovert",
-      languages: ["English"],
-      bio: "I really look forward to being a mentor and having a positive impact on the community!",
-      links: [],
-    },
-  ];
+  useEffect(() => {
+    if (user) {
+      fetchMatches();
+    }
+  }, [user, fetchMatches]);
+
+  // const matches = [
+  //   {
+  //     name: "Shane",
+  //     id: "672e3c25bd7073becceae3b4",
+  //     imgUrl: "https://example.com/profile.jpg",
+  //     headline: "Passionate Scientist | Driving Innovation and Growth in Law",
+  //     role: "Mentor",
+  //     fields: ["Biology"],
+  //     industries: ["Law"],
+  //     location: "Dallas, TX",
+  //     university: "The University of Texas at Dallas",
+  //     personalityType: "Introvert",
+  //     languages: ["English"],
+  //     bio: "I really look forward to being a mentor and having a positive impact on the community!",
+  //     links: [],
+  //   },
+  //   {
+  //     name: "Chris",
+  //     id: "6719aabd4b36027a26a4560c",
+  //     imgUrl: "https://example.com/profile.jpg",
+  //     headline: "Passionate Engineer | Driving Innovation and Growth in Law",
+  //     role: "Mentee",
+  //     fields: ["Computer Science"],
+  //     industries: ["Law"],
+  //     location: "Dallas, TX",
+  //     university: "The University of Texas at Dallas",
+  //     personalityType: "Introvert",
+  //     languages: ["English"],
+  //     bio: "I really look forward to being a mentor and having a positive impact on the community!",
+  //     links: [],
+  //   },
+  //   {
+  //     name: "Lerich",
+  //     id: "67180e89157b3c18a7d20248",
+  //     imgUrl: "https://example.com/profile.jpg",
+  //     headline: "Passionate Engineer | Driving Innovation and Growth in Law",
+  //     role: "Mentor",
+  //     fields: ["Computer Science"],
+  //     industries: ["Law"],
+  //     location: "Dallas, TX",
+  //     university: "The University of Texas at Dallas",
+  //     personalityType: "Introvert",
+  //     languages: ["English"],
+  //     bio: "I really look forward to being a mentor and having a positive impact on the community!",
+  //     links: [],
+  //   },
+  //   {
+  //     name: "Abis",
+  //     imgUrl: "https://example.com/profile.jpg",
+  //     headline: "Strategic Thinker | Specializing in Data Analysis slay",
+  //     role: "Mentor",
+  //     fields: ["Computer Science"],
+  //     industries: ["Health"],
+  //     location: "Houston, TX",
+  //     university: "The University of Texas at Dallas",
+  //     jobTitle: "Software Engineer",
+  //     company: "Texas Instruments",
+  //     personalityType: "Extrovert",
+  //     languages: ["English"],
+  //     bio: "I really look forward to being a mentor and having a positive impact on the community!",
+  //     links: [],
+  //   },
+  //   {
+  //     name: "Jeshna",
+  //     imgUrl: "https://example.com/profile.jpg",
+  //     headline: "Creative Problem Solver | Front-End Developer",
+  //     role: "Mentor",
+  //     fields: ["Computer Science"],
+  //     industries: ["Education"],
+  //     location: "San Francisco, California",
+  //     university: "Stanford University",
+  //     personalityType: "Extrovert",
+  //     languages: ["English"],
+  //     bio: "I really look forward to being a mentor and having a positive impact on the community!",
+  //     links: [],
+  //   },
+  // ];
 
   // Apply filters to the matches
   const filteredMatches = matches.filter((match) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { UseAuth } from "../../context/AuthContext";
-import { Questions } from "../questions/Questions";
+import { Questions } from "./Questions";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 

@@ -24,6 +24,9 @@ export const MatchesContextProvider = ({ children }) => {
       const response = await fetch(
         `http://localhost:5000/api/match/${user.id}`,
         {
+          // `http://localhost:5000/api/match/${user.id}`,
+          // `http://localhost:5000/api/match/67313c2a886ec172b4dda4fb`
+
           method: "GET",
           headers: { "Content-Type": "application/json" },
         }
@@ -36,7 +39,7 @@ export const MatchesContextProvider = ({ children }) => {
 
       const data = await response.json();
       console.log("Received matches:", data);
-      setMatches(data);
+      setMatches(data.matchedMentors);
     } catch (error) {
       console.error("Error fetching matches:", error);
       setError(error.message);

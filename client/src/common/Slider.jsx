@@ -22,25 +22,27 @@ const Slider = ({ fields, onWeightageChange, onAnswer, curAnswer }) => {
   };
 
   return (
-    <div className="flex w-full p-8 bg-white rounded">
+    <div className="flex w-full p-8 rounded">
       {/* Left Half: Sliders Section */}
       <div className="w-1/2 pr-8">
         <h2 className="text-3xl mb-4">Matching Preferences</h2>
         {fields.map((field, index) => (
-          <div key={field.id} className="mb-6">
-            <label className="block text-xl text-[#B89C75] font-medium">
+          <div key={field.id} className="mb-3">
+            <label className="block text-xl text-[#B89C75] font-medium mb-1">
               {field.label}
             </label>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              step="10"
-              value={weights[index]}
-              onChange={(e) => handleChange(index, e.target.value)}
-              className="w-full"
-            />
-            <p>{weights[index]}%</p>
+            <div className="flex items-center space-x-2">
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="10"
+                value={weights[index]}
+                onChange={(e) => handleChange(index, e.target.value)}
+                className="flex-grow"
+              />
+              <p className="w-5 text-right">{weights[index]}%</p>
+            </div>
           </div>
         ))}
       </div>

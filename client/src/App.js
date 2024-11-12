@@ -18,25 +18,28 @@ import Questions from "./components/questions/QuestionsSubmit";
 import { AuthContextProvider } from "./context/AuthContext";
 import { MatchesContextProvider } from "./context/MatchesContext";
 import ViewMore from "./components/matches/viewMore";
+import { TasksContextProvider } from "./context/TasksContext";
 
 const App = () => {
   return (
     <AuthContextProvider>
       <MatchesContextProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/questions" element={<Questions />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/matches" element={<Matches />} />
-            <Route path="/ViewingProfile" element={<ViewMore />} />
-            <Route path="/tasks" element={<Tasks />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/home" element={<Home />} />
-          </Routes>
-        </Router>
+        <TasksContextProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/questions" element={<Questions />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/matches" element={<Matches />} />
+              <Route path="/ViewingProfile" element={<ViewMore />} />
+              <Route path="/tasks" element={<Tasks />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/home" element={<Home />} />
+            </Routes>
+          </Router>
+        </TasksContextProvider>
       </MatchesContextProvider>
     </AuthContextProvider>
   );

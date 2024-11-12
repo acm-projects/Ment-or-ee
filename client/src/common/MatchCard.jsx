@@ -1,9 +1,35 @@
 import React from "react";
 import ProfilePicture from "./ProfilePicture";
 import { useNavigate } from "react-router-dom";
+import { UseAuth } from "../context/AuthContext";
 
 const MatchCard = ({ match, compact, selfView }) => {
+  const { user } = UseAuth();
   const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    console.log("attemping matching submit"); //testing
+    // console.log(formData); //testing
+
+    try {
+      const response = await fetch("http://localhost:5000/addMenteeToMentor", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ mentorId: user, menteeId: match }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Matching failed");
+      } else {
+        navigate("/chat", { state: { match: match } });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex rounded-3xl shadow-lg bg-[#E3E0E0] w-full mb-6">
       <div className="bg-[#B89C75] w-1/4 rounded-l-3xl flex items-center justify-center">
@@ -27,10 +53,8 @@ const MatchCard = ({ match, compact, selfView }) => {
               <div></div>
             ) : (
               <div className="text-right py-2">
-                <button
-                  onClick={() => navigate("/chat", { state: { match: match } })}
-                  className="px-3 py-1 text-lg text-white bg-[#1F2839] rounded-full flex items-center hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
-                >
+                <button className="px-3 py-1 text-lg text-white bg-[#1F2839] rounded-full flex items-center hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
+                  onClick={() => handleSubmit()}
                   {match.role === "Mentor"
                     ? "Connect with Mentor"
                     : "Accept Request"}{" "}
@@ -64,7 +88,8 @@ const MatchCard = ({ match, compact, selfView }) => {
                   {match.personalityType}
                 </p>
                 <p>
-                  <span className="font-bold">Location:</span> {match.location}
+                  <span className="font-bold">Location:</span>{" "}
+                  {match.location.city}
                 </p>
                 <p>
                   <span className="font-bold">College:</span> {match.university}

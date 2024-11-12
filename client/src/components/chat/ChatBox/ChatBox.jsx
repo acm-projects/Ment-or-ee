@@ -9,9 +9,6 @@ const socket = io("http://localhost:5000");
 
 function ChatBox({ sender, receiver }) {
   const [messages, setMessages] = useState([]);
-  const roomId = `${sender.role === "Mentor" ? sender.id : receiver.id}_${
-    sender.role === "Mentor" ? receiver.id : sender.id
-  }`;
 
   // const messagesEndRef = useRef(null);
 
@@ -41,6 +38,9 @@ function ChatBox({ sender, receiver }) {
   //check here
   useEffect(() => {
     // console.log(messages);
+    const roomId = `${sender.role === "Mentor" ? sender.id : receiver.id}_${
+      sender.role === "Mentor" ? receiver.id : sender.id
+    }`;
     console.log("Current roomId:", roomId);
     if (!sender || !sender.id || !receiver || !receiver.id) {
       console.error("Sender or receiver is not defined");
@@ -68,9 +68,12 @@ function ChatBox({ sender, receiver }) {
       socket.off("connect", handleConnect);
       socket.off("message", handleReceivedMessage);
     };
-  }, [sender, receiver, roomId, handleReceivedMessage]);
+  }, [sender, receiver, handleReceivedMessage]);
 
   const sendMessage = (inputMessage) => {
+    const roomId = `${sender.role === "Mentor" ? sender.id : receiver.id}_${
+      sender.role === "Mentor" ? receiver.id : sender.id
+    }`;
     console.log("sendMessage function called with:", inputMessage); // Add this lo
     if (inputMessage.trim()) {
       console.log(`Sending message to room ${roomId}`);

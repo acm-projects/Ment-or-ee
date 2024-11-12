@@ -80,7 +80,7 @@ const ProfileComponent = ({ user, selfView }) => {
               <p>{industries}</p>
 
               <h2 className="text-xl text-[#B89C75] mt-4 mb-2">Links:</h2>
-              {user.links.length > 0 ? (
+              {user.links > 0 ? (
                 <ul>
                   {user.links.map((link, index) => (
                     <li key={index}>{link}</li>
@@ -114,7 +114,7 @@ const ProfileComponent = ({ user, selfView }) => {
               <p>{user.fields.join(", ")}</p>
 
               <h2 className="text-xl text-[#B89C75] mt-4 mb-2">Links:</h2>
-              {user.links.length > 0 ? (
+              {user.links ? (
                 <ul>
                   {user.links.map((link, index) => (
                     <li key={index}>{link}</li>

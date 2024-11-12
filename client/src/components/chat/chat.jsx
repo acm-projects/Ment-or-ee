@@ -4,6 +4,7 @@ import ChatBox from "./ChatBox/ChatBox";
 import { UseAuth } from "../../context/AuthContext";
 import ChatDMs from "./ChatDMs/ChatDMs";
 import { useLocation } from "react-router-dom";
+import Zoom from "../zoom/Zoom.jsx"; //temp
 
 const Chat = () => {
   const { user } = UseAuth();
@@ -34,6 +35,7 @@ const Chat = () => {
           )}
           {/* <ChatBox user={user} match={match} /> */}
         </div>
+        <Zoom></Zoom>
       </div>
     </div>
   );

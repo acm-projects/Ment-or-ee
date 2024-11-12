@@ -177,20 +177,16 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
       condition: () => formData.role === "Mentor", //make it into a multiselect
     },
     {
-      key: "industry",
-      type: "dropdown",
-      multi: true,
+      key: "industries",
+      type: "text",
       text: "What industries are you interested in working in?",
-      condition: () => formData.role === "Mentee", //temp options
-      options: ["Law", "Education", "Medical"],
+      condition: () => formData.role === "Mentee",
     },
     {
-      key: "industry",
-      type: "dropdown",
-      multi: false,
+      key: "industries",
+      type: "text",
       text: "What industry do you work in?",
-      condition: () => formData.role === "Mentor", //temp options
-      options: ["Law", "Education", "Medical"],
+      condition: () => formData.role === "Mentor",
     },
     // {
     //   key: "growthAreas", //TODO: multi select
