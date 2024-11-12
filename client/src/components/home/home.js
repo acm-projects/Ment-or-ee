@@ -5,7 +5,6 @@ import ProfileBox from "../../common/ProfileBox";
 import MatchesBox from "../../common/MatchesBox";
 import { UseAuth } from "../../context/AuthContext";
 import CalendarBox from "../../common/CalendarBox";
-import Zoom from "../zoom/Zoom"; //temp
 
 const Home = () => {
   const { user } = UseAuth();
@@ -36,7 +35,6 @@ const Home = () => {
           <MatchesBox user={user} />
         </div>
       </div>
-      <Zoom></Zoom>
     </div>
   );
 };

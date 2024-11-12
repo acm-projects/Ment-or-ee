@@ -9,25 +9,26 @@ const MatchCard = ({ match, compact, selfView }) => {
 
   const handleSubmit = async () => {
     console.log("attemping matching submit"); //testing
+    navigate("/chat", { state: { match: match } }); //remove later
     // console.log(formData); //testing
 
-    try {
-      const response = await fetch("http://localhost:5000/addMenteeToMentor", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ mentorId: user, menteeId: match }),
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Matching failed");
-      } else {
-        navigate("/chat", { state: { match: match } });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const response = await fetch("http://localhost:5000/addMenteeToMentor", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ mentorId: user, menteeId: match }),
+    //   });
+    //   if (!response.ok) {
+    //     const errorData = await response.json();
+    //     throw new Error(errorData.message || "Matching failed");
+    //   } else {
+    //     navigate("/chat", { state: { match: match } });
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -53,8 +54,10 @@ const MatchCard = ({ match, compact, selfView }) => {
               <div></div>
             ) : (
               <div className="text-right py-2">
-                <button className="px-3 py-1 text-lg text-white bg-[#1F2839] rounded-full flex items-center hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]">
+                <button
+                  className="px-3 py-1 text-lg text-white bg-[#1F2839] rounded-full flex items-center hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
                   onClick={() => handleSubmit()}
+                >
                   {match.role === "Mentor"
                     ? "Connect with Mentor"
                     : "Accept Request"}{" "}
