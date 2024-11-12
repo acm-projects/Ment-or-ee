@@ -386,7 +386,7 @@ const signup = async (req, res) => {
             email,
             password: hashedPassword,
             role,
-            location,
+            location: {city, state},
             languages,
             university,
             personalityType,
