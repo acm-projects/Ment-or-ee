@@ -111,6 +111,7 @@ const router = express.Router();
 
 router.post("/addMenteeToMentor", async (req, res) => {
   const { mentorId, menteeId } = req.body;
+  console.log(mentorId, menteeId);
 
   try {
     // Find the mentor by ID and add the mentee ID to their mentees array

@@ -9,26 +9,33 @@ const MatchCard = ({ match, compact, selfView }) => {
 
   const handleSubmit = async () => {
     console.log("attemping matching submit"); //testing
-    navigate("/chat", { state: { match: match } }); //remove later
+    console.log("mentor", match.mentorId);
+    console.log("mentee", user.id);
+    // navigate("/chat", { state: { match: match } }); //remove later
     // console.log(formData); //testing
 
-    // try {
-    //   const response = await fetch("http://localhost:5000/addMenteeToMentor", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ mentorId: user, menteeId: match }),
-    //   });
-    //   if (!response.ok) {
-    //     const errorData = await response.json();
-    //     throw new Error(errorData.message || "Matching failed");
-    //   } else {
-    //     navigate("/chat", { state: { match: match } });
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const response = await fetch("http://localhost:5000/addMenteeToMentor", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify({ mentorId: match.mentorId, menteeId: user.id }),
+        body: JSON.stringify({
+          menteeId: "6732d1e474bfa2e4f82b0db2",
+          mentorId: "6732d20c74bfa2e4f82b0db7",
+        }),
+      });
+      console.log(response);
+      if (!response.ok) {
+        // const errorData = await response.json();
+        // throw new Error(errorData.message || "Matching failed");
+      } else {
+        navigate("/chat", { state: { match: match } });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -47,7 +54,8 @@ const MatchCard = ({ match, compact, selfView }) => {
         {compact ? (
           <div>
             <p className="text-gray-600">
-              <span className="font-bold">Role:</span> {match.role}
+              <span className="font-bold">Role:</span>{" "}
+              {match.mentorId ? "Mentor" : "Mentee"}
             </p>{" "}
             <p className="text-gray-600">{match.headline}</p>
             {selfView ? (
@@ -58,9 +66,7 @@ const MatchCard = ({ match, compact, selfView }) => {
                   className="px-3 py-1 text-lg text-white bg-[#1F2839] rounded-full flex items-center hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
                   onClick={() => handleSubmit()}
                 >
-                  {match.role === "Mentor"
-                    ? "Connect with Mentor"
-                    : "Accept Request"}{" "}
+                  {match.mentorId ? "Connect with Mentor" : "Accept Request"}{" "}
                   <span className="ml-1"></span>
                 </button>
               </div>
@@ -74,7 +80,8 @@ const MatchCard = ({ match, compact, selfView }) => {
                   <span className="font-bold">Headline:</span> {match.headline}
                 </p>
                 <p>
-                  <span className="font-bold">Role:</span> {match.role}
+                  <span className="font-bold">Role:</span>{" "}
+                  {match.mentorId ? "Mentor" : "Mentee"}
                 </p>
                 <p>
                   <span className="font-bold">Career Field:</span>{" "}

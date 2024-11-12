@@ -367,7 +367,8 @@ const signup = async (req, res) => {
       email,
       password,
       role,
-      location,
+      city,
+      state,
       languages,
       university,
       personalityType,
@@ -417,7 +418,7 @@ const signup = async (req, res) => {
       email,
       password: hashedPassword,
       role,
-      location,
+      location: { city, state },
       languages,
       university,
       personalityType,
@@ -435,11 +436,9 @@ const signup = async (req, res) => {
     let profile;
     if (role === "Mentor") {
       if (!company || !jobTitle || !degrees) {
-        return res
-          .status(400)
-          .json({
-            message: "Mentors must provide company, job title, and degrees",
-          });
+        return res.status(400).json({
+          message: "Mentors must provide company, job title, and degrees",
+        });
       }
 
       profile = new MentorModel({
@@ -486,14 +485,12 @@ const signup = async (req, res) => {
     );
 
     // Respond with tokens and user data
-    res
-      .status(201)
-      .json({
-        accessToken,
-        refreshToken,
-        userId: savedUser._id,
-        email: savedUser.email,
-      });
+    res.status(201).json({
+      accessToken,
+      refreshToken,
+      userId: savedUser._id,
+      email: savedUser.email,
+    });
   } catch (error) {
     console.error("Signup error:", error);
     res.status(500).json({ message: "Server error" });

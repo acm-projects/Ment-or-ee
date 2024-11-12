@@ -1,35 +1,33 @@
-// TaskItem.js
 import React from 'react';
 import TaskStatus from './TaskStatus';
 
-const TaskItem = ({ type, description, dueDate, mentor, status, onStatusChange }) => {
-  const handleClick = () => {
-    onStatusChange(status); // Pass the current status when clicked
-  };
+const TaskItem = ({ type, description, dueDate, mentor, status, onStatusChange, taskId }) => {
+    const handleClick = () => {
+        onStatusChange(taskId); // Pass taskId to onStatusChange when clicked
+    };
 
-  const getStatusColor = () => {
-    switch (status) {
-      case TaskStatus.COMPLETED:
-        return 'bg-[#1F2839]'; // Completed color
-      case TaskStatus.IN_PROGRESS:
-        return 'bg-[#B89C75]'; // In-progress color (beige)
-      default:
-        return 'bg-white'; // Not started color
-    }
-  };
+    const getStatusColor = () => {
+        return status === TaskStatus.COMPLETE ? 'bg-[#1F2839]' : 'bg-white'; // Filled if complete
+    };
 
-  return (
-    <div className="flex items-center justify-between p-2 border-b last:border-none">
-      <div
-        className={`w-6 h-6 rounded-full border cursor-pointer ${getStatusColor()}`}
-        onClick={handleClick}
-      ></div>
-      <span className="text-sm font-medium">{type}</span>
-      <span className="text-sm text-blue-600 underline cursor-pointer">{description}</span>
-      <span className="text-sm">{dueDate}</span>
-      <span className="text-sm">{mentor}</span>
-    </div>
-  );
+    return (
+        <div className="flex items-center justify-between p-4 border-b last:border-none space-x-4">
+            {/* Status indicator */}
+            <div className={`w-6 h-6 rounded-full border cursor-pointer ${getStatusColor()}`} onClick={handleClick}></div>
+            
+            {/* Task Type */}
+            <span className="text-sm font-medium text-gray-700">{type}</span>
+            
+            {/* Task Description */}
+            <span className="text-sm text-blue-600 underline cursor-pointer">{description}</span>
+            
+            {/* Due Date */}
+            <span className="text-sm text-gray-500">{dueDate}</span>
+            
+            {/* Mentor */}
+            <span className="text-sm text-gray-600">{mentor}</span>
+        </div>
+    );
 };
 
 export default TaskItem;
