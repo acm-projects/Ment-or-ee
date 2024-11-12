@@ -10,7 +10,7 @@ const menteeSchema = new mongoose.Schema({
   },  
   mentors: [{ // Reference to the Mentor model
     type: mongoose.Schema.Types.ObjectId,
-    ref: MentorModel
+    ref: 'Mentor'
   }],
   major: { 
     type: String,

@@ -9,7 +9,7 @@ router.post('/create', async (req, res) => {
     const { title, mentorId, menteeId, date, duration, description } = req.body;
 
     // Validate inputs
-    if (!title || !mentorId || !menteeId || !date || !duration) {
+    if (!title || !date || !duration) {
       return res.status(400).json({ error: 'All fields are required.' });
     }
 
