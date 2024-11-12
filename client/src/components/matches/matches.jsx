@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../common/navbar";
 import FilterBox from "../../common/FilterBoxes";
 import MatchCard from "../../common/MatchCard";
+import MenteeCard from "../../common/MenteeCard";
 import { UseAuth } from "../../context/AuthContext";
 import { useMatches } from "../../context/MatchesContext";
 
 const Matches = () => {
   const { user } = UseAuth();
-  const { matches, fetchMatches, error, loading } = useMatches();
+  const { matches, mentees, fetchMatches, fetchMentees } = useMatches();
   const [careerFieldFilter, setCareerFieldFilter] = useState("");
   const [headlineFilter, setHeadlineFilter] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
@@ -18,10 +19,13 @@ const Matches = () => {
   const [languageFilter, setLanguageFilter] = useState("");
 
   useEffect(() => {
-    if (user) {
+    if (user.role === "Mentee") {
       fetchMatches();
     }
-  }, [user, fetchMatches]);
+    if (user.role === "Mentor") {
+      fetchMentees();
+    }
+  }, [user, fetchMatches, fetchMentees]);
 
   // const matches = [
   //   {
@@ -213,10 +217,10 @@ const Matches = () => {
           </div>
         ) : (
           <div className="w-3/4">
-            <h2 className="text-3xl py-2">{matches.length} Requests</h2>
+            <h2 className="text-3xl py-2">{mentees.length} Requests</h2>
 
-            {filteredMatches.map((match, index) => (
-              <MatchCard key={index} match={match} />
+            {mentees.map((mentee, index) => (
+              <MenteeCard key={index} mentee={mentee} />
             ))}
           </div>
         )}

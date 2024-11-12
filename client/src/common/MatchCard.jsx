@@ -20,7 +20,7 @@ const MatchCard = ({ match, compact, selfView }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ mentorId: match.mentorId, menteeId: user.id }),
+        body: JSON.stringify({ mentorId: match.mentorId, userId: user.id }),
         // body: JSON.stringify({
         //   menteeId: "6732d1e474bfa2e4f82b0db2",
         //   mentorId: "6732d20c74bfa2e4f82b0db7",
@@ -85,11 +85,11 @@ const MatchCard = ({ match, compact, selfView }) => {
                 </p>
                 <p>
                   <span className="font-bold">Career Field:</span>{" "}
-                  {match.fields}
+                  {match.fields.join(", ")}
                 </p>
                 <p>
                   <span className="font-bold">Industry:</span>{" "}
-                  {match.industries[0]}
+                  {match.industries}
                 </p>
               </div>
               <div className="w-1/2">
@@ -99,13 +99,14 @@ const MatchCard = ({ match, compact, selfView }) => {
                 </p>
                 <p>
                   <span className="font-bold">Location:</span>{" "}
-                  {match.location.city}
+                  {match.location.city} {match.location.state}
                 </p>
                 <p>
                   <span className="font-bold">College:</span> {match.university}
                 </p>
                 <p>
-                  <span className="font-bold">Language:</span> {match.languages}
+                  <span className="font-bold">Language:</span>{" "}
+                  {match.languages.join(", ")}
                 </p>
               </div>
             </div>

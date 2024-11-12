@@ -57,7 +57,7 @@ export const MatchesContextProvider = ({ children }) => {
     setError(null);
 
     try {
-      console.log("Fetching matches for user ID:", user.id);
+      console.log("Fetching mentees for user ID:", user.id);
       const response = await fetch(`http://localhost:5000/mentees/${user.id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -65,14 +65,14 @@ export const MatchesContextProvider = ({ children }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch matches");
+        throw new Error(errorData.message || "Failed to fetch mentees");
       }
 
       const data = await response.json();
-      console.log("Received matches:", data);
+      console.log("Received mentees:", data);
       setMentees(data.mentees);
     } catch (error) {
-      console.error("Error fetching matches:", error);
+      console.error("Error fetching mentees:", error);
       setError(error.message);
       setMentees([]);
     } finally {

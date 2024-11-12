@@ -54,79 +54,155 @@ import { useNavigate } from "react-router-dom";
 // ];
 
 function MatchesBox() {
-  const { matches, fetchMatches, error, loading } = useMatches();
   const { user } = UseAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user) {
-      fetchMatches();
-    }
-  }, [user, fetchMatches]);
 
   if (!user) {
     return <div>Please log in to see matches.</div>;
   }
 
-  if (loading) {
-    return <div>Loading matches...</div>;
-  }
+  const MentorMatches = () => {
+    const { mentees, fetchMentees, error, loading } = useMatches();
 
-  if (error) {
+    useEffect(() => {
+      if (user) {
+        fetchMentees();
+      }
+    }, [fetchMentees]);
+
+    if (loading) {
+      return <div>Loading mentees...</div>;
+    }
+
+    if (error) {
+      return (
+        <div>
+          <h1 className=" pt-2 text-2xl text-black font-semibold mb-2 text-center">
+            Match Requests
+          </h1>
+          <p className="p-2 text-lg">
+            No match requests currently found. Please visit another time!
+          </p>
+        </div>
+      );
+    }
+
+    console.log("Mentees:", mentees); //testing
+    return (
+      <div>
+        <h1 className=" pt-2 text-2xl text-black font-semibold mb-2 text-center">
+          Match Requests
+        </h1>
+        <div className="m-2 items-center">
+          here
+          {/* {mentees.length > 0 ? (
+            <div>
+              {mentees.map((mentee) => (
+                <div key={mentee.id} className="flex rounded-3xl w-full mb-1">
+                  <div className="w-1/4 flex items-center justify-center">
+                    <ProfilePicture
+                      imgUrl={mentee.imgUrl}
+                      altText={mentee.name}
+                      size="w-25 h-25"
+                    />
+                  </div>
+                  <div className="w-3/4 h-70 flex flex-col justify-between pl-4 py-6">
+                    <h2 className="text-2xl font-bold">{mentee.name}</h2>
+                    <p>
+                      <span className="font-bold">Headline:</span>{" "}
+                      {mentee.headline}
+                    </p>
+                  </div>
+                </div>
+              ))}
+              <button
+                onClick={() => navigate("/matches")}
+                className="px-4 py-2 text-lg text-black bg-[#B89C75] rounded-full flex items-center hover:bg-[#B89C75] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
+              >
+                Discover More Requests
+              </button>
+            </div>
+          ) : (
+            <p className="p-2 text-lg">
+              No match requests currently found. Please visit another time!
+            </p>
+          )} */}
+        </div>
+      </div>
+    );
+  };
+
+  const MenteeMatches = () => {
+    const { matches, fetchMatches, error, loading } = useMatches();
+
+    useEffect(() => {
+      if (user) {
+        fetchMatches();
+      }
+    }, [fetchMatches]);
+
+    if (loading) {
+      return <div>Loading matches...</div>;
+    }
+
+    if (error) {
+      return (
+        <div>
+          <h1 className=" pt-2 text-2xl text-black font-semibold mb-2 text-center">
+            Matches
+          </h1>
+          <p className="p-2 text-lg">
+            No matches currently found. Please visit another time!
+          </p>
+        </div>
+      );
+    }
+
     return (
       <div>
         <h1 className=" pt-2 text-2xl text-black font-semibold mb-2 text-center">
           Matches
         </h1>
-        <p className="p-2 text-lg">
-          No matches currently found. Please visit another time!
-        </p>
+        <div className="m-2 items-center">
+          {matches.length > 0 ? (
+            <div>
+              {matches.map((match) => (
+                <div key={match.id} className="flex rounded-3xl w-full mb-1">
+                  <div className="w-1/4 flex items-center justify-center">
+                    <ProfilePicture
+                      imgUrl={match.imgUrl}
+                      altText={match.name}
+                      size="w-25 h-25"
+                    />
+                  </div>
+                  <div className="w-3/4 h-70 flex flex-col justify-between pl-4 py-6">
+                    <h2 className="text-2xl font-bold">{match.name}</h2>
+                    <p>
+                      <span className="font-bold">Headline:</span>{" "}
+                      {match.headline}
+                    </p>
+                  </div>
+                </div>
+              ))}
+              <button
+                onClick={() => navigate("/matches")}
+                className="px-4 py-2 text-lg text-black bg-[#B89C75] rounded-full flex items-center hover:bg-[#B89C75] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
+              >
+                Discover More Matches
+              </button>
+            </div>
+          ) : (
+            <p className="p-2 text-lg">
+              No matches currently found. Please visit another time!
+            </p>
+          )}
+        </div>
       </div>
     );
-  }
+  };
 
   return (
-    <div>
-      <h1 className=" pt-2 text-2xl text-black font-semibold mb-2 text-center">
-        {user.role === "Mentee" ? "Matches" : "Match Requests"}
-      </h1>
-      <div className="m-2 items-center">
-        {matches.length > 0 ? (
-          <div>
-            {matches.map((match) => (
-              <div key={match.id} className="flex rounded-3xl w-full mb-1">
-                <div className="w-1/4 flex items-center justify-center">
-                  <ProfilePicture
-                    imgUrl={match.imgUrl}
-                    altText={match.name}
-                    size="w-25 h-25"
-                  />
-                </div>
-                <div className="w-3/4 h-70 flex flex-col justify-between pl-4 py-6">
-                  <h2 className="text-2xl font-bold">{match.name}</h2>
-                  <p>
-                    <span className="font-bold">Headline:</span>{" "}
-                    {match.headline}
-                  </p>
-                </div>
-              </div>
-            ))}
-            <button
-              onClick={() => navigate("/matches")}
-              className="px-4 py-2 text-lg text-black bg-[#B89C75] rounded-full flex items-center hover:bg-[#B89C75] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
-            >
-              {user.role === "Mentee"
-                ? "Discover More Matches"
-                : "Discover More Requests"}
-            </button>
-          </div>
-        ) : (
-          <p className="p-2 text-lg">
-            No matches currently found. Please visit another time!
-          </p>
-        )}
-      </div>
-    </div>
+    <div>{user.role === "Mentor" ? <MentorMatches /> : <MenteeMatches />}</div>
   );
 }
 
