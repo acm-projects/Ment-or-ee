@@ -69,7 +69,7 @@ export const TasksContextProvider = ({ children }) => {
 
   return (
     <TasksContext.Provider
-      value={{ tasks, assignTask, fetchTasks, error, loading }}
+      value={{ tasks, setTasks, assignTask, fetchTasks, error, loading }}
     >
       {children}
     </TasksContext.Provider>
