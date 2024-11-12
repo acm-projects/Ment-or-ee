@@ -105,7 +105,9 @@ io.on('connection', (socket) => {
 const router = express.Router();
 
 app.post('/addMenteeToMentor', async (req, res) => {
-  const { mentorId, menteeId } = req.body;
+  const { mentorId, userId } = req.body;
+
+  const menteeId = await getMenteeIdByUserId(userId);
 
   console.log('Received request to add mentee to mentor:');
   console.log(`Mentor ID: ${mentorId}, Mentee ID: ${menteeId}`);
