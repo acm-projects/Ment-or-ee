@@ -268,10 +268,13 @@ app.get("/mentees/:userId", async (req, res) => {
         .json({ message: "Mentor ID not found for the given userId." });
     }
 
-    // Fetch the mentor's mentees using the mentor ID
+    // Fetch the mentor's mentees with full mentee and user documents
     console.log("Looking for mentor with ID:", mentorId);
     const mentor = await MentorModel.findById(mentorId)
-      .populate("user") // Populate the mentees array with full mentee documents
+      .populate({
+        path: "mentees",
+        populate: { path: "user" }, // Populate user data inside each mentee
+      })
       .exec();
 
     if (!mentor) {

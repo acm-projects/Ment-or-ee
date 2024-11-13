@@ -8,43 +8,44 @@ export const TasksContextProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const { user } = UseAuth();
+  // const { user } = UseAuth();
 
-  const fetchTasks = useCallback(async () => {
-    if (!user) {
-      setError("User not authenticated");
-      return;
-    }
-
+  const fetchTasks = async (id) => {
     setLoading(true);
     setError(null);
 
     try {
-      console.log("Fetching tasks for user ID:", user.id);
+      console.log("Fetching tasks for user ID:", id);
       const response = await fetch(
-        `http://localhost:5000/api/tasks/assigned/${user.id}`,
+        // `http://localhost:5000/api/tasks/assigned/${id}`,
+        `http://localhost:5000/api/tasks/assigned/6732d1e474bfa2e4f82b0db0`,
+
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         }
       );
 
+      const text = await response.text();
+      console.log("Full response:", text);
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch tasks");
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
+      const data = JSON.parse(text);
       console.log("Received tasks:", data);
       setTasks(data);
+      return data;
     } catch (error) {
       console.error("Error fetching tasks:", error);
       setError(error.message);
       setTasks([]);
+      return [];
     } finally {
       setLoading(false);
     }
-  }, [user]);
+  };
 
   const assignTask = async (task) => {
     console.log("attemping tasks submit"); //testing
@@ -60,7 +61,8 @@ export const TasksContextProvider = ({ children }) => {
         const error = await response.json();
         throw new Error(error.message || "Adding task failed");
       }
-      return true;
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error("assign task failed", error);
       throw error;

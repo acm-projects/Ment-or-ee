@@ -149,7 +149,7 @@ const ProfileComponent = ({ user, selfView }) => {
       </div>
 
       <ProfileCard />
-      {user.role === "Mentor" && <ReviewComponent selfView={selfView} />}
+      {user.mentorId && <ReviewComponent selfView={selfView} />}
     </div>
   );
 };

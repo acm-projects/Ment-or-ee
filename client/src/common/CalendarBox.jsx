@@ -22,22 +22,22 @@ function CalendarBox({ user, events }) {
             <FaArrowRight />
           </button>
         </div>
-        <div className="m-2">
+        <div className="m-2 mt-6">
           {events.length > 0 ? (
             <div>
               {events.map((events) => (
                 <div
                   key={events.title}
-                  className="flex w-full mb-1 bg-slate-100 rounded-lg"
+                  className="flex w-full mb-2 bg-slate-100 rounded-lg"
                 >
-                  <div className="w-3/4 h-70 flex flex-col justify-between pl-4 py-6">
+                  <div className="w-full flex flex-col justify-between pl-4 py-4">
                     <button
                       onClick={() => navigate("/tasks")}
-                      className="text-2xl font-bold"
+                      className="text-2xl font-bold text-left"
                     >
                       {events.title}
                     </button>
-                    <p>
+                    <p className="text-left">
                       <span className="font-bold">Date:</span>{" "}
                       {events.date.split("T")[0]}
                     </p>
