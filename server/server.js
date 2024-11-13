@@ -205,15 +205,32 @@ app.get('/api/match/:userId', async (req, res) => {
         const mentorUser = match.mentor.user || {};
 
         return {
-          mentorId: match.mentor._id,
-          name: mentorUser.name || 'Unknown',  // Default if name is missing
-          score: match.score,  // Include the calculated score
-          location: mentorUser.location || 'Unknown location',  // Default if location is missing
-          languages: mentorUser.languages || [],
-          fields: mentorUser.fields || [],
-          industries: mentorUser.industries || [],
-          university: mentorUser.university || 'Unknown university',
-          personalityType: mentorUser.personalityType || 'Unknown',
+          mmentorId: match.mentor._id,  // Mentor's unique identifier
+          name: mentorUser.name || 'Unknown',  // User's name with default
+          score: match.score,  // Calculated score
+          location: mentorUser.location || 'Unknown location',  // Location with default
+          languages: mentorUser.languages || [],  // Languages with default
+          fields: mentorUser.fields || [],  // Fields of expertise with default
+          industries: mentorUser.industries || [],  // Industries with default
+          university: mentorUser.university || 'Unknown university',  // University with default
+          personalityType: mentorUser.personalityType || 'Unknown',  // Personality type with default
+          headline: mentorUser.headline || 'Unknown',  // Headline with default
+          photo_id: mentorUser.photo_id || null,  // Photo ID with default
+          role: mentorUser.role || 'Unknown role',  // Role (mentor/mentee) with default
+          googleId: mentorUser.googleId || null,  // Google ID, if applicable
+          password: mentorUser.password || null,  // Password, if applicable
+          email: mentorUser.email || 'Unknown email',  // Email with default
+          availability: mentorUser.availability || false,  // Availability status with default
+          reviews: mentorUser.reviews || [],  // Array of review IDs
+          meetings: mentorUser.meetings || [],  // Array of meeting IDs
+          bio: mentorUser.bio || 'No bio provided',  // Bio with default
+          links: mentorUser.links || [],  // Array of links with default
+          mentees: mentorUser.mentees || [],  // Array of mentees with default
+          company: mentorUser.company || 'Unknown company',  // Company with default
+          jobTitle: mentorUser.jobTitle || 'Unknown job title',  // Job title with default
+          degrees: mentorUser.degrees || [],  // Array of degrees with default
+          tasks: mentorUser.tasks || []  // Array of task IDs
+          
         };
       })
     });
