@@ -7,14 +7,14 @@ const existingReviews = [
   {
     name: "Sabrina",
     rating: 4.5,
-    text: "The mentor was extremely helpful and provided great insights into my field of interest. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    text: "I’m incredibly grateful for the mentorship I received from this mentor. Their guidance and support were instrumental in helping me secure an internship. They provided valuable advice, constructive feedback, and pushed me to build confidence and sharpen my skills. This mentor not only helped with technical aspects but also shared industry insights and networking tips. I'm excited to apply everything they taught me in my future career. Thank you for your support!",
     date: "2024-10-16",
     id: "67180e89157b3c18a7d20248",
   },
   {
-    name: "Neeti",
+    name: "Alice",
     rating: 5,
-    text: "Best mentor ever!! I would highly recommend Abis for anyone interested in tech. Not only is he genuinely passionate about mentoring, but he also had so much experience. ",
+    text: "Best mentor ever!! I would highly recommend this mentor for anyone interested in tech. Not only are they genuinely passionate about mentoring, but they also had so much experience.",
     date: "2024-9-26",
   },
 ];

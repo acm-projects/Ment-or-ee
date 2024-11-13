@@ -5,8 +5,12 @@ import TaskStatus from "../../common/TaskStatus";
 import ProgressChart from "../../common/ProgressChart";
 import { useTasks } from "../../context/TasksContext";
 import { useMatches } from "../../context/MatchesContext";
+import { TbBrandZoom } from "react-icons/tb";
+import { IoMdAdd } from "react-icons/io";
+import Zoom from "../zoom/Zoom.jsx"; // Import the Zoom component
 
-const TaskComponent = ({ user }) => {
+
+const TaskComponent = ({ user, sender, receiver }) => {
   const { tasks, assignTask, fetchTasks } = useTasks;
   // const { mentees, fetchMentees } = useMatches;
 
@@ -33,6 +37,41 @@ const TaskComponent = ({ user }) => {
       resources: [],
     },
   ]);
+
+  const [showZoom, setShowZoom] = useState(false);
+  const [showZoomForm, setShowZoomForm] = useState(false);
+  const [zoomForm, setZoomForm] = useState({});
+  const [zooms, setZooms] = useState([]);
+
+  const updateZoomForm = (data) => {
+    setZoomForm((prevData) => ({ ...prevData, ...data }));
+  };
+
+   // Set initial mentee ID based on sender/receiver role
+   useEffect(() => {
+    const menteeId = sender.role === "Mentee" ? sender.id : receiver.id;
+    const mentorId = sender.role === "Mentor" ? sender.id : receiver.id;
+    setZoomForm({ menteeId, mentorId });
+  }, [sender, receiver]);
+
+  const handleZoomSubmit = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/zoom", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(zoomForm),
+      });
+      if (response.ok) {
+        setZooms([...zooms, zoomForm]);
+        setZoomForm({});
+        setShowZoomForm(false);
+      } else {
+        console.error("Failed to create Zoom meeting.");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const [selectedMentee, setSelectedMentee] = useState(null);
   const [newTask, setNewTask] = useState({
@@ -220,6 +259,59 @@ const TaskComponent = ({ user }) => {
               <h1 className="text-3xl font-semibold text-center mb-4 text-[#000000]">
                 Task List
               </h1>
+              
+                          {/* Zoom Form and Button */}
+            <div className="text-center mb-4">
+              <button
+                className="bg-blue-500 text-white py-2 px-4 rounded"
+                onClick={() => setShowZoomForm(!showZoomForm)}
+              >
+                <TbBrandZoom className="inline-block mr-2" />
+                {showZoomForm ? "Close Zoom Form" : "Create Zoom Meeting"}
+              </button>
+
+              {showZoomForm && (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleZoomSubmit();
+                  }}
+                  className="space-y-4 mt-4"
+                >
+                  <input
+                    type="text"
+                    placeholder="Meeting Topic"
+                    className="w-full p-2 border rounded"
+                    value={zoomForm.topic || ""}
+                    onChange={(e) => setZoomForm({ ...zoomForm, topic: e.target.value })}
+                  />
+                  <input
+                    type="datetime-local"
+                    className="w-full p-2 border rounded"
+                    value={zoomForm.time || ""}
+                    onChange={(e) => setZoomForm({ ...zoomForm, time: e.target.value })}
+                  />
+                  <button type="submit" className="bg-green-500 text-white py-2 px-4 rounded">
+                    Schedule Meeting
+                  </button>
+                </form>
+              )}
+            </div>
+
+            {/* List Zoom Meetings */}
+            {zooms.length > 0 && (
+              <div className="mt-8">
+                <h2 className="text-xl font-semibold text-center mb-2">Scheduled Zoom Meetings</h2>
+                <ul className="bg-white rounded-lg shadow-md p-4">
+                  {zooms.map((meeting, index) => (
+                    <li key={index} className="py-1">
+                      {meeting.topic} - {meeting.time}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+              
 
               {/* Task Form and Task Tables */}
               <div className="mt-8">
