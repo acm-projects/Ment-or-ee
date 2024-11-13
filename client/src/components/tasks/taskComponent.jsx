@@ -276,8 +276,8 @@ const TaskComponent = ({ user, ogMentees, sender, receiver }) => {
               <h1 className="text-3xl font-semibold text-center mb-4 text-[#000000]">
                 Task List
               </h1>
-              
-                          {/* Zoom Form and Button */}
+{/*               
+                          Zoom Form and Button
             <div className="text-center mb-4">
               <button
                 className="bg-blue-500 text-white py-2 px-4 rounded"
@@ -316,7 +316,7 @@ const TaskComponent = ({ user, ogMentees, sender, receiver }) => {
             </div>
 
             {/* List Zoom Meetings */}
-            {zooms.length > 0 && (
+            {/* {zooms.length > 0 && (
               <div className="mt-8">
                 <h2 className="text-xl font-semibold text-center mb-2">Scheduled Zoom Meetings</h2>
                 <ul className="bg-white rounded-lg shadow-md p-4">
@@ -327,7 +327,7 @@ const TaskComponent = ({ user, ogMentees, sender, receiver }) => {
                   ))}
                 </ul>
               </div>
-            )}
+            )} */} 
               
 
               {/* Task Form and Task Tables */}

@@ -125,9 +125,9 @@ const Matches = () => {
 
       <div className="w-full flex p-12">
         {user.role === "Mentee" ? (
-          <div>
+          <div className="w-full flex">
             {/* Left side filter boxes */}
-            <div className="w-1/4 pr-4">
+            <div className="w-1/3 pr-4">
               <h2 className="text-3xl py-2">Filters</h2>
               <FilterBox title="Career Field">
                 <select
@@ -137,6 +137,7 @@ const Matches = () => {
                 >
                   <option value="">All</option>
                   <option value="Computer Science">Computer Science</option>
+                  <option value="Marketing">Marketing</option>
                 </select>
               </FilterBox>
               <FilterBox title="Industry">
@@ -158,8 +159,9 @@ const Matches = () => {
                   onChange={(e) => setLocationFilter(e.target.value)}
                 >
                   <option value="">All</option>
-                  <option value="Dallas, TX">Dallas, TX</option>
-                  <option value="Houston, TX">Houston, TX</option>
+                  <option value="Dallas, TX">Dallas, Texas</option>
+                  <option value="Houston, TX">Houston, Texas</option>
+                  <option value="Chicago, Illinois">Chicago, Illinois</option>
                   <option value="San Francisco, California">
                     San Francisco, California
                   </option>
@@ -207,7 +209,7 @@ const Matches = () => {
             </div>
 
             {/* Right side match cards */}
-            <div className="w-3/4">
+            <div className="w-full">
               <h2 className="text-3xl py-2">{matches.length} Results</h2>
 
               {filteredMatches.map((match, index) => (
@@ -216,7 +218,7 @@ const Matches = () => {
             </div>
           </div>
         ) : (
-          <div className="w-3/4">
+          <div className="w-2/3">
             <h2 className="text-3xl py-2">{mentees.length} Requests</h2>
 
             {mentees.map((mentee, index) => (
