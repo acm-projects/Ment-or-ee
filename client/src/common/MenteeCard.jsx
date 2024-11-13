@@ -49,12 +49,14 @@ const MenteeCard = ({ mentee, compact, selfView }) => {
               </div>
               <div className="w-1/2">
                 <p>
-                  <span className="font-bold">Prefers a Mentor that is:</span>{" "}
+                  <span className="font-bold">
+                    Prefers a Mentor that is an:
+                  </span>{" "}
                   {mentee.personalityType}
                 </p>
                 <p>
                   <span className="font-bold">Location:</span>{" "}
-                  {mentee.location.city} {mentee.location.state}
+                  {mentee.location.city}, {mentee.location.state}
                 </p>
                 <p>
                   <span className="font-bold">College:</span>{" "}

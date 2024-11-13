@@ -6,33 +6,72 @@ import ProgressChart from "../../common/ProgressChart";
 import { useTasks } from "../../context/TasksContext";
 import { useMatches } from "../../context/MatchesContext";
 
-const TaskComponent = ({ user }) => {
-  const { tasks, assignTask, fetchTasks } = useTasks;
-  // const { mentees, fetchMentees } = useMatches;
+const TaskComponent = ({ user, ogMentees }) => {
+  const { tasks, assignTask, fetchTasks } = useTasks();
 
-  const [mentees, setMentees] = useState([
-    {
-      name: "Mentee 1",
-      role: "Mentee",
+  // const [mentees, setMentees] = useState([
+  //   {
+  //     name: "Mentee 1",
+  //     role: "Mentee",
+  //     mentor: user.name,
+  //     tasks: [],
+  //     resources: [],
+  //   },
+  //   {
+  //     name: "Mentee 2",
+  //     role: "Mentee",
+  //     mentor: user.name,
+  //     tasks: [],
+  //     resources: [],
+  //   },
+  //   {
+  //     name: "Mentee 3",
+  //     role: "Mentee",
+  //     mentor: user.name,
+  //     tasks: [],
+  //     resources: [],
+  //   },
+  // ]);
+
+  const [mentees, setMentees] = useState(
+    ogMentees.map((item) => ({
+      name: item.name,
+      role: item.role,
+      id: item._id,
       mentor: user.name,
       tasks: [],
       resources: [],
-    },
-    {
-      name: "Mentee 2",
-      role: "Mentee",
-      mentor: user.name,
-      tasks: [],
-      resources: [],
-    },
-    {
-      name: "Mentee 3",
-      role: "Mentee",
-      mentor: user.name,
-      tasks: [],
-      resources: [],
-    },
-  ]);
+    }))
+  );
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchTasksForAllMentees = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const updatedMentees = await Promise.all(
+          mentees.map(async (mentee) => {
+            const tasks = await fetchTasks(mentee.id);
+            console.log(tasks); //testing
+            return { ...mentee, tasks };
+          })
+        );
+
+        setMentees(updatedMentees);
+      } catch (error) {
+        setError("Failed to fetch tasks for mentees");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTasksForAllMentees();
+  }, [fetchTasks]);
+
+  console.log("mapped", mentees); //testing
 
   const [selectedMentee, setSelectedMentee] = useState(null);
   const [newTask, setNewTask] = useState({
@@ -64,7 +103,19 @@ const TaskComponent = ({ user }) => {
       return;
     }
 
-    assignTask({ creator: user, receiver: selectedMentee, ...newTask });
+    assignTask({
+      creator: user.id,
+      receiver: selectedMentee.id,
+      deadline: newTask.deadline,
+      description: newTask.description,
+      title: newTask.title,
+    })
+      .then((result) => {
+        console.log("Task assigned successfully:", result);
+      })
+      .catch((error) => {
+        console.error("Failed to assign task:", error);
+      });
 
     const updatedMentees = mentees.map((mentee) => {
       if (mentee.name === selectedMentee.name) {
@@ -196,23 +247,24 @@ const TaskComponent = ({ user }) => {
         <div className="mt-[80px]">
           <div className="flex flex-row space-x-6 p-12 px-4">
             {/* LeftBox component */}
-            <div className="flex-none w-1/4 bg-gray-100 rounded-lg shadow-lg">
-              <LeftBox title="Mentees" name={user.name} role={user.role} />
-              <ul className="bg-white rounded-lg shadow-md p-4">
-                {mentees.map((mentee, index) => (
-                  <li
-                    key={index}
-                    className={`py-1 cursor-pointer ${
-                      selectedMentee?.name === mentee.name
-                        ? "font-bold text-blue-500"
-                        : ""
-                    }`}
-                    onClick={() => handleMenteeSelect(mentee)}
-                  >
-                    {mentee.name}
-                  </li>
-                ))}
-              </ul>
+            <div className="flex-none w-1/4 bg-gray-100 rounded-lg shadow-lg overflow-hidden">
+              <LeftBox title="Mentees" name={user.name} role={user.role}>
+                <ul className="bg-white rounded-lg shadow-md p-4">
+                  {mentees.map((mentee, index) => (
+                    <li
+                      key={index}
+                      className={`py-1 cursor-pointer ${
+                        selectedMentee?.name === mentee.name
+                          ? "font-bold text-blue-500"
+                          : ""
+                      }`}
+                      onClick={() => handleMenteeSelect(mentee)}
+                    >
+                      {mentee.name}
+                    </li>
+                  ))}
+                </ul>
+              </LeftBox>
             </div>
 
             {/* Main task section - spans 50% width */}

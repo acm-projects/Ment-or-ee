@@ -78,10 +78,10 @@ function MatchesBox() {
       return (
         <div>
           <h1 className=" pt-2 text-2xl text-black font-semibold mb-2 text-center">
-            Match Requests
+            Mentees
           </h1>
           <p className="p-2 text-lg">
-            No match requests currently found. Please visit another time!
+            No mentees currently found. Please visit another time!
           </p>
         </div>
       );
@@ -91,11 +91,10 @@ function MatchesBox() {
     return (
       <div>
         <h1 className=" pt-2 text-2xl text-black font-semibold mb-2 text-center">
-          Match Requests
+          Mentees
         </h1>
         <div className="m-2 items-center">
-          here
-          {/* {mentees.length > 0 ? (
+          {mentees.length > 0 ? (
             <div>
               {mentees.map((mentee) => (
                 <div key={mentee.id} className="flex rounded-3xl w-full mb-1">
@@ -115,18 +114,12 @@ function MatchesBox() {
                   </div>
                 </div>
               ))}
-              <button
-                onClick={() => navigate("/matches")}
-                className="px-4 py-2 text-lg text-black bg-[#B89C75] rounded-full flex items-center hover:bg-[#B89C75] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
-              >
-                Discover More Requests
-              </button>
             </div>
           ) : (
             <p className="p-2 text-lg">
-              No match requests currently found. Please visit another time!
+              No mentees currently found. Please visit another time!
             </p>
-          )} */}
+          )}
         </div>
       </div>
     );
@@ -184,12 +177,14 @@ function MatchesBox() {
                   </div>
                 </div>
               ))}
-              <button
-                onClick={() => navigate("/matches")}
-                className="px-4 py-2 text-lg text-black bg-[#B89C75] rounded-full flex items-center hover:bg-[#B89C75] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
-              >
-                Discover More Matches
-              </button>
+              <div className="flex justify-center w-full mt-4">
+                <button
+                  onClick={() => navigate("/matches")}
+                  className="px-4 py-2 text-lg text-black bg-[#B89C75] rounded-full flex items-center hover:bg-[#B89C75] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
+                >
+                  Discover More Matches
+                </button>
+              </div>
             </div>
           ) : (
             <p className="p-2 text-lg">

@@ -8,7 +8,7 @@ import { useMatches } from "../../context/MatchesContext";
 
 const Matches = () => {
   const { user } = UseAuth();
-  const { matches, mentees, fetchMatches, fetchMentees } = useMatches();
+  const { matches, mentees } = useMatches();
   const [careerFieldFilter, setCareerFieldFilter] = useState("");
   const [headlineFilter, setHeadlineFilter] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
@@ -18,14 +18,14 @@ const Matches = () => {
   const [personalityFilter, setPersonalityFilter] = useState("");
   const [languageFilter, setLanguageFilter] = useState("");
 
-  useEffect(() => {
-    if (user.role === "Mentee") {
-      fetchMatches();
-    }
-    if (user.role === "Mentor") {
-      fetchMentees();
-    }
-  }, [user, fetchMatches, fetchMentees]);
+  // useEffect(() => {
+  //   if (user.role === "Mentee") {
+  //     fetchMatches();
+  //   }
+  //   if (user.role === "Mentor") {
+  //     fetchMentees();
+  //   }
+  // }, [user, fetchMatches, fetchMentees]);
 
   // const matches = [
   //   {

@@ -99,7 +99,7 @@ const MatchCard = ({ match, compact, selfView }) => {
                 </p>
                 <p>
                   <span className="font-bold">Location:</span>{" "}
-                  {match.location.city} {match.location.state}
+                  {match.location.city}, {match.location.state}
                 </p>
                 <p>
                   <span className="font-bold">College:</span> {match.university}

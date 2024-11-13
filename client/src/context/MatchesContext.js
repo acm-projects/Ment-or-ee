@@ -69,8 +69,16 @@ export const MatchesContextProvider = ({ children }) => {
       }
 
       const data = await response.json();
-      console.log("Received mentees:", data);
-      setMentees(data.mentees);
+
+      // console.log("beforentees:", data.mentees);
+      setMentees(
+        data.mentees.map((item) => ({
+          collegeYear: item.collegeYear,
+          major: item.major,
+          ...item.user,
+        }))
+      );
+      console.log("Received mentees:", mentees);
     } catch (error) {
       console.error("Error fetching mentees:", error);
       setError(error.message);
