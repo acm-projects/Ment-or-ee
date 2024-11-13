@@ -125,9 +125,9 @@ const Matches = () => {
 
       <div className="w-full flex p-12">
         {user.role === "Mentee" ? (
-          <div>
+          <div classname="w-full flex">
             {/* Left side filter boxes */}
-            <div className="w-1/4 pr-4">
+            <div className="w-1/3 pr-4">
               <h2 className="text-3xl py-2">Filters</h2>
               <FilterBox title="Career Field">
                 <select
@@ -216,7 +216,7 @@ const Matches = () => {
             </div>
           </div>
         ) : (
-          <div className="w-3/4">
+          <div className="w-2/3">
             <h2 className="text-3xl py-2">{mentees.length} Requests</h2>
 
             {mentees.map((mentee, index) => (
