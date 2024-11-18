@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import TextQuestion from "../../common/TextQuestion.js";
 import ButtonQuestion from "../../common/ButtonQuestion.js";
 import DropdownQuestion from "../../common/DropdownQuestion.jsx";
-import Slider from "../../common/Slider.jsx";
+import Stepper from "../../common/Stepper.jsx";
 // import { LinearProgress, Typography, Box } from "@mui/material";
 
 export function Questions({ formData, updateFormData, handleSubmit }) {
@@ -512,7 +512,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
 
       case "slider":
         return (
-          <Slider
+          <Stepper
             fields={sliderFields}
             onWeightageChange={handleWeightageChange}
             onAnswer={handleAnswer}
