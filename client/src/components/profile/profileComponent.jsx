@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../../common/navbar";
 import MatchCard from "../../common/MatchCard";
-import Slider from "../../common/Slider";
+import Stepper from "../../common/Stepper";
 import ReviewComponent from "./ReviewComponent";
 
 const ProfileComponent = ({ user, selfView }) => {
