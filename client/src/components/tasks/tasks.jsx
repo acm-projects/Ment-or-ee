@@ -13,20 +13,20 @@ const Task = () => {
 
   const { tasks, assignTask, fetchTasks } = useTasks(); //testing
 
-  useEffect(() => {
-    const fetchTasksForAllMentees = async () => {
-      //testing
-      try {
-        const tasks = await fetchTasks(user.id);
-        console.log(tasks); //testing
-      } catch (error) {
-        console.log("Failed to fetch tasks for mentees");
-      } finally {
-      }
-    };
+  // useEffect(() => {
+  //   const fetchTasksForAllMentees = async () => {
+  //     //testing
+  //     try {
+  //       const tasks = await fetchTasks(user.id);
+  //       console.log(tasks); //testing
+  //     } catch (error) {
+  //       console.log("Failed to fetch tasks for mentees");
+  //     } finally {
+  //     }
+  //   };
 
-    fetchTasksForAllMentees();
-  }, [fetchTasks]);
+  //   fetchTasksForAllMentees();
+  // }, [fetchTasks]);
 
   return (
     <div className="flex flex-col">

@@ -6,74 +6,73 @@ const Zoom = ({ zoomForm, setZoomForm, handleZoomSubmit }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center m-5">
+    <div className="rounded-lg p-3 max-w-md mx-auto">
+      <h2 className="text-2xl font-bold text-center mb-6 text-[#1F2839]">
+        Schedule Zoom Meeting
+      </h2>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           handleZoomSubmit();
         }}
+        autocomplete="off"
+        className="space-y-4"
       >
-        <div className="mt-5">
-          <label htmlFor="Title"></label>
+        <div>
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Title
+          </label>
           <input
-            type="title"
-            onChange={(e) => {
-              setZoomForm({
-                ...zoomForm,
-                ...{ title: e.target.value },
-              });
-            }}
+            type="text"
+            onChange={(e) =>
+              setZoomForm({ ...zoomForm, title: e.target.value })
+            }
             id="title"
-            className="w-full block border text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
-            placeholder="Title"
+            className="w-full block border border-gray-300 text-base px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F2839] focus:border-transparent"
+            placeholder="Enter meeting title"
             required
           />
         </div>
-        <div className="mt-4">
-          <label htmlFor="date"></label>
+        {/* <div>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Description
+          </label>
+          <input
+            type="text"
+            onChange={(e) => updateZoomForm({ description: e.target.value })}
+            id="description"
+            className="w-full block border border-gray-300 text-base px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F2839] focus:border-transparent"
+            placeholder="Enter meeting description"
+            required
+          />
+        </div> */}
+        <div>
+          <label
+            htmlFor="date"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Date and Time
+          </label>
           <input
             type="datetime-local"
-            onChange={(e) => {
-              updateZoomForm({ date: e.target.value });
-            }}
+            onChange={(e) => updateZoomForm({ date: e.target.value })}
             id="date"
-            className="w-full block border text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
-            placeholder="Date Time"
+            className="w-full block border border-gray-300 text-base px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F2839] focus:border-transparent"
             required
           />
         </div>
-        <div className="mt-4">
-          <label htmlFor="duration"></label>
-          <input
-            type="duration"
-            onChange={(e) => {
-              updateZoomForm({ duration: e.target.value });
-            }}
-            id="duration"
-            className="w-full block border text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
-            placeholder="Duration (in minutes)"
-            required
-          />
-        </div>
-        <div className="mt-4">
-          <label htmlFor="description"></label>
-          <input
-            type="description"
-            onChange={(e) => {
-              updateZoomForm({ description: e.target.value });
-            }}
-            id="description"
-            className="w-full block border text-base px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-full"
-            placeholder="Description"
-            required
-          />
-        </div>
-        <div className="mt-5">
+        <div className="mt-6 flex justify-center">
           <button
             type="submit"
-            className="border-2 border-[#1F3839] bg-[#1F3839] text-white py-1 px-5 rounded-md  font-semibold"
+            className="bg-[#1F2839] text-white py-2 px-6 rounded-md font-semibold hover:bg-[#2C3A4F] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1F2839]"
           >
-            Submit
+            Schedule Meeting
           </button>
         </div>
       </form>

@@ -31,7 +31,7 @@ const MatchCard = ({ match, compact, selfView }) => {
         // const errorData = await response.json();
         // throw new Error(errorData.message || "Matching failed");
       } else {
-        navigate("/chat", { state: { match: match } });
+        navigate("/tasks");
       }
     } catch (error) {
       console.log(error);
@@ -40,12 +40,8 @@ const MatchCard = ({ match, compact, selfView }) => {
 
   return (
     <div className="flex rounded-3xl shadow-lg bg-[#E3E0E0] w-full mb-6">
-      <div className="bg-[#B89C75] w-1/4 rounded-l-3xl flex items-center justify-center">
-        <ProfilePicture
-          imgUrl={match.imgUrl}
-          altText={match.name}
-          size="w-25 h-25"
-        />
+      <div className="bg-[#B89C75] w-1/4 p-4 rounded-l-3xl flex items-center justify-center">
+        <ProfilePicture imgUrl={match.imgUrl} altText={match.name} />
       </div>
 
       <div className="w-3/4 h-70 flex flex-col justify-between pl-4 py-6">

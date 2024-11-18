@@ -8,10 +8,8 @@ const Chatbody = ({ messages, curUser }) => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`mb-4 ${
-              msg.fromSelf
-                ? "text-right flex items-start mb-2 gap-2.5"
-                : "text-left flex items-start mb-2 gap-2.5"
+            className={`mb-4 flex items-start gap-2.5 ${
+              msg.fromSelf ? "justify-end" : "justify-start"
             }`}
           >
             {/* <img
@@ -27,8 +25,8 @@ const Chatbody = ({ messages, curUser }) => {
             <div
               className={`inline-block p-2 rounded-lg ${
                 msg.fromSelf
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-800"
+                  ? "bg-[#1F2839] text-white"
+                  : "bg-white text-gray-800"
               }`}
             >
               <p className="text-sm font-normal py-2.5">{msg.text}</p>

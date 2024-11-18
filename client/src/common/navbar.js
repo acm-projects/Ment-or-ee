@@ -5,6 +5,8 @@ import { CiChat1 } from "react-icons/ci";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoPeople } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import AutoProfile from "../assets/autoprofile.png";
+import LindaProfile from "../assets/lindagarcia.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -70,11 +72,12 @@ const Navbar = () => {
             onClick={handleProfileClick}
             className="flex flex-col items-center py-2 px-6 text-base font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
           >
-            <div className="w-7 h-7 rounded-full bg-blue-500"></div>
-            <div className="flex items-center">
-              Me
-              <IoMdArrowDropdown size={25} />
-            </div>
+            <img
+              src={AutoProfile}
+              alt="Profile"
+              className="w-7 h-7 rounded-full object-cover bg-white"
+            />
+            <div className="flex items-center">Profile</div>
           </button>
         </div>
       </div>

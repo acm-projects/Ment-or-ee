@@ -9,7 +9,7 @@ const Conversation = ({ conversation, lastIdx, match }) => {
   return (
     <>
       <div
-        className={`flex gap-2 items-center hover:bg-[#D7CFC5] rounded p-2 py-1 cursor-pointer`}
+        className={`flex gap-2 items-center bg-[#D7CFC5] rounded p-2 py-1 cursor-pointer`}
       >
         {/* <div
         className={`flex gap-2 items-center hover:bg-[#D7CFC5] rounded p-2 py-1 cursor-pointer

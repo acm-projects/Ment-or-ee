@@ -7,6 +7,7 @@ import { useTasks } from "../../context/TasksContext";
 import { useMatches } from "../../context/MatchesContext";
 import { TbBrandZoom } from "react-icons/tb";
 import { IoMdAdd } from "react-icons/io";
+import { Link } from "react-router-dom";
 // import Zoom from "../zoom/Zoom.jsx"; // Import the Zoom component
 
 const TaskComponent = ({ user, ogMentees }) => {
@@ -77,15 +78,15 @@ const TaskComponent = ({ user, ogMentees }) => {
 
   // console.log("mapped", mentees); //testing
 
-  const [showZoom, setShowZoom] = useState(false);
+  // const [showZoom, setShowZoom] = useState(false);
   const [showZoomForm, setShowZoomForm] = useState(false);
   const [zoomForm, setZoomForm] = useState({});
   const [zooms, setZooms] = useState([]);
   const [selectedMentee, setSelectedMentee] = useState(null);
 
-  // const updateZoomForm = (data) => {
-  //   setZoomForm((prevData) => ({ ...prevData, ...data }));
-  // };
+  const updateZoomForm = (data) => {
+    setZoomForm((prevData) => ({ ...prevData, ...data }));
+  };
 
   // Set initial mentee ID based on sender/receiver role
   // useEffect(() => {
@@ -96,24 +97,50 @@ const TaskComponent = ({ user, ogMentees }) => {
   //   setZoomForm({ menteeId, mentorId });
   // }, [selectedMentee, user]);
 
-  // const handleZoomSubmit = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:5000/zoom", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(zoomForm),
-  //     });
-  //     if (response.ok) {
-  //       setZooms([...zooms, zoomForm]);
-  //       setZoomForm({});
-  //       setShowZoomForm(false);
-  //     } else {
-  //       console.error("Failed to create Zoom meeting.");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const handleZoomSubmit = async () => {
+    console.log({
+      ...zoomForm,
+      menteeId: selectedMentee.id,
+      mentorId: user.id,
+    });
+
+    setZooms([...zooms, zoomForm]);
+    setZoomForm({});
+    setShowZoomForm(false);
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/meetings/create",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...zoomForm, //testing
+            menteeId: selectedMentee.id,
+            mentorId: user.id,
+          }),
+        }
+      );
+      if (response.ok) {
+        const newZoom = await response.json();
+        console.log(newZoom);
+        setZooms([...zooms, newZoom]);
+        setZoomForm({});
+        setShowZoomForm(false);
+      } else {
+        console.error("Failed to create Zoom meeting.");
+      }
+
+      // const meetingInfo = {
+      //   email: data.email,
+      //   user: data.user,
+      //   id: data.id,
+      //   accessToken: data.accessToken,
+      //   refreshToken: data.refreshToken,
+      // };
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const [newTask, setNewTask] = useState({
     title: "",
@@ -317,7 +344,7 @@ const TaskComponent = ({ user, ogMentees }) => {
               {/* Zoom Form and Button */}
               <div className="text-center mb-4">
                 <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded"
+                  className="bg-[#1F2839] text-white py-2 px-4 rounded"
                   onClick={() => setShowZoomForm(!showZoomForm)}
                 >
                   <TbBrandZoom className="inline-block mr-2" />
@@ -328,30 +355,36 @@ const TaskComponent = ({ user, ogMentees }) => {
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
-                      // handleZoomSubmit();
+                      handleZoomSubmit();
                     }}
                     className="space-y-4 mt-4"
                   >
                     <input
                       type="text"
-                      placeholder="Meeting Topic"
+                      placeholder="Meeting Title"
                       className="w-full p-2 border rounded"
-                      value={zoomForm.topic || ""}
+                      value={zoomForm.title || ""}
                       onChange={(e) =>
-                        setZoomForm({ ...zoomForm, topic: e.target.value })
+                        setZoomForm({ ...zoomForm, title: e.target.value })
                       }
                     />
                     <input
                       type="datetime-local"
                       className="w-full p-2 border rounded"
-                      value={zoomForm.time || ""}
-                      onChange={(e) =>
-                        setZoomForm({ ...zoomForm, time: e.target.value })
+                      value={zoomForm.date || ""}
+                      onChange={
+                        (e) =>
+                          setZoomForm({
+                            ...zoomForm,
+                            date: e.target.value,
+                            duration: 30, //temporary
+                            description: "Description",
+                          }) //testing
                       }
                     />
                     <button
                       type="submit"
-                      className="bg-green-500 text-white py-2 px-4 rounded"
+                      className="bg-[#B89C75] text-black py-2 px-4 rounded"
                     >
                       Schedule Meeting
                     </button>
@@ -365,13 +398,39 @@ const TaskComponent = ({ user, ogMentees }) => {
                   <h2 className="text-xl font-semibold text-center mb-2">
                     Scheduled Zoom Meetings
                   </h2>
-                  <ul className="bg-white rounded-lg shadow-md p-4">
-                    {zooms.map((meeting, index) => (
-                      <li key={index} className="py-1">
-                        {meeting.topic} - {meeting.time}
-                      </li>
-                    ))}
-                  </ul>
+                  <table className="table-auto w-full bg-white rounded-lg shadow-md p-4">
+                    <thead className="bg-gray-200">
+                      <tr>
+                        <th className="px-4 py-2 text-center">Title</th>
+                        <th className="px-4 py-2 text-center">Date</th>
+                        <th className="px-4 py-2 text-center">Time</th>
+                        <th className="px-4 py-2 text-center">Link</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {zooms.map((meeting, index) => (
+                        <tr key={index} className="border-b">
+                          <td className="px-4 py-2 text-center">
+                            {meeting.title}
+                          </td>
+                          <td className="px-4 py-2 text-center">
+                            {meeting.date.split("T")[0]}
+                          </td>
+                          <td className="px-4 py-2 text-center">
+                            {meeting.date.split("T")[1].slice(0, 5)}
+                          </td>
+                          <td className="px-4 py-2 text-center">
+                            <Link
+                              to={`${meeting.zoomLink}`}
+                              className="text-blue-600 underline hover:text-blue-800"
+                            >
+                              {meeting.zoomLink}
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               )}
 

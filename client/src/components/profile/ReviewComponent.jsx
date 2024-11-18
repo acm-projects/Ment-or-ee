@@ -5,14 +5,14 @@ import { UseAuth } from "../../context/AuthContext";
 
 const existingReviews = [
   {
-    name: "Sabrina",
+    name: "Finn Gomez",
     rating: 4.5,
     text: "I’m incredibly grateful for the mentorship I received from this mentor. Their guidance and support were instrumental in helping me secure an internship. They provided valuable advice, constructive feedback, and pushed me to build confidence and sharpen my skills. This mentor not only helped with technical aspects but also shared industry insights and networking tips. I'm excited to apply everything they taught me in my future career. Thank you for your support!",
     date: "2024-10-16",
     id: "67180e89157b3c18a7d20248",
   },
   {
-    name: "Alice",
+    name: "Alice Nguyen",
     rating: 5,
     text: "Best mentor ever!! I would highly recommend this mentor for anyone interested in tech. Not only are they genuinely passionate about mentoring, but they also had so much experience.",
     date: "2024-9-26",
@@ -132,8 +132,8 @@ const ReviewComponent = ({ selfView }) => {
 
   return (
     <div className="w-full bg-[#D6C7B1] px-5 py-8">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 m-6">
-        <div className="lg:col-span-1 m-2">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 m-6">
+        <div className="sm:col-span-1 m-2">
           <h1 className="text-2xl">Mentee Reviews</h1>
           <div className="py-3 flex items-center">
             <div className="flex">{starRating}</div>
@@ -142,7 +142,7 @@ const ReviewComponent = ({ selfView }) => {
           <div className="py-2">{reviews.length} ratings</div>
         </div>
 
-        <div className="lg:col-span-2 m-2">
+        <div className="sm:col-span-2 m-2">
           {!selfView && (
             <div>
               <h1 className="text-2xl py-3">Review this mentor</h1>

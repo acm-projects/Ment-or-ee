@@ -12,12 +12,13 @@ const Home = () => {
   // if (!user) {
   //   return <div>Please log in</div>;
   // }
+  const events = [];
 
-  const events = [
-    { title: "Meeting", date: "2024-11-08T10:00:00", duration: 2 },
-    { title: "Lunch", date: "2024-11-08T12:00:00", duration: 1 },
-    { title: "Project Review", date: "2024-11-09T14:00:00", duration: 3 },
-  ];
+  // const events = [
+  //   { title: "Meeting", date: "2024-11-08T10:00:00", duration: 2 },
+  //   { title: "Lunch", date: "2024-11-08T12:00:00", duration: 1 },
+  //   { title: "Project Review", date: "2024-11-09T14:00:00", duration: 3 },
+  // ];
 
   return (
     <div className="h-full p-6 flex flex-col space-y-20">

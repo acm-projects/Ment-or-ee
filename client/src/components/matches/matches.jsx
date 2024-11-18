@@ -5,6 +5,9 @@ import MatchCard from "../../common/MatchCard";
 import MenteeCard from "../../common/MenteeCard";
 import { UseAuth } from "../../context/AuthContext";
 import { useMatches } from "../../context/MatchesContext";
+import lindaProfile from "../../assets/lindagarcia.png";
+import michaelProfile from "../../assets/michaelbrown.png";
+import ericProfile from "../../assets/ericjones.png";
 
 const Matches = () => {
   const { user } = UseAuth();
@@ -27,83 +30,59 @@ const Matches = () => {
   //   }
   // }, [user, fetchMatches, fetchMentees]);
 
-  // const matches = [
-  //   {
-  //     name: "Shane",
-  //     id: "672e3c25bd7073becceae3b4",
-  //     imgUrl: "https://example.com/profile.jpg",
-  //     headline: "Passionate Scientist | Driving Innovation and Growth in Law",
-  //     role: "Mentor",
-  //     fields: ["Biology"],
-  //     industries: ["Law"],
-  //     location: "Dallas, TX",
-  //     university: "The University of Texas at Dallas",
-  //     personalityType: "Introvert",
-  //     languages: ["English"],
-  //     bio: "I really look forward to being a mentor and having a positive impact on the community!",
-  //     links: [],
-  //   },
-  //   {
-  //     name: "Chris",
-  //     id: "6719aabd4b36027a26a4560c",
-  //     imgUrl: "https://example.com/profile.jpg",
-  //     headline: "Passionate Engineer | Driving Innovation and Growth in Law",
-  //     role: "Mentee",
-  //     fields: ["Computer Science"],
-  //     industries: ["Law"],
-  //     location: "Dallas, TX",
-  //     university: "The University of Texas at Dallas",
-  //     personalityType: "Introvert",
-  //     languages: ["English"],
-  //     bio: "I really look forward to being a mentor and having a positive impact on the community!",
-  //     links: [],
-  //   },
-  //   {
-  //     name: "Lerich",
-  //     id: "67180e89157b3c18a7d20248",
-  //     imgUrl: "https://example.com/profile.jpg",
-  //     headline: "Passionate Engineer | Driving Innovation and Growth in Law",
-  //     role: "Mentor",
-  //     fields: ["Computer Science"],
-  //     industries: ["Law"],
-  //     location: "Dallas, TX",
-  //     university: "The University of Texas at Dallas",
-  //     personalityType: "Introvert",
-  //     languages: ["English"],
-  //     bio: "I really look forward to being a mentor and having a positive impact on the community!",
-  //     links: [],
-  //   },
-  //   {
-  //     name: "Abis",
-  //     imgUrl: "https://example.com/profile.jpg",
-  //     headline: "Strategic Thinker | Specializing in Data Analysis slay",
-  //     role: "Mentor",
-  //     fields: ["Computer Science"],
-  //     industries: ["Health"],
-  //     location: "Houston, TX",
-  //     university: "The University of Texas at Dallas",
-  //     jobTitle: "Software Engineer",
-  //     company: "Texas Instruments",
-  //     personalityType: "Extrovert",
-  //     languages: ["English"],
-  //     bio: "I really look forward to being a mentor and having a positive impact on the community!",
-  //     links: [],
-  //   },
-  //   {
-  //     name: "Jeshna",
-  //     imgUrl: "https://example.com/profile.jpg",
-  //     headline: "Creative Problem Solver | Front-End Developer",
-  //     role: "Mentor",
-  //     fields: ["Computer Science"],
-  //     industries: ["Education"],
-  //     location: "San Francisco, California",
-  //     university: "Stanford University",
-  //     personalityType: "Extrovert",
-  //     languages: ["English"],
-  //     bio: "I really look forward to being a mentor and having a positive impact on the community!",
-  //     links: [],
-  //   },
-  // ];
+  const testMatches = [
+    {
+      name: "Linda Garcia",
+      imgUrl: lindaProfile,
+      mentorId: "aasdsafcdscda",
+      jobTitle: "Head of Cyber Defense",
+      company: "Meta",
+      headline:
+        "Passionate in Cybersecurity | Driving Innovation and Growth in Tech",
+      role: "Mentor",
+      fields: ["Cybersecurity, Network Security"],
+      industries: ["Tech"],
+      location: { city: "Dallas", state: "Texas" },
+      university: "The University of Texas at Dallas",
+      personalityType: "Introvert",
+      languages: ["English"],
+      bio: "I really look forward to being a mentor and having a positive impact on the community!",
+      links: ["linkedin.com/in/lindagarcia"],
+    },
+    {
+      name: "Michael Brown",
+      imgUrl: michaelProfile,
+      id: "6719aabd4b36027a26a4560c",
+      mentorId: "aasdsafcdscda",
+      headline: "Strategic Thinker | Lifelong learner",
+      role: "Mentor",
+      fields: ["Marketing, Business Strategy"],
+      industries: ["Marketing"],
+      location: { city: "Chicago", state: "Illinois" },
+      university: "Northwestern University",
+      personalityType: "Extrovert",
+      languages: ["English"],
+      bio: "I really look forward to being a mentor and having a positive impact on the community!",
+      links: [],
+    },
+    {
+      name: "Eric Jones",
+      imgUrl: ericProfile,
+      id: "67180e89157b3c18a7d20248",
+      mentorId: "aasdsafcdscda",
+      headline: "Intelligence for Social Good",
+      role: "Mentor",
+      fields: ["Lawyer"],
+      industries: ["Education, Law"],
+      location: { city: "Seattle", state: "Washington" },
+      university: "University of Washington",
+
+      personalityType: "Introvert",
+      languages: ["English"],
+      bio: "I really look forward to being a mentor and having a positive impact on the community!",
+      links: [],
+    },
+  ];
 
   // Apply filters to the matches
   const filteredMatches = matches.filter((match) => {
@@ -125,7 +104,7 @@ const Matches = () => {
 
       <div className="w-full flex p-12">
         {user.role === "Mentee" ? (
-          <div classname="w-full flex">
+          <div className="w-full flex">
             {/* Left side filter boxes */}
             <div className="w-1/3 pr-4">
               <h2 className="text-3xl py-2">Filters</h2>
@@ -137,6 +116,7 @@ const Matches = () => {
                 >
                   <option value="">All</option>
                   <option value="Computer Science">Computer Science</option>
+                  <option value="Marketing">Marketing</option>
                 </select>
               </FilterBox>
               <FilterBox title="Industry">
@@ -158,8 +138,9 @@ const Matches = () => {
                   onChange={(e) => setLocationFilter(e.target.value)}
                 >
                   <option value="">All</option>
-                  <option value="Dallas, TX">Dallas, TX</option>
-                  <option value="Houston, TX">Houston, TX</option>
+                  <option value="Dallas, TX">Dallas, Texas</option>
+                  <option value="Houston, TX">Houston, Texas</option>
+                  <option value="Chicago, Illinois">Chicago, Illinois</option>
                   <option value="San Francisco, California">
                     San Francisco, California
                   </option>
@@ -207,7 +188,7 @@ const Matches = () => {
             </div>
 
             {/* Right side match cards */}
-            <div className="w-3/4">
+            <div className="w-full">
               <h2 className="text-3xl py-2">{matches.length} Results</h2>
 
               {filteredMatches.map((match, index) => (
