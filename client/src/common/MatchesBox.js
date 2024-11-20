@@ -3,55 +3,10 @@ import { useMatches } from "../context/MatchesContext";
 import { UseAuth } from "../context/AuthContext";
 import ProfilePicture from "./ProfilePicture";
 import { useNavigate } from "react-router-dom";
-
-// const matches = []; //testing
-// const matches = [
-//   {
-//     name: "Lerich",
-//     id: "67180e89157b3c18a7d20248",
-//     imgUrl: "https://example.com/profile.jpg",
-//     headline: "Passionate Engineer | Driving Innovation and Growth in Law",
-//     role: "Mentor",
-//     fields: ["Computer Science"],
-//     industries: ["Law"],
-//     location: "Dallas, TX",
-//     university: "The University of Texas at Dallas",
-//     personalityType: "Introvert",
-//     languages: ["English"],
-//     bio: "I really look forward to being a mentor and having a positive impact on the community!",
-//     links: [],
-//   },
-//   {
-//     name: "Abis",
-//     imgUrl: "https://example.com/profile.jpg",
-//     headline: "Strategic Thinker | Specializing in Data Analysis slay",
-//     role: "Mentor",
-//     fields: ["Computer Science"],
-//     industries: ["Health"],
-//     location: "Houston, TX",
-//     university: "The University of Texas at Dallas",
-//     jobTitle: "Software Engineer",
-//     company: "Texas Instruments",
-//     personalityType: "Extrovert",
-//     languages: ["English"],
-//     bio: "I really look forward to being a mentor and having a positive impact on the community!",
-//     links: [],
-//   },
-//   {
-//     name: "Jeshna",
-//     imgUrl: "https://example.com/profile.jpg",
-//     headline: "Creative Problem Solver | Front-End Developer",
-//     role: "Mentor",
-//     fields: ["Computer Science"],
-//     industries: ["Education"],
-//     location: "San Francisco, California",
-//     university: "Stanford University",
-//     personalityType: "Extrovert",
-//     languages: ["English"],
-//     bio: "I really look forward to being a mentor and having a positive impact on the community!",
-//     links: [],
-//   },
-// ];
+import lindaProfile from "../assets/lindagarcia.png";
+import michaelProfile from "../assets/michaelbrown.png";
+import robertProfile from "../assets/robertsmith.png";
+import autoprofile from "../assets/autoprofile.png";
 
 function MatchesBox() {
   const { user } = UseAuth();
@@ -99,11 +54,47 @@ function MatchesBox() {
               {mentees.map((mentee) => (
                 <div key={mentee.id} className="flex rounded-3xl w-full mb-1">
                   <div className="w-1/4 flex items-center justify-center">
-                    <ProfilePicture
+                    {/* <ProfilePicture
                       imgUrl={mentee.imgUrl}
                       altText={mentee.name}
                       size="w-25 h-25"
-                    />
+                    /> */}
+                    {(() => {
+                      switch (mentee.name) {
+                        case "Linda Garcia":
+                          return (
+                            <img
+                              src={lindaProfile}
+                              alt="Profile"
+                              className="rounded-full object-cover bg-white"
+                            />
+                          );
+                        case "Robert Smith":
+                          return (
+                            <img
+                              src={robertProfile}
+                              alt="Profile"
+                              className="rounded-full object-cover bg-white"
+                            />
+                          );
+                        case "Michael Brown":
+                          return (
+                            <img
+                              src={michaelProfile}
+                              alt="Profile"
+                              className="rounded-full object-cover bg-white"
+                            />
+                          );
+                        default:
+                          return (
+                            <img
+                              src={autoprofile}
+                              alt="Profile"
+                              className="rounded-full object-cover bg-white"
+                            />
+                          );
+                      }
+                    })()}
                   </div>
                   <div className="w-3/4 h-70 flex flex-col justify-between pl-4 py-6">
                     <h2 className="text-2xl font-bold">{mentee.name}</h2>
@@ -162,17 +153,59 @@ function MatchesBox() {
               {matches.map((match) => (
                 <div key={match.id} className="flex rounded-3xl w-full mb-1">
                   <div className="w-1/4 flex items-center justify-center">
-                    <ProfilePicture
-                      imgUrl={match.imgUrl}
-                      altText={match.name}
-                      size="w-25 h-25"
-                    />
+                    {(() => {
+                      switch (match.name) {
+                        case "Linda Garcia":
+                          return (
+                            <img
+                              src={lindaProfile}
+                              alt="Profile"
+                              className="rounded-full object-cover bg-white"
+                            />
+                          );
+                        case "Robert Smith":
+                          return (
+                            <img
+                              src={robertProfile}
+                              alt="Profile"
+                              className="rounded-full object-cover bg-white"
+                            />
+                          );
+                        case "Michael Brown":
+                          return (
+                            <img
+                              src={michaelProfile}
+                              alt="Profile"
+                              className="rounded-full object-cover bg-white"
+                            />
+                          );
+                        default:
+                          return (
+                            <img
+                              src={autoprofile}
+                              alt="Profile"
+                              className="rounded-full object-cover bg-white"
+                            />
+                          );
+                      }
+                    })()}
                   </div>
                   <div className="w-3/4 h-70 flex flex-col justify-between pl-4 py-6">
                     <h2 className="text-2xl font-bold">{match.name}</h2>
                     <p>
                       <span className="font-bold">Headline:</span>{" "}
-                      {match.headline}
+                      {(() => {
+                        switch (match.name) {
+                          case "Linda Garcia":
+                            return <div>Cybersecurity Expert</div>;
+                          case "Robert Smith":
+                            return <div>Data Science Mentor</div>;
+                          case "Michael Brown":
+                            return <div>Marketing and Strategy Mentor</div>;
+                          default:
+                            return <div>Mentor</div>;
+                        }
+                      })()}
                     </p>
                   </div>
                 </div>

@@ -2,6 +2,10 @@ import React from "react";
 import ProfilePicture from "./ProfilePicture";
 import { useNavigate } from "react-router-dom";
 import { UseAuth } from "../context/AuthContext";
+import lindaProfile from "../assets/lindagarcia.png";
+import michaelProfile from "../assets/michaelbrown.png";
+import robertProfile from "../assets/robertsmith.png";
+import autoprofile from "../assets/autoprofile.png";
 
 const MatchCard = ({ match, compact, selfView }) => {
   const { user } = UseAuth();
@@ -41,7 +45,44 @@ const MatchCard = ({ match, compact, selfView }) => {
   return (
     <div className="flex rounded-3xl shadow-lg bg-[#E3E0E0] w-full mb-6">
       <div className="bg-[#B89C75] w-1/4 p-4 rounded-l-3xl flex items-center justify-center">
-        <ProfilePicture imgUrl={match.imgUrl} altText={match.name} />
+        {(() => {
+          switch (match.name) {
+            case "Linda Garcia":
+              return (
+                <img
+                  src={lindaProfile}
+                  alt="Profile"
+                  className="rounded-full object-cover bg-white"
+                />
+              );
+            case "Robert Smith":
+              return (
+                <img
+                  src={robertProfile}
+                  alt="Profile"
+                  className="rounded-full object-cover bg-white"
+                />
+              );
+            case "Michael Brown":
+              return (
+                <img
+                  src={michaelProfile}
+                  alt="Profile"
+                  className="rounded-full object-cover bg-white"
+                />
+              );
+            default:
+              return (
+                <img
+                  src={autoprofile}
+                  alt="Profile"
+                  className="rounded-full object-cover bg-white"
+                />
+              );
+          }
+        })()}
+
+        {/* <ProfilePicture imgUrl={match.imgUrl} altText={match.name} /> */}
       </div>
 
       <div className="w-3/4 h-70 flex flex-col justify-between pl-4 py-6">
@@ -53,7 +94,9 @@ const MatchCard = ({ match, compact, selfView }) => {
               <span className="font-bold">Role:</span>{" "}
               {match.mentorId ? "Mentor" : "Mentee"}
             </p>{" "}
-            <p className="text-gray-600">{match.headline}</p>
+            <p className="text-gray-600">
+              <span className="font-bold">Headline:</span> {match.headline}
+            </p>
             {selfView ? (
               <div></div>
             ) : (
@@ -72,9 +115,21 @@ const MatchCard = ({ match, compact, selfView }) => {
           <div>
             <div className="flex justify-between">
               <div className="w-1/2">
-                <p>
-                  <span className="font-bold">Headline:</span> {match.headline}
-                </p>
+                <div className="flex items-center">
+                  <span className="font-bold">Headline:</span>{" "}
+                  {(() => {
+                    switch (match.name) {
+                      case "Linda Garcia":
+                        return <div> Cybersecurity Expert</div>;
+                      case "Robert Smith":
+                        return <div> Data Science Mentor</div>;
+                      case "Michael Brown":
+                        return <div> Marketing and Strategy Mentor</div>;
+                      default:
+                        return <div> Mentor</div>;
+                    }
+                  })()}
+                </div>
                 <p>
                   <span className="font-bold">Role:</span>{" "}
                   {match.mentorId ? "Mentor" : "Mentee"}

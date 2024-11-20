@@ -7,7 +7,7 @@ import { UseAuth } from "../../context/AuthContext";
 import { useMatches } from "../../context/MatchesContext";
 import lindaProfile from "../../assets/lindagarcia.png";
 import michaelProfile from "../../assets/michaelbrown.png";
-import ericProfile from "../../assets/ericjones.png";
+import robertProfile from "../../assets/robertsmith.png";
 
 const Matches = () => {
   const { user } = UseAuth();
@@ -67,7 +67,7 @@ const Matches = () => {
     },
     {
       name: "Eric Jones",
-      imgUrl: ericProfile,
+      imgUrl: robertProfile,
       id: "67180e89157b3c18a7d20248",
       mentorId: "aasdsafcdscda",
       headline: "Intelligence for Social Good",

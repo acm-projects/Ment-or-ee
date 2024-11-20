@@ -29,6 +29,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
       multi: false,
       text: "What state do you live in?",
       options: [
+        "Texas",
         "Alabama",
         "Alaska",
         "Arizona",
@@ -71,7 +72,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
         "South Carolina",
         "South Dakota",
         "Tennessee",
-        "Texas",
+
         "Utah",
         "Vermont",
         "Virginia",

@@ -4,18 +4,33 @@ import MatchCard from "../../common/MatchCard";
 import Stepper from "../../common/Stepper";
 import ReviewComponent from "./ReviewComponent";
 
-const ProfileComponent = ({ user, selfView }) => {
-  // const matchData = {
-  //   imgUrl: "https://example.com/profile.jpg",
-  //   name: "John Doe",
-  //   role: "Mentee",
-  //   headline: "CS @ UT Dallas",
-  //   careerField: "Software Engineering",
-  //   location: "New York, NY",
-  //   college: "University of Example",
-  //   personality: "Extrovert",
-  //   language: "English, Spanish",
-  // };
+// const ProfileComponent = ({ user, selfView }) => {
+const ProfileComponent = ({ selfView }) => {
+  const user = {
+    //finishthis
+    imgUrl: "https://example.com/profile.jpg",
+
+    bio: "I have over five years of experience in analytics and project management, focusing on developing machine learning models and optimizing operational efficiency. I am passionate about education and mentorship, aiming to share my knowledge of data science and machine learning with aspiring professionals. My experience in a leading tech company equips me with valuable insights into industry trends, making me a supportive resource for those looking to grow in this dynamic field.",
+    name: "Robert Smith",
+    mentorId: "6732d20c74bfa2e4f82b0db7",
+    role: "Mentor",
+    headline: "Data Science Mentor",
+    fields: ["Data Science", "Machine Learning"],
+    location: { city: "San Franciso", state: "California" },
+    industries: ["Tech"],
+    college: "University of Example",
+    personalityType: "Extrovert",
+    university: "Stanford University",
+    languages: ["English", "Spanish"],
+    company: "Google",
+    jobTitle: "Senior Data Scientist",
+    degrees: ["Ph.D. in Data Science"],
+    links: [
+      "linkedin.com/in/robertsmith",
+      "robertsmith.com",
+      "github.com/robertsmith",
+    ],
+  };
 
   const [bio, setBio] = useState(user.bio);
   const [industries, setIndustries] = useState(user.industries.join(", "));
@@ -100,7 +115,7 @@ const ProfileComponent = ({ user, selfView }) => {
                 Currently working at:
               </h2>
               <p>
-                {user.company} as a {user.jobTitle} in {industries}
+                {user.company} as a {user.jobTitle} in the {industries} industry
               </p>
 
               <h2 className="text-xl text-[#B89C75] mt-4 mb-2">

@@ -1,4 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import lindaProfile from "../assets/lindagarcia.png";
+import michaelProfile from "../assets/michaelbrown.png";
+import robertProfile from "../assets/robertsmith.png";
+import autoprofile from "../assets/autoprofile.png";
 
 const AuthContext = createContext();
 
@@ -58,7 +62,48 @@ export const AuthContextProvider = ({ children }) => {
 
       const userData = await userResponse.json();
 
-      const completeUserInfo = { ...basicUserInfo, ...userData };
+      const profile = (() => {
+        switch (userData.name) {
+          case "Linda Garcia":
+            return (
+              <img
+                src={lindaProfile}
+                alt="Profile"
+                className="rounded-full object-cover bg-white"
+              />
+            );
+          case "Robert Smith":
+            return (
+              <img
+                src={robertProfile}
+                alt="Profile"
+                className="rounded-full object-cover bg-white"
+              />
+            );
+          case "Michael Brown":
+            return (
+              <img
+                src={michaelProfile}
+                alt="Profile"
+                className="rounded-full object-cover bg-white"
+              />
+            );
+          default:
+            return (
+              <img
+                src={autoprofile}
+                alt="Profile"
+                className="rounded-full object-cover bg-white"
+              />
+            );
+        }
+      })();
+
+      const completeUserInfo = {
+        ...basicUserInfo,
+        ...userData,
+        profilePic: profile,
+      };
 
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);

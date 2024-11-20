@@ -52,33 +52,35 @@ const TaskComponent = ({ user, ogMentees }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchTasksForAllMentees = async () => {
-  //     setLoading(true);
-  //     setError(null);
-  //     try {
-  //       const updatedMentees = await Promise.all(
-  //         mentees.map(async (mentee) => {
-  //           const tasks = await fetchTasks(mentee.id);
-  //           console.log(tasks); //testing
-  //           return { ...mentee, tasks };
-  //         })
-  //       );
+  useEffect(() => {
+    const fetchTasksForAllMentees = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const updatedMentees = await Promise.all(
+          mentees.map(async (mentee) => {
+            // const tasks = await fetchTasks(mentee.id);
+            // console.log(tasks); //testing
+            // return { ...mentee, tasks };
+            return { ...mentee };
+          })
+        );
+        // console.log(updatedMentees);
 
-  //       setMentees(updatedMentees);
-  //     } catch (error) {
-  //       setError("Failed to fetch tasks for mentees");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+        // setMentees(updatedMentees);
+      } catch (error) {
+        setError("Failed to fetch tasks for mentees");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //   fetchTasksForAllMentees();
-  // }, [fetchTasks]);
+    fetchTasksForAllMentees();
+  }, [mentees]);
 
   // console.log("mapped", mentees); //testing
 
-  // const [showZoom, setShowZoom] = useState(false);
+  const [showZoom, setShowZoom] = useState(false);
   const [showZoomForm, setShowZoomForm] = useState(false);
   const [zoomForm, setZoomForm] = useState({});
   const [zooms, setZooms] = useState([]);
@@ -424,7 +426,7 @@ const TaskComponent = ({ user, ogMentees }) => {
                               to={`${meeting.zoomLink}`}
                               className="text-blue-600 underline hover:text-blue-800"
                             >
-                              {meeting.zoomLink}
+                              Join
                             </Link>
                           </td>
                         </tr>

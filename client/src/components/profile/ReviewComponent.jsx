@@ -27,11 +27,11 @@ const Stars = ({ rating, totalStars = 5 }) => {
 
     for (let i = 1; i <= totalStars; i++) {
       if (i <= fullStars) {
-        stars.push(<IoStarSharp key={i} />);
+        stars.push(<IoStarSharp key={i} className="text-3xl" />);
       } else if (i === fullStars + 1 && hasHalfStar) {
-        stars.push(<MdOutlineStarHalf key={i} />);
+        stars.push(<MdOutlineStarHalf key={i} className="text-3xl" />);
       } else {
-        stars.push(<IoStarOutline key={i} />);
+        stars.push(<IoStarOutline key={i} className="text-3xl" />);
       }
     }
     return stars;
@@ -122,11 +122,11 @@ const ReviewComponent = ({ selfView }) => {
   const starRating = [];
   for (let i = 1; i <= 5; i++) {
     if (i <= Math.floor(avgRating)) {
-      starRating.push(<IoStarSharp key={i} />);
+      starRating.push(<IoStarSharp key={i} className="text-3xl" />);
     } else if (i - 0.75 <= avgRating && avgRating < i) {
-      starRating.push(<MdOutlineStarHalf key={i} />);
+      starRating.push(<MdOutlineStarHalf key={i} className="text-3xl" />);
     } else {
-      starRating.push(<IoStarOutline key={i} />);
+      starRating.push(<IoStarOutline key={i} className="text-3xl" />);
     }
   }
 
