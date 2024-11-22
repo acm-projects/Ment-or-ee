@@ -1,8 +1,17 @@
 const mongoose = require('mongoose');
+const MentorModel = require('./mentorModel'); // Import Mentor model
 const UserModel = require('./userModel'); // Import User model
 
 // Create Mentee schema extending the base user schema
 const menteeSchema = new mongoose.Schema({
+  photo_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'uploads.files' // This is likely related to a MongoDB GridFS collection for file uploads
+  },  
+  mentors: [{ // Reference to the Mentor model
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Mentor'  // This should match the model name exactly, which is 'Mentor'
+  }],
   major: { 
     type: String,
     required: true,
@@ -45,12 +54,12 @@ const menteeSchema = new mongoose.Schema({
       default: (100/6) // Default weight for fields of expertise
     }
   },
-// Reference to the User model
-user: {
-  type: mongoose.Schema.Types.ObjectId,
-  ref: 'User',
-  required: true,
-}
+  // Reference to the User model
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',  // Reference model name should be a string, not the model itself
+    required: true,
+  }
 });
 
 const MenteeModel = mongoose.model('Mentee', menteeSchema);

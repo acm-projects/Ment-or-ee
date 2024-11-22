@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const MentorModel = require('./mentorModel'); // Import User model
+const MenteeModel = require('./menteeModel'); // Import User model
 const { Schema } = mongoose;
 
 // Define the Meetings Schema
@@ -9,17 +11,17 @@ const meetingSchema = new Schema({
   },
   mentor: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserModel',  // Reference to the User model for mentor
-    required: true,
+    ref: 'Mentor',  // Reference to the User model for mentor
+    required: false,
   },
   mentee: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserModel',  // Reference to the User model for mentee
-    required: true,
+    ref: 'Mentee',  // Reference to the User model for mentee
+    required: false,
   },
   date: {
     type: Date,
-    required: true,
+    required: false,
   },
   duration: {
     type: Number,  // Duration of the meeting in minutes
@@ -27,7 +29,7 @@ const meetingSchema = new Schema({
   },
   location: {
     type: String,  // Physical or virtual location (e.g., Zoom link)
-    required: true,
+    required: false,
   },
   zoomLink: {
     type: String,  // Field to store the Zoom meeting link
@@ -44,6 +46,6 @@ const meetingSchema = new Schema({
 });
 
 // Export the Meetings model
-const Meeting = mongoose.model('Meeting', meetingSchema);
+const MeetingModel = mongoose.model('Meeting', meetingSchema);
 
-module.exports = Meeting;
+module.exports = MeetingModel;

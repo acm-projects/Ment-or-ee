@@ -92,9 +92,9 @@ const Login = () => {
             </div>
           </form>
 
-          <div>
+          {/* <div>
             <h2>Log in here with Google</h2>
-          </div>
+          </div> */}
         </div>
       </div>
 

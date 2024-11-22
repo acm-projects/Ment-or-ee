@@ -1,26 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { UseAuth } from "../../context/AuthContext";
-import { Questions } from "../questions/Questions";
+import { Questions } from "./Questions";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const QuestionsSubmit = () => {
+  const { login } = UseAuth();
+  const location = useLocation();
+  const prevSignupData = location.state?.prevSignupData;
+
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
   const updateFormData = (data) => {
     setFormData((prevData) => ({ ...prevData, ...data }));
   };
+
+  useEffect(() => {
+    if (prevSignupData) {
+      updateFormData(prevSignupData);
+    }
+  }, []);
+
   const [error, setError] = useState("");
 
   const { user } = UseAuth(); //use when user submits questionnaire
 
   const handleSubmit = async () => {
-    console.log("handling question submission"); //testing
+    console.log("attemping signup submit"); //testing
     console.log(formData); //testing
     setError("");
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/authenication/store-auth/", //get uri for questionnaire
+        "http://localhost:5000/api/authenication/store-auth/signup", //get api for questionnaire
         {
           method: "POST",
           headers: {
@@ -31,13 +43,21 @@ const QuestionsSubmit = () => {
       );
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Questionnaire submission failed");
+        throw new Error(errorData.message || "Signup failed");
       } else {
-        //do somethign here is successful
-        navigate("/home");
+        console.log("successful signup");
+
+        const success = await login(formData.email, formData.password);
+
+        if (success) {
+          navigate("/home");
+        } else {
+          setError("Invalid email or password");
+        }
       }
     } catch (error) {
       setError(error.message);
+      console.log(error);
     }
   };
 

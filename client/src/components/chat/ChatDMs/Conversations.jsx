@@ -1,29 +1,19 @@
 import React from "react";
 import Conversation from "./Conversation";
-import useGetConversations from "../../../hooks/useGetConversations";
+// import useGetConversations from "../../../hooks/useGetConversations";
 
-const Conversations = () => {
-  const { loading, conversations } = useGetConversations();
-  console.log("Fetching conversations:", conversations);
+const Conversations = ({ match }) => {
+  // const { loading, conversations } = useGetConversations();
+  // console.log("Fetching conversations:", conversations);
   return (
     <div className="py-2 flex flex-col overflow-auto">
-      {conversations.map((conversation, idx) => (
-        <Conversation
-          key={conversation._id}
-          conversation={conversation}
-          lastIdx={idx === conversations.length - 1}
-        />
-      ))}
-
-      {loading ? (
-        <span className="loading loading-spinner mx-auto"></span>
-      ) : null}
-
-      {/* testing */}
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
+      {match ? (
+        <Conversation match={match} />
+      ) : (
+        <div className="p-2 text-lg">
+          No chats found. Visit the matches page to start chatting with someone!
+        </div>
+      )}
     </div>
   );
 };

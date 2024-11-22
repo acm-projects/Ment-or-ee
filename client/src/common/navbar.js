@@ -5,8 +5,12 @@ import { CiChat1 } from "react-icons/ci";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoPeople } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import robertProfile from "../assets/robertsmith.png";
+import autoprofile from "../assets/autoprofile.png";
+import { UseAuth } from "../context/AuthContext";
 
 const Navbar = () => {
+  const { user } = UseAuth();
   const navigate = useNavigate();
 
   const handleMatchClick = () => {
@@ -35,8 +39,12 @@ const Navbar = () => {
             onClick={() => navigate("/home")}
             className="flex items-center"
           >
-            <img src={logo} alt="mentor/ee logo" className="h-16 w-auto mr-2" />
-            <span className="text-3xl font-bold text-white">mentor/ee</span>
+            <img
+              src={logo}
+              alt="ment(or/ee) logo"
+              className="h-16 w-auto mr-2"
+            />
+            <span className="text-3xl font-bold text-white">ment(or/ee)</span>
           </button>
         </div>
 
@@ -70,11 +78,27 @@ const Navbar = () => {
             onClick={handleProfileClick}
             className="flex flex-col items-center py-2 px-6 text-base font-semibold text-white rounded-lg hover:bg-[#1A202C] focus:outline-none focus:ring-2 focus:ring-[#1F2839]"
           >
-            <div className="w-7 h-7 rounded-full bg-blue-500"></div>
-            <div className="flex items-center">
-              Me
-              <IoMdArrowDropdown size={25} />
-            </div>
+            {(() => {
+              switch (user.name) {
+                case "Robert Smith":
+                  return (
+                    <img
+                      src={robertProfile}
+                      alt="Profile"
+                      className="w-7 h-7 rounded-full object-cover bg-white"
+                    />
+                  );
+                default:
+                  return (
+                    <img
+                      src={autoprofile}
+                      alt="Profile"
+                      className="w-7 h-7 rounded-full object-cover bg-white"
+                    />
+                  );
+              }
+            })()}
+            <div className="flex items-center">Profile</div>
           </button>
         </div>
       </div>

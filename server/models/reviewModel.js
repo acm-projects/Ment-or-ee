@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const UserModel = require('./userModel'); // Import User model
+const MentorModel = require('./mentorModel'); // Import User model
+const MenteeModel = require('./menteeModel'); // Import User model
 
 // Define schema
 const Schema = mongoose.Schema;
@@ -19,12 +20,12 @@ const reviewModelSchema = new Schema({
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: UserModel, // Reference the User model
+    ref: 'Mentee', // Reference the User model
     required: true
   },
   reviewedUser: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: UserModel, // Reference the User model
+    ref: 'Mentor', // Reference the User model
     required: true
   }
 });

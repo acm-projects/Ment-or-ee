@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import TextQuestion from "../../common/TextQuestion.js";
 import ButtonQuestion from "../../common/ButtonQuestion.js";
 import DropdownQuestion from "../../common/DropdownQuestion.jsx";
+import Stepper from "../../common/Stepper.jsx";
+// import { LinearProgress, Typography, Box } from "@mui/material";
 
 export function Questions({ formData, updateFormData, handleSubmit }) {
   const navigate = useNavigate();
@@ -27,6 +29,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
       multi: false,
       text: "What state do you live in?",
       options: [
+        "Texas",
         "Alabama",
         "Alaska",
         "Arizona",
@@ -69,7 +72,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
         "South Carolina",
         "South Dakota",
         "Tennessee",
-        "Texas",
+
         "Utah",
         "Vermont",
         "Virginia",
@@ -101,7 +104,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
         "Hindi",
         "Persian",
       ],
-    }, //TODO: multiselect
+    },
     {
       key: "personalityType",
       type: "button",
@@ -120,65 +123,272 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
     },
     {
       key: "university",
-      type: "text",
+      type: "dropdown",
+      multi: false,
       text: "What university are you currently attending?",
+      options: [
+        "University of Texas at Dallas",
+        "Harvard University",
+        "Stanford University",
+        "Massachusetts Institute of Technology",
+        "California Institute of Technology",
+        "University of California, Berkeley",
+        "University of California, Los Angeles",
+        "University of Chicago",
+        "Princeton University",
+        "Yale University",
+        "Columbia University",
+        "University of Pennsylvania",
+        "Cornell University",
+        "Duke University",
+        "University of Michigan",
+        "University of Washington",
+        "Carnegie Mellon University",
+        "University of Southern California",
+        "New York University",
+        "University of North Carolina at Chapel Hill",
+        "University of Wisconsin-Madison",
+        "University of Illinois Urbana-Champaign",
+        "Georgia Institute of Technology",
+        "University of Virginia",
+        "University of Florida",
+        "Texas A&M University",
+        "University of California, San Diego",
+        "University of California, Santa Barbara",
+        "University of California, Davis",
+        "Brown University",
+        "Northwestern University",
+        "Rice University",
+        "Vanderbilt University",
+        "Johns Hopkins University",
+        "University of Notre Dame",
+        "University of Texas at Austin",
+        "Boston University",
+        "Purdue University",
+        "University of Minnesota",
+        "University of Maryland",
+        "University of Colorado Boulder",
+        "Pennsylvania State University",
+        "Ohio State University",
+        "University of Arizona",
+        "Arizona State University",
+        "University of Utah",
+        "University of Oregon",
+        "University of Miami",
+        "Washington University in St. Louis",
+        "Emory University",
+        "Tulane University",
+        "University of Rochester",
+      ],
       condition: () => formData.role === "Mentee",
     },
     {
       key: "university",
-      type: "text",
+      type: "dropdown",
+      multi: false,
       text: "What university did you graduate from?",
+      options: [
+        "University of Texas at Dallas",
+        "Harvard University",
+        "Stanford University",
+        "Massachusetts Institute of Technology",
+        "California Institute of Technology",
+        "University of California, Berkeley",
+        "University of California, Los Angeles",
+        "University of Chicago",
+        "Princeton University",
+        "Yale University",
+        "Columbia University",
+        "University of Pennsylvania",
+        "Cornell University",
+        "Duke University",
+        "University of Michigan",
+        "University of Washington",
+        "Carnegie Mellon University",
+        "University of Southern California",
+        "New York University",
+        "University of North Carolina at Chapel Hill",
+        "University of Wisconsin-Madison",
+        "University of Illinois Urbana-Champaign",
+        "Georgia Institute of Technology",
+        "University of Virginia",
+        "University of Florida",
+        "Texas A&M University",
+        "University of California, San Diego",
+        "University of California, Santa Barbara",
+        "University of California, Davis",
+        "Brown University",
+        "Northwestern University",
+        "Rice University",
+        "Vanderbilt University",
+        "Johns Hopkins University",
+        "University of Notre Dame",
+        "University of Texas at Austin",
+        "Boston University",
+        "Purdue University",
+        "University of Minnesota",
+        "University of Maryland",
+        "University of Colorado Boulder",
+        "Pennsylvania State University",
+        "Ohio State University",
+        "University of Arizona",
+        "Arizona State University",
+        "University of Utah",
+        "University of Oregon",
+        "University of Miami",
+        "Washington University in St. Louis",
+        "Emory University",
+        "Tulane University",
+        "University of Rochester",
+      ],
       condition: () => formData.role === "Mentor",
     },
-    // {
-    //   key: "degrees",
-    //   type: "text",
-    //   text: "What degrees do you have?",
-    //   condition: () => formData.role === "Mentor",
-    // },
-    // {
-    //   key: "company",
-    //   type: "text",
-    //   text: "What company do you currently work for?",
-    //   condition: () => formData.role === "Mentor",
-    // },
+
     {
-      key: "educationLevel",
+      key: "degrees",
+      type: "text",
+      text: "What degree do you have?",
+      condition: () => formData.role === "Mentor",
+    },
+    {
+      key: "company",
+      type: "text",
+      text: "What company do you currently work for?",
+      condition: () => formData.role === "Mentor",
+    },
+
+    {
+      key: "collegeYear",
       type: "dropdown",
       multi: false,
       text: "What is your level of education",
       options: ["First Year", "Second Year", "Third Year", "Fourth Year"],
       condition: () => formData.role === "Mentee",
     },
-    // { key: "major", type: "text", text: "What is your major?", condition: () => formData.role === "Mentee" },
-    // { key: "degrees", type: "text", text: "What degrees do you have?", condition: () => formData.role === "Mentee" },
-    // { key: "jobTitle", type: "text", text: "What is your job title?", condition: () => formData.role === "Mentor", },
-    // {
-    //   key: "fields",
-    //   type: "text",
-    //   text: "What career fields are you interested in?",
-    //   condition: () => formData.role === "Mentee",
-    // },
-    // {
-    //   key: "fields",
-    //   type: "text",
-    //   text: "What career fields are you interested in teaching?",
-    //   condition: () => formData.role === "Mentor",
-    // },
-    // {
-    //   key: "industry",
-    //   type: "dropdown",
-    //   multi: true,
-    //   text: "What industries are you interested in working in?",
-    //   condition: () => formData.role === "Mentee",
-    // },
-    // {
-    //   key: "industry",
-    //   type: "dropdown",
-    //   multi: false,
-    //   text: "What industry do you work in?",
-    //   condition: () => formData.role === "Mentor",
-    // },
+    {
+      key: "major",
+      type: "dropdown",
+      multi: false,
+      text: "What is your major?",
+      options: [
+        "Computer Science",
+        "Engineering",
+        "Mathematics",
+        "Physics",
+        "Biology",
+        "Chemistry",
+        "Data Science",
+        "Environmental Science",
+        "Information Technology",
+        "Statistics",
+        "Astronomy",
+        "Biomedical Sciences",
+        "Nursing",
+        "Medicine",
+        "Pharmacy",
+        "Public Health",
+        "Physical Therapy",
+        "Dentistry",
+        "Nutrition and Dietetics",
+        "Veterinary Medicine",
+        "Health Administration",
+        "Accounting",
+        "Finance",
+        "Marketing",
+        "Management",
+        "Entrepreneurship",
+        "Economics",
+        "Human Resources",
+        "Supply Chain Management",
+        "International Business",
+        "Business Analytics",
+        "Psychology",
+        "Sociology",
+        "Political Science",
+        "Anthropology",
+        "History",
+        "Geography",
+        "International Relations",
+        "Criminal Justice",
+        "Social Work",
+        "Women’s and Gender Studies",
+        "English Literature",
+        "Philosophy",
+        "Art History",
+        "Religious Studies",
+        "Performing Arts",
+        "Visual Arts",
+        "Film Studies",
+        "Creative Writing",
+        "Foreign Languages and Linguistics",
+        "Communication Studies",
+        "Elementary Education",
+        "Secondary Education",
+        "Special Education",
+        "Educational Leadership",
+        "Early Childhood Education",
+        "Physical Education",
+        "Curriculum and Instruction",
+        "Pre-Law",
+        "Public Administration",
+        "Public Policy",
+        "Urban Studies",
+        "Environmental Policy",
+        "Legal Studies",
+        "Liberal Arts",
+        "Environmental Studies",
+        "Gender and Sexuality Studies",
+        "Cognitive Science",
+        "Cultural Studies",
+        "Hospitality Management",
+        "Culinary Arts",
+        "Tourism Management",
+        "Event Management",
+        "Journalism",
+        "Film Production",
+        "Public Relations",
+        "Digital Media",
+        "Broadcasting",
+        "Advertising",
+        "Agricultural Science",
+        "Architecture",
+        "Interior Design",
+        "Industrial Design",
+        "Fashion Design",
+        "Graphic Design",
+      ],
+      condition: () => formData.role === "Mentee",
+    },
+    {
+      key: "jobTitle",
+      type: "text",
+      text: "What is your job title?",
+      condition: () => formData.role === "Mentor",
+    },
+    {
+      key: "fields",
+      type: "text",
+      text: "What career fields are you interested in?",
+      condition: () => formData.role === "Mentee", //make it into a multiselect
+    },
+    {
+      key: "fields",
+      type: "text",
+      text: "What career fields are you interested in teaching?",
+      condition: () => formData.role === "Mentor", //make it into a multiselect
+    },
+    {
+      key: "industries",
+      type: "text",
+      text: "What industries are you interested in working in?",
+      condition: () => formData.role === "Mentee",
+    },
+    {
+      key: "industries",
+      type: "text",
+      text: "What industry do you work in?",
+      condition: () => formData.role === "Mentor",
+    },
     // {
     //   key: "growthAreas", //TODO: multi select
     //   type: "dropdown",
@@ -196,20 +406,26 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
     //   ],
     //   condition: () => formData.role === "Mentee",
     // },
-    // {
-    //   key: "importantCategories", //TODO: slider for each of the categories
-    //   type: "dropdown",
-    //   text: "What categories do you find the most important?",
-    //   options: [
-    //     "Location",
-    //     "Language",
-    //     "University",
-    //     "Career Field",
-    //     "Introvert vs Extrovert",
-    //   ],
-    //   condition: () => formData.role === "Mentee",
-    // },
+    {
+      key: "importantCategories", //TODO: slider for each of the categories
+      type: "slider",
+      text: "What categories do you find the most important?",
+      condition: () => formData.role === "Mentee",
+    },
   ];
+
+  const sliderFields = [
+    { id: "college", label: "College" },
+    { id: "careerField", label: "Career Field" },
+    { id: "location", label: "Location" },
+    { id: "personality", label: "Personality" },
+    { id: "language", label: "Language" },
+    { id: "industry", label: "Industry" },
+  ];
+
+  const handleWeightageChange = (newWeightages) => {
+    console.log("New Weightages:", newWeightages);
+  };
 
   const [curQuestionIndex, setCurQuestionIndex] = useState(0);
 
@@ -228,12 +444,17 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
     return -1;
   };
 
+  const progress = (curQuestionIndex / 10) * 100;
+
+  // console.log(progress); //testing
+
   //displaying next question, submitting if reached end
   const handleNext = () => {
     const nextIndex = getNextQuestionIndex(curQuestionIndex);
     if (nextIndex !== -1) {
       setCurQuestionIndex(nextIndex);
     } else {
+      console.log(formData); //testing
       handleSubmit();
     }
   };
@@ -289,6 +510,16 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
             curAnswer={formData[curQuestion.key] || ""}
           />
         );
+
+      case "slider":
+        return (
+          <Stepper
+            fields={sliderFields}
+            onWeightageChange={handleWeightageChange}
+            onAnswer={handleAnswer}
+            curAnswer={formData[curQuestion.key] || ""}
+          />
+        );
       default:
         return null;
     }
@@ -297,8 +528,7 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[#1F3839]">
       <div className="absolute inset-0 bg-[#1F2839] backdrop-filter z-10"></div>
-
-      <div className="relative z-20 min-h-screen w-full flex items-center justify-center p-6">
+      <div className="relative z-20 min-h-screen w-full flex flex-col items-center justify-center p-6">
         <div className="bg-white bg-opacity-80 rounded-lg shadow-lg p-10 max-w-2xl w-full">
           <div className="flex items-center absolute top-10 left-10">
             <img
@@ -328,8 +558,17 @@ export function Questions({ formData, updateFormData, handleSubmit }) {
             </div>
           </div>
         </div>
+        {/* <div data-testid={"progress bar"}>
+          <Box sx={{ width: "100%", mr: 1 }}>
+            <LinearProgress variant="determinate" value={progress} />
+            <Box sx={{ minWidth: 200 }}>
+              <Typography variant="body2" color="white">{`${Math.round(
+                progress
+              )}%`}</Typography>
+            </Box>
+          </Box>
+        </div> */}
       </div>
-      <div data-testid={"progress bar"}>{/* finish later if time */}</div>
     </div>
   );
 }

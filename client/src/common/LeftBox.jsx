@@ -1,5 +1,6 @@
 import React from "react";
-import AutoProfile from "../assets/autoprofile.png";
+import robertProfile from "../assets/robertsmith.png";
+import autoprofile from "../assets/autoprofile.png";
 
 function LeftBox({ title, name, children, role }) {
   return (
@@ -17,11 +18,26 @@ function LeftBox({ title, name, children, role }) {
           data-testid={"profilepicture"}
           className="flex justify-center p-4 items-center"
         >
-          <img
-            src={AutoProfile}
-            alt="Auto Profile"
-            className="w-[135px] h-[135px] object-cover"
-          />
+          {(() => {
+            switch (name) {
+              case "Robert Smith":
+                return (
+                  <img
+                    src={robertProfile}
+                    alt="Profile"
+                    className="w-[135px] h-[135px] object-cover rounded-full"
+                  />
+                );
+              default:
+                return (
+                  <img
+                    src={autoprofile}
+                    alt="Profile"
+                    className="w-[135px] h-[135px] object-cover rounded-full"
+                  />
+                );
+            }
+          })()}
         </div>
         <h1 className="text-2xl text-black font-semibold mb-2 text-center">
           Hi {name}!
