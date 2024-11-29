@@ -8,6 +8,10 @@
 One of the significant challenges facing college students aspiring to break into their respective industry today is the necessity to meaningfully network with industry professionals. Ment(or/ee) aims to assist students in overcoming this challenge by sophisticatedly matching them with professionals willing to mentor students on their journey. Simply create a profile stating your goals—whether for long-term guidance, resume reviews, mock interviews, or just a simple coffee chat—and you can establish a meaningful professional connection with Ment(or/ee).
 </p>
 
+<p align="center">
+<a href="https://www.canva.com/design/DAGWj6_VBTU/xeihspLsnNOyyrCjuC1fGA/view?utm_content=DAGWj6_VBTU&utm_campaign=designshare&utm_medium=link&utm_source=editor">Find our presentation here!</a>
+</p>
+
 ## MVP ✅
 * User auth → account / profile
   * Select account to be either a mentor or mentee
