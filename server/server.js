@@ -341,3 +341,5 @@ server.listen(port, () => {
 //Auth routes
 const storeAuthRoutes = require("./routes/authenication/store-auth.routes");
 app.use("/api/authenication/store-auth", storeAuthRoutes);
+
+/www.canva.com/design/DAGWj6_VBTU/gKOj0aXwtiJph64VhdkKfg/edit
